@@ -5,7 +5,34 @@
     <div class="huge-invoice-container">
       <div class="Invoice-content">
         <div class="invoice-top-section">
-          <div>For Invoice Details</div>
+        
+          <div class="top-invoice-section">
+            <div class="invoice-top-section-details-left">
+                <div class="invoice-custom-id">
+                    <label>Invoice No </label>
+                    <label style="color:var(--primary)">INV-GAN-0001</label>
+                </div>    
+                <div class="form-invoice-customer">
+                    <label>Customer </label>
+                    <input type="text" class="customerInputHolder" placeholder="Choose Customer"/> 
+                </div>
+                <div class="form-invoice-notes">
+                    <label>Notes </label>
+                    <textarea type="text" class="invoiceNotesHolder"></textarea> 
+                </div>
+            </div>
+            <div class="invoice-top-section-details-right">
+                <div class="form-invoice-date">
+                    <label>Invoice Date</label>
+                    <input type="date" class="invoiceDateHolder" /> 
+                </div>
+                <div class="form-due-date">
+                    <label>Due Date</label>
+                    <input type="date" class="invoiceDueDateHolder" /> 
+                </div>
+            </div>
+
+          </div>
         </div>
         <!-- <header class="px-5 py-4 border-b border-gray-100">
                   <h2 class="font-semibold text-gray-800">Invoices</h2>
@@ -429,6 +456,37 @@ border: 0px;
 
   font-size:14px ;
 }
+input.customerInputHolder{
+    border: 0px;
+  padding: 10px;
+  border:1px solid #4ade809c;
+  border-radius:10px ;
+  width: 100%;
+  font-size:14px ;
+  margin-top: 10px;
+
+}
+textarea.invoiceNotesHolder{
+    border: 0px;
+  padding: 10px;
+  border:1px solid #4ade809c;
+  border-radius:10px ;
+  width: 100%;
+  font-size:14px ;
+  resize: none;
+  margin-top: 5px;
+}
+input.invoiceDateHolder,input.invoiceDueDateHolder{
+    border: 0px;
+  padding: 10px;
+  border:1px solid #4ade809c;
+  border-radius:10px ;
+  width: 100%;
+  font-size:14px ;
+  margin-top: 5px;
+
+}
+
 input.nameInputHolder,
 select.unitInputHolder,
 input.priceInputHolder,
@@ -546,6 +604,13 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+.top-invoice-section{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
 @media (max-width: 767px) {
   table {
     font-size: 14px;
@@ -563,6 +628,24 @@ tr:nth-child(even) {
   display: flex;
   padding: 0px;
   align-items: center;
+}
+.top-invoice-section label{
+    margin: 5px;
+}
+.form-invoice-notes{
+    margin-top: 10px;
+}
+.form-invoice-customer{
+    margin-top: 10px;
+}
+.invoice-custom-id{
+    margin-top: 10px;
+}
+.form-invoice-date{
+    margin-top: 10px;
+}
+.form-due-date{
+    margin-top: 10px;
 }
 </style>
  
