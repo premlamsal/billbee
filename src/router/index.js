@@ -12,15 +12,19 @@ const router = createRouter({
 			path: '/invoices',
 			component: () => import('../views/Invoices.vue')
 		},
-    {
+		{
+			path: '/new-invoice',
+			component: () => import('../views/NewInvoice.vue')
+		},
+		{
 			path: '/products',
 			component: () => import('../views/Products.vue')
 		},
-    {
+		{
 			path: '/users',
 			component: () => import('../views/Users.vue')
 		},
-    {
+		{
 			path: '/settings',
 			component: () => import('../views/Settings.vue')
 		},

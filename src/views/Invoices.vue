@@ -2,7 +2,7 @@
   <main id="invoices-page">
     <h1>Invoices</h1>
     <div class="invoice-header">
-      <button class="btn-new-invoice">
+      <button class="btn-new-invoice" @click="newInvoiceBtn()">
        <span class="btn-name"> New Invoice</span>
       <span class="material-icons">add_circle</span>
 
@@ -64,6 +64,21 @@
     </div>
   </main>
 </template>
+<script>
+export default{
+  data(){
+    return{
+
+    };
+  },
+  methods:{
+    newInvoiceBtn(){
+      this.$router.push({ path: '/new-invoice' })
+    }
+  },
+}
+</script>
+
 <style scoped>
 .invoice-header{
   display: flex;
