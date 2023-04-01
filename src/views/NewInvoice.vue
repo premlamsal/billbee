@@ -1,7 +1,7 @@
 <template>
   <main id="Invoice-page">
-    <h1>Invoice</h1>
-    <p>This is the Invoice page</p>
+    <h1>New Invoice</h1>
+    <p>Welcome to new Invoice page</p>
     <div class="huge-invoice-container">
       <div class="Invoice-content">
         <div class="invoice-top-section">
@@ -106,23 +106,23 @@
                 "
               >
                 <table>
-                  <thead>
+                  <!-- <thead>
                     <tr>
-                      <!-- <th>Product</th>
+                      <th>Product</th>
                       <th>Quantity</th>
                       <th>Unit</th>
                       <th>Price</th>
                       <th>LineTotal</th>
-                      <th>Actions</th> -->
+                      <th></th>
                     </tr>
-                  </thead>
+                  </thead> -->
                   <tbody>
                     <tr v-for="(item, index) in invoiceItems" :key="index">
                       <td style="width:34%">
                         <div class="invoiceItemProductName">
                           <div>
                             <img
-                              style="border-radius: 10%"
+                              style="border-radius: 50%"
                               :src="item.image"
                               width="40"
                               height="40"
