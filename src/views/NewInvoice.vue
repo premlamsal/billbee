@@ -5,33 +5,35 @@
     <div class="huge-invoice-container">
       <div class="Invoice-content">
         <div class="invoice-top-section">
-        
           <div class="top-invoice-section">
             <div class="invoice-top-section-details-left">
-                <div class="invoice-custom-id">
-                    <label>Invoice No </label>
-                    <label style="color:var(--primary)">INV-GAN-0001</label>
-                </div>    
-                <div class="form-invoice-customer">
-                    <label>Customer </label>
-                    <input type="text" class="customerInputHolder" placeholder="Choose Customer"/> 
-                </div>
-                <div class="form-invoice-notes">
-                    <label>Notes </label>
-                    <textarea type="text" class="invoiceNotesHolder"></textarea> 
-                </div>
+              <div class="invoice-custom-id">
+                <label>Invoice No </label>
+                <label style="color: var(--primary)">INV-GAN-0001</label>
+              </div>
+              <div class="form-invoice-customer">
+                <label>Customer </label>
+                <input
+                  type="text"
+                  class="customerInputHolder"
+                  placeholder="Choose Customer"
+                />
+              </div>
+              <div class="form-invoice-notes">
+                <label>Notes </label>
+                <textarea type="text" class="invoiceNotesHolder"></textarea>
+              </div>
             </div>
             <div class="invoice-top-section-details-right">
-                <div class="form-invoice-date">
-                    <label>Invoice Date</label>
-                    <input type="date" class="invoiceDateHolder" /> 
-                </div>
-                <div class="form-due-date">
-                    <label>Due Date</label>
-                    <input type="date" class="invoiceDueDateHolder" /> 
-                </div>
+              <div class="form-invoice-date">
+                <label>Invoice Date</label>
+                <input type="date" class="invoiceDateHolder" />
+              </div>
+              <div class="form-due-date">
+                <label>Due Date</label>
+                <input type="date" class="invoiceDueDateHolder" />
+              </div>
             </div>
-
           </div>
         </div>
         <!-- <header class="px-5 py-4 border-b border-gray-100">
@@ -39,7 +41,7 @@
               </header> -->
         <div class="invoiceItemsTableContainer">
           <div
-          class="insideinvoiceItemsContainer"
+            class="insideinvoiceItemsContainer"
             style="
               overflow-x: auto;
               margin-top: 20px;
@@ -59,7 +61,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width:33%">
+                  <td style="width: 33%">
                     <input
                       type="text"
                       placeholder="Enter item name"
@@ -67,7 +69,7 @@
                       v-model="itemHolder.name"
                     />
                   </td>
-                  <td style="width:15%">
+                  <td style="width: 15%">
                     <input
                       type="text"
                       class="quantityInputHolder"
@@ -145,7 +147,7 @@
                   </thead> -->
                   <tbody>
                     <tr v-for="(item, index) in invoiceItems" :key="index">
-                      <td style="width:34%">
+                      <td style="width: 34%">
                         <div class="invoiceItemProductName">
                           <div>
                             <img
@@ -162,30 +164,38 @@
                           </div>
                         </div>
                       </td>
-                      <td style="width:16%">
+                      <td style="width: 16%">
                         <div>
                           {{ item.quantity }}
                         </div>
                       </td>
-                      <td style="width:10%">
+                      <td style="width: 10%">
                         <div>
                           {{ item.unit }}
                         </div>
                       </td>
-                      <td style="width:22%">
+                      <td style="width: 22%">
                         <div>
                           {{ item.price }}
                         </div>
                       </td>
 
-                      <td >
+                      <td>
                         <div>
                           {{ (item.lineTotal = item.quantity * item.price) }}
                         </div>
                       </td>
                       <td>
-                        <button @click="editInvoiceItem(item.id)" class="btnEditInvoice">Edit</button>
-                        <button @click="deleteInvoiceItem(item.id)" class="btnDeleteInvoice">
+                        <button
+                          @click="editInvoiceItem(item.id)"
+                          class="btnEditInvoice"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          @click="deleteInvoiceItem(item.id)"
+                          class="btnDeleteInvoice"
+                        >
                           Remove
                         </button>
                       </td>
@@ -257,11 +267,136 @@
   
   <script>
 import { uid } from "uid";
+import { computed, reactive, ref } from "vue";
+
 export default {
   name: "Create New Invoice",
-  methods: {
-    addNewInvoiceItem() {
-      this.invoiceItems.push({
+  setup() {
+    //data
+    const itemHolder = reactive({
+      name: "",
+      quantity: 0,
+      image: "",
+      unit: "",
+      price: 0,
+      lineTotal: 0,
+    });
+    const invoiceItems = reactive([]);
+    const invoiceInfo = reactive({
+        // subTotal:0,
+        // discount:0,
+    });
+    const isItemHolderUpdating = ref(false);
+    const currentEditItemIDIndex = ref("");
+    const errorItemHolder = reactive({
+      name: "",
+      quantity: "",
+      image: "",
+      unit: "",
+      price: "",
+    });
+
+    //methods
+    const editInvoiceItem = (id) => {
+      isItemHolderUpdating.value = true;
+      let indexForItem = invoiceItems.findIndex((item) => item.id === id);
+      currentEditItemIDIndex.value = indexForItem;
+      // console.log(invoiceItems[indexForItem]);
+
+      // console.log(getInvoiceItemFromID);
+
+      itemHolder.name = invoiceItems[indexForItem].name;
+      itemHolder.quantity = invoiceItems[indexForItem].quantity;
+      // itemHolder.image="";
+      itemHolder.unit = invoiceItems[indexForItem].unit;
+      itemHolder.price = invoiceItems[indexForItem].price;
+      itemHolder.lineTotal = invoiceItems[indexForItem].lineTotal;
+    };
+    const deleteInvoiceItem = (id) => {
+      invoiceItems = invoiceItems.filter((item) => item.id !== id);
+    };
+    const updateItemToInvoiceBtn = () => {
+      if (itemHolder.name === "") {
+        errorItemHolder.name = "Enter Item";
+      }
+      if (itemHolder.price == 0) {
+        errorItemHolder.price = "Enter Price";
+      }
+      if (itemHolder.unit == "") {
+        errorItemHolder.unit = "Select Unit";
+      }
+      if (itemHolder.quantity == 0) {
+        errorItemHolder.quantity = "Enter Quantity";
+      } else {
+        let index = currentEditItemIDIndex.value;
+        // get old invoiceItems and update with current itemHolder items
+        invoiceItems[index].name = itemHolder.name;
+        invoiceItems[index].quantity = itemHolder.quantity;
+        invoiceItems[index].unit = itemHolder.unit;
+        invoiceItems[index].price = itemHolder.price;
+        invoiceItems[index].lineTotal = itemHolder.price * itemHolder.quantity;
+
+        console.log(invoiceItems);
+
+        // invoiceItems.push({
+        // id: uid(),
+        // name: itemHolder.name,
+        // image: "https://avatars.githubusercontent.com/u/24312128?v=4",
+        // price: itemHolder.price,
+        // unit: itemHolder.unit,
+        // quantity: itemHolder.quantity,
+        // lineTotal: itemHolder.price * itemHolder.quantity,
+        // });
+
+        clearItemHolder();
+        clearErrorItemHolder();
+        isItemHolderUpdating.value = false;
+      }
+    };
+    const clearErrorItemHolder = () => {
+      errorItemHolder.name = "";
+      errorItemHolder.quantity = 0;
+      // errorItemHolder.image="";
+      errorItemHolder.unit = "";
+      errorItemHolder.price = 0;
+      errorItemHolder.lineTotal = 0;
+    };
+    const clearItemHolder = () => {
+      itemHolder.name = "";
+      itemHolder.quantity = 0;
+      // itemHolder.image="";
+      itemHolder.unit = "";
+      itemHolder.price = 0;
+      itemHolder.lineTotal = 0;
+    };
+    const addItemToInvoiceBtn = () => {
+      if (itemHolder.name === "") {
+        errorItemHolder.name = "Enter Item";
+      }
+      if (itemHolder.price == 0) {
+        errorItemHolder.price = "Enter Price";
+      }
+      if (itemHolder.unit == "") {
+        errorItemHolder.unit = "Select Unit";
+      }
+      if (itemHolder.quantity == 0) {
+        errorItemHolder.quantity = "Enter Quantity";
+      } else {
+        invoiceItems.push({
+          id: uid(),
+          name: itemHolder.name,
+          image: "https://avatars.githubusercontent.com/u/24312128?v=4",
+          price: itemHolder.price,
+          unit: itemHolder.unit,
+          quantity: itemHolder.quantity,
+          lineTotal: itemHolder.price * itemHolder.quantity,
+        });
+        clearItemHolder();
+        clearErrorItemHolder();
+      }
+    };
+    const addNewInvoiceItem = () => {
+      invoiceItems.push({
         id: uid(),
         name: "",
         image: "",
@@ -270,221 +405,104 @@ export default {
         quantity: 0,
         lineTotal: 0,
       });
-    },
-    addItemToInvoiceBtn() {
-      if (this.itemHolder.name === "") {
-        this.errorItemHolder.name = "Enter Item";
-      }
-      if (this.itemHolder.price == 0) {
-        this.errorItemHolder.price = "Enter Price";
-      }
-      if (this.itemHolder.unit == "") {
-        this.errorItemHolder.unit = "Select Unit";
-      }
-      if (this.itemHolder.quantity == 0) {
-        this.errorItemHolder.quantity = "Enter Quantity";
-      } else {
-        this.invoiceItems.push({
-          id: uid(),
-          name: this.itemHolder.name,
-          image: "https://avatars.githubusercontent.com/u/24312128?v=4",
-          price: this.itemHolder.price,
-          unit: this.itemHolder.unit,
-          quantity: this.itemHolder.quantity,
-          lineTotal: this.itemHolder.price * this.itemHolder.quantity,
-        });
-        this.clearItemHolder();
-        this.clearErrorItemHolder();
-      }
-    },
-    clearItemHolder() {
-      this.itemHolder.name = "";
-      this.itemHolder.quantity = 0;
-      // this.itemHolder.image="";
-      this.itemHolder.unit = "";
-      this.itemHolder.price = 0;
-      this.itemHolder.lineTotal = 0;
-    },
-    clearErrorItemHolder() {
-      this.errorItemHolder.name = "";
-      this.errorItemHolder.quantity = 0;
-      // this.errorItemHolder.image="";
-      this.errorItemHolder.unit = "";
-      this.errorItemHolder.price = 0;
-      this.errorItemHolder.lineTotal = 0;
-    },
-    updateItemToInvoiceBtn() {
-      if (this.itemHolder.name === "") {
-        this.errorItemHolder.name = "Enter Item";
-      }
-      if (this.itemHolder.price == 0) {
-        this.errorItemHolder.price = "Enter Price";
-      }
-      if (this.itemHolder.unit == "") {
-        this.errorItemHolder.unit = "Select Unit";
-      }
-      if (this.itemHolder.quantity == 0) {
-        this.errorItemHolder.quantity = "Enter Quantity";
-      } else {
-        let index = this.currentEditItemIDIndex;
-        // get old invoiceItems and update with current itemHolder items
-        this.invoiceItems[index].name = this.itemHolder.name;
-        this.invoiceItems[index].quantity = this.itemHolder.quantity;
-        this.invoiceItems[index].unit = this.itemHolder.unit;
-        this.invoiceItems[index].price = this.itemHolder.price;
-        this.invoiceItems[index].lineTotal =
-          this.itemHolder.price * this.itemHolder.quantity;
+    };
 
-        console.log(this.invoiceItems);
+    //end of methods
 
-        // this.invoiceItems.push({
-        // id: uid(),
-        // name: this.itemHolder.name,
-        // image: "https://avatars.githubusercontent.com/u/24312128?v=4",
-        // price: this.itemHolder.price,
-        // unit: this.itemHolder.unit,
-        // quantity: this.itemHolder.quantity,
-        // lineTotal: this.itemHolder.price * this.itemHolder.quantity,
-        // });
+    //computed
 
-        this.clearItemHolder();
-        this.clearErrorItemHolder();
-        this.isItemHolderUpdating = false;
-      }
-    },
-    deleteInvoiceItem(id) {
-      this.invoiceItems = this.invoiceItems.filter((item) => item.id !== id);
-    },
-    editInvoiceItem(id) {
-      this.isItemHolderUpdating = true;
-      let indexForItem = this.invoiceItems.findIndex((item) => item.id === id);
-      this.currentEditItemIDIndex = indexForItem;
-      // console.log(this.invoiceItems[indexForItem]);
-
-      // console.log(getInvoiceItemFromID);
-
-      this.itemHolder.name = this.invoiceItems[indexForItem].name;
-      this.itemHolder.quantity = this.invoiceItems[indexForItem].quantity;
-      // this.itemHolder.image="";
-      this.itemHolder.unit = this.invoiceItems[indexForItem].unit;
-      this.itemHolder.price = this.invoiceItems[indexForItem].price;
-      this.itemHolder.lineTotal = this.invoiceItems[indexForItem].lineTotal;
-    },
-  },
-  watch: {
-    // "invoiceInfo.discount": function (val, oldVal) {
-    //   if (this.invoiceInfo.discount === "") {
-    //     this.invoiceInfo.discount = 0;
-    //   }
-    // },
-  },
-  computed: {
-    subTotal: function () {
+    const subTotal = computed(() => {
       //reduce function is used to sum the array elements
-      this.invoiceInfo.subTotal = this.invoiceItems.reduce(function (
-        carry,
-        item
-      ) {
+      invoiceInfo.subTotal = invoiceItems.reduce(function (carry, item) {
         return carry + parseFloat(item.quantity) * parseFloat(item.price);
-      },
-      0);
-      return parseFloat(this.invoiceInfo.subTotal);
-    },
+      }, 0);
+      return parseFloat(invoiceInfo.subTotal);
+    });
+    const taxAmount = computed(() => {
+      if (invoiceInfo.discount != null && invoiceInfo.discount !== "") {
 
-    taxAmount: function () {
-      if (
-        this.invoiceInfo.discount != null &&
-        this.invoiceInfo.discount !== ""
-      ) {
         return parseFloat(
-          (this.subTotal - parseFloat(this.invoiceInfo.discount)) *
-            parseFloat(13 / 100)
+          (subTotal.value - parseFloat(invoiceInfo.discount)) * parseFloat(13 / 100)
         );
       } else {
-        return parseFloat(this.subTotal * parseFloat(13 / 100));
-      }
-    },
 
-    grandTotal: function () {
-      if (
-        this.invoiceInfo.discount != null &&
-        this.invoiceInfo.discount !== ""
-      ) {
+        return parseFloat(subTotal.value * parseFloat(13 / 100));
+      }
+
+    });
+    const grandTotal = computed(() => {
+      if (invoiceInfo.discount != null && invoiceInfo.discount !== "") {
         return parseFloat(
-          this.subTotal - parseFloat(this.invoiceInfo.discount) + this.taxAmount
+          subTotal.value - parseFloat(invoiceInfo.discount) + taxAmount.value
         );
       } else {
-        return parseFloat(this.subTotal + this.taxAmount);
+        return parseFloat(subTotal.value + taxAmount.value);
       }
-    },
-  },
-  data() {
+    });
+
+    //end of computed
+
+    //here you can return data and methods
     return {
-      itemHolder: {
-        name: "",
-        quantity: 0,
-        image: "",
-        unit: "",
-        price: 0,
-        lineTotal: 0,
-      },
-      invoiceItems: [],
-      invoiceInfo: {},
-
-      isItemHolderUpdating: false,
-
-      currentEditItemIDIndex: "",
-
-      errorItemHolder: {
-        name: "",
-        quantity: "",
-        image: "",
-        unit: "",
-        price: "",
-      },
+      itemHolder,
+      invoiceItems,
+      invoiceInfo,
+      isItemHolderUpdating,
+      currentEditItemIDIndex,
+      errorItemHolder,
+      editInvoiceItem,
+      deleteInvoiceItem,
+      updateItemToInvoiceBtn,
+      clearErrorItemHolder,
+      clearItemHolder,
+      addItemToInvoiceBtn,
+      addNewInvoiceItem,
+      subTotal,
+      taxAmount,
+      grandTotal,
     };
   },
+  
 };
 </script>
 <style scoped>
-input.quantityInputHolder{
-border: 0px;
+input.quantityInputHolder {
+  border: 0px;
   padding: 10px;
-  border:1px solid #4ade809c;
-  border-radius:10px ;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
   width: 100%;
 
-  font-size:14px ;
+  font-size: 14px;
 }
-input.customerInputHolder{
-    border: 0px;
+input.customerInputHolder {
+  border: 0px;
   padding: 10px;
-  border:1px solid #4ade809c;
-  border-radius:10px ;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
   width: 100%;
-  font-size:14px ;
+  font-size: 14px;
   margin-top: 10px;
-
 }
-textarea.invoiceNotesHolder{
-    border: 0px;
+textarea.invoiceNotesHolder {
+  border: 0px;
   padding: 10px;
-  border:1px solid #4ade809c;
-  border-radius:10px ;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
   width: 100%;
-  font-size:14px ;
+  font-size: 14px;
   resize: none;
   margin-top: 5px;
 }
-input.invoiceDateHolder,input.invoiceDueDateHolder{
-    border: 0px;
+input.invoiceDateHolder,
+input.invoiceDueDateHolder {
+  border: 0px;
   padding: 10px;
-  border:1px solid #4ade809c;
-  border-radius:10px ;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
   width: 100%;
-  font-size:14px ;
+  font-size: 14px;
   margin-top: 5px;
-
 }
 
 input.nameInputHolder,
@@ -493,10 +511,10 @@ input.priceInputHolder,
 input.totalInputHolder {
   border: 0px;
   padding: 10px;
-  border:1px solid #4ade809c;
-  border-radius:10px ;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
   width: 100%;
-  font-size:14px ;
+  font-size: 14px;
 }
 .Invoice-content {
   margin-top: 15px;
@@ -518,9 +536,9 @@ input.totalInputHolder {
   justify-content: end;
 }
 .item-table-holder-button-container {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 20px;
 }
 button.create-invoice-btn {
   background: var(--primary);
@@ -537,17 +555,17 @@ button.btn-add-to-invoice {
 }
 
 .button-container-down {
-    margin-top: 15px;
-    display: flex;
-    justify-content: end;
+  margin-top: 15px;
+  display: flex;
+  justify-content: end;
 }
 input.discount-input {
-    border: 0px;
+  border: 0px;
   padding: 10px;
-  border:1px solid #4ade809c;
-  border-radius:10px ;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
   width: 100%;
-  font-size:14px ;
+  font-size: 14px;
 }
 .total-sections {
   background: #fff;
@@ -567,14 +585,14 @@ button.btn-new-invoice {
   display: flex;
   align-items: center;
 }
-button.btnEditInvoice{
+button.btnEditInvoice {
   background: #ffc107;
   color: white;
   padding: 5px;
   border-radius: 2px;
 }
-button.btnDeleteInvoice{
-    background: #f44336;
+button.btnDeleteInvoice {
+  background: #f44336;
   color: white;
   padding: 5px;
   border-radius: 2px;
@@ -594,7 +612,6 @@ td {
   padding: 10px;
 }
 
-
 th {
   background-color: var(--primary);
   color: white;
@@ -604,18 +621,15 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.top-invoice-section{
-    display: flex;
-    justify-content: space-between;
+.top-invoice-section {
+  display: flex;
+  justify-content: space-between;
 }
-
-
 
 @media (max-width: 767px) {
   table {
     font-size: 14px;
   }
-
 }
 
 @media (max-width: 479px) {
@@ -629,23 +643,23 @@ tr:nth-child(even) {
   padding: 0px;
   align-items: center;
 }
-.top-invoice-section label{
-    margin: 5px;
+.top-invoice-section label {
+  margin: 5px;
 }
-.form-invoice-notes{
-    margin-top: 10px;
+.form-invoice-notes {
+  margin-top: 10px;
 }
-.form-invoice-customer{
-    margin-top: 10px;
+.form-invoice-customer {
+  margin-top: 10px;
 }
-.invoice-custom-id{
-    margin-top: 10px;
+.invoice-custom-id {
+  margin-top: 10px;
 }
-.form-invoice-date{
-    margin-top: 10px;
+.form-invoice-date {
+  margin-top: 10px;
 }
-.form-due-date{
-    margin-top: 10px;
+.form-due-date {
+  margin-top: 10px;
 }
 </style>
  
