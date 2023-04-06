@@ -17,21 +17,36 @@
                   type="text"
                   class="customerInputHolder"
                   placeholder="Choose Customer"
+                  v-model="invoiceInfo.customer"
+                  @keyup="customerSelectInput()"
                 />
+                <Transition :duration="550">
+                <div class="customer-select" v-if="showCustomerSelect">
+                  <!-- {{ queryResults }} -->
+                    <div class="selection-list" >
+                        <ul >
+                          <template v-for="queryResult in queryResults" v-bind:key="queryResult.id">
+                            <li @click="selectOption(queryResult.id,queryResult.name)">{{queryResult.name}}</li>
+                          </template>
+                            
+                        </ul>
+                    </div>
+                </div>
+                </Transition>
               </div>
               <div class="form-invoice-notes">
                 <label>Notes </label>
-                <textarea type="text" class="invoiceNotesHolder"></textarea>
+                <textarea type="text" class="invoiceNotesHolder" v-model="invoiceInfo.notes"></textarea>
               </div>
             </div>
             <div class="invoice-top-section-details-right">
               <div class="form-invoice-date">
                 <label>Invoice Date</label>
-                <input type="date" class="invoiceDateHolder" />
+                <input type="date" class="invoiceDateHolder" v-model="invoiceInfo.invoice_date" />
               </div>
               <div class="form-due-date">
                 <label>Due Date</label>
-                <input type="date" class="invoiceDueDateHolder" />
+                <input type="date" class="invoiceDueDateHolder" v-model="invoiceInfo.due_date"/>
               </div>
             </div>
           </div>
@@ -267,7 +282,7 @@
   
   <script>
 import { uid } from "uid";
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref,inject } from "vue";
 
 export default {
   name: "Create New Invoice",
@@ -288,6 +303,9 @@ export default {
     });
     const isItemHolderUpdating = ref(false);
     const currentEditItemIDIndex = ref("");
+
+    let queryResults=reactive([]);
+
     const errorItemHolder = reactive({
       name: "",
       quantity: "",
@@ -295,6 +313,7 @@ export default {
       unit: "",
       price: "",
     });
+    const showCustomerSelect = ref(false);
 
     //methods
     const editInvoiceItem = (id) => {
@@ -406,6 +425,70 @@ export default {
         lineTotal: 0,
       });
     };
+  //   const onInput = debounce(() => {
+  //   console.log('debug')
+  // }, 500)
+    
+    const axios = inject('$axios'); 
+
+    const customerSelectInput=()=>{
+      // queryResults =  [{}];
+
+      //code
+      if (invoiceInfo.customer_name === "") {
+
+        // queryResults = [{}];
+        queryResults.splice(0)
+        showCustomerSelect.value=false;
+
+
+      } else {
+        // let formData=new FormData();
+        // formData.append('searchQuery',invoiceInfo.customer)
+        axios
+        .post("customers/search", {
+            searchQuery: invoiceInfo.customer
+          })
+          .then(response => {
+
+            
+            // queryResults=response.data;
+
+            // console.log(response.data);
+
+             queryResults.splice(0)
+
+
+            for(let i=0; i< response.data.data.length;i++){
+             queryResults.push(response.data.data[i])
+            }
+
+           showCustomerSelect.value=true;
+
+
+
+            // console.log(queryResults)
+
+         
+            // console.log(queryResults)
+
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+
+
+            
+    };
+    const selectOption=(customer_id, customer_name)=>{
+       
+        showCustomerSelect.value=false;
+        invoiceInfo.customer=customer_name;
+        invoiceInfo.customer_id=customer_id;
+
+    };
 
     //end of methods
 
@@ -460,6 +543,10 @@ export default {
       subTotal,
       taxAmount,
       grandTotal,
+      customerSelectInput,
+      showCustomerSelect,
+      selectOption,
+      queryResults
     };
   },
   
@@ -661,5 +748,59 @@ tr:nth-child(even) {
 .form-due-date {
   margin-top: 10px;
 }
+.form-invoice-customer{
+    position: relative;
+}
+.customer-select{
+  width: 100%;
+    opacity: 1;
+    transition: all .75s ease;
+    transition-delay: 1s;
+    max-height: 80px;
+    background: #4CAF50;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+      overflow: scroll;
+  position:absolute;
+  }
+.customer-select.show{
+    opacity: 1;
+}
+
+.selection-list{
+ 
+}
+.selection-list ul{
+    list-style: none;
+}
+.selection-list ul li {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    cursor: pointer;
+    color: white;
+
+
+
+}
+
+
+/* vue animation */
+.v-enter-active,
+.v-leave-active {
+  /* transition: opacity 0.5s ease; */
+  transition: all 0.1s ease-in-out;
+  /* transition-delay: 0.25s; */
+}
+
+.v-enter-from{
+  transform: translateY(-50px);
+  opacity: 0.001;
+}
+.v-leave-to {
+  transform: translateY(-50px);
+  opacity: 0.001;
+ 
+}
+
 </style>
  
