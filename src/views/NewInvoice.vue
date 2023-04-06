@@ -17,7 +17,7 @@
                   type="text"
                   class="customerInputHolder"
                   placeholder="Choose Customer"
-                  v-model="invoiceInfo.customer"
+                  v-model="invoiceInfo.customer_name"
                   @keyup="customerSelectInput()"
                 />
                 <Transition :duration="550">
@@ -47,7 +47,7 @@
                 <textarea
                   type="text"
                   class="invoiceNotesHolder"
-                  v-model="invoiceInfo.notes"
+                  v-model="invoiceInfo.note"
                 ></textarea>
               </div>
             </div>
@@ -102,7 +102,7 @@
                         type="text"
                         placeholder="Enter item name"
                         class="nameInputHolder"
-                        v-model="itemHolder.name"
+                        v-model="itemHolder.product_name"
                         @keyup="productSelectInput()"
                       />
                       <Transition :duration="550">
@@ -116,7 +116,7 @@
                               >
                                 <li
                                   @click="
-                                    selectOptionProduct(queryResultProduct.id, queryResultProduct.name,queryResultProduct.unit.short_name,queryResultProduct.sp)
+                                    selectOptionProduct(queryResultProduct.id, queryResultProduct.name,queryResultProduct.unit.short_name,queryResultProduct.sp,queryResultProduct.unit.id)
                                   "
                                 >
                                   {{ queryResultProduct.name }}
@@ -215,11 +215,11 @@
                               width="40"
                               height="40"
                               v-if="item.image"
-                              :alt="item.name"
+                              :alt="item.product_name"
                             />
                           </div>
                           <div style="margin-left: 10%">
-                            {{ item.name }}
+                            {{ item.product_name }}
                           </div>
                         </div>
                       </td>
@@ -312,7 +312,7 @@
               </table>
             </div>
             <div class="button-container-down">
-              <button class="create-invoice-btn">Create Invoice</button>
+              <button class="create-invoice-btn" @click="createInvoice()">Create Invoice</button>
             </div>
           </section>
         </div>
@@ -333,7 +333,9 @@ export default {
   setup() {
     //data
     const itemHolder = reactive({
-      name: "",
+      id:'',
+      product_name: "",
+      product_id:'',
       quantity: 0,
       image: "",
       unit: "",
@@ -352,7 +354,9 @@ export default {
     let queryResultsProduct = reactive([]);
 
     const errorItemHolder = reactive({
-      name: "",
+      id:'',
+      product_name_name: "",
+      product_id:'',
       quantity: "",
       image: "",
       unit: "",
@@ -369,20 +373,25 @@ export default {
       // console.log(invoiceItems[indexForItem]);
 
       // console.log(getInvoiceItemFromID);
-
-      itemHolder.name = invoiceItems[indexForItem].name;
+      itemHolder.product_id = invoiceItems[indexForItem].product_id;
+      itemHolder.product_name = invoiceItems[indexForItem].product_name;
       itemHolder.quantity = invoiceItems[indexForItem].quantity;
       // itemHolder.image="";
       itemHolder.unit = invoiceItems[indexForItem].unit;
+      itemHolder.unit_id = invoiceItems[indexForItem].unit_id;
       itemHolder.price = invoiceItems[indexForItem].price;
       itemHolder.lineTotal = invoiceItems[indexForItem].lineTotal;
     };
     const deleteInvoiceItem = (id) => {
-      invoiceItems = invoiceItems.filter((item) => item.id !== id);
+      console.log(invoiceItems);
+      // have to change
+       invoiceItems = invoiceItems.filter((item) => item.id !== id);
+
+      console.log(invoiceItems)
     };
     const updateItemToInvoiceBtn = () => {
-      if (itemHolder.name === "") {
-        errorItemHolder.name = "Enter Item";
+      if (itemHolder.product_name === "") {
+        errorItemHolder.product_name = "Enter Item";
       }
       if (itemHolder.price == 0) {
         errorItemHolder.price = "Enter Price";
@@ -395,7 +404,8 @@ export default {
       } else {
         let index = currentEditItemIDIndex.value;
         // get old invoiceItems and update with current itemHolder items
-        invoiceItems[index].name = itemHolder.name;
+        invoiceItems[index].product_id = itemHolder.product_id;
+        invoiceItems[index].product_name = itemHolder.product_name;
         invoiceItems[index].quantity = itemHolder.quantity;
         invoiceItems[index].unit = itemHolder.unit;
         invoiceItems[index].price = itemHolder.price;
@@ -419,7 +429,8 @@ export default {
       }
     };
     const clearErrorItemHolder = () => {
-      errorItemHolder.name = "";
+      errorItemHolder.product_name = "";
+      errorItemHolder.product_id="";
       errorItemHolder.quantity = 0;
       // errorItemHolder.image="";
       errorItemHolder.unit = "";
@@ -427,16 +438,26 @@ export default {
       errorItemHolder.lineTotal = 0;
     };
     const clearItemHolder = () => {
-      itemHolder.name = "";
+      itemHolder.product_name = "";
+      itemHolder.product_id = "";
       itemHolder.quantity = 0;
       // itemHolder.image="";
       itemHolder.unit = "";
       itemHolder.price = 0;
       itemHolder.lineTotal = 0;
     };
+    const clearInvoiceInfo = () => {
+      invoiceInfo.customer_id = "";
+      invoiceInfo.customer_name = "";
+      invoiceInfo.due_date = "";
+      invoiceInfo.invoice_date = "";
+      invoiceInfo.customer_name = "";
+      invoiceInfo.note = "";
+      invoiceInfo.subTotal = "";
+    };
     const addItemToInvoiceBtn = () => {
-      if (itemHolder.name === "") {
-        errorItemHolder.name = "Enter Item";
+      if (itemHolder.product_name === "") {
+        errorItemHolder.product_name = "Enter Item";
       }
       if (itemHolder.price == 0) {
         errorItemHolder.price = "Enter Price";
@@ -448,11 +469,13 @@ export default {
         errorItemHolder.quantity = "Enter Quantity";
       } else {
         invoiceItems.push({
-          id: itemHolder.product_id,
-          name: itemHolder.name,
+          id:uid(),
+          product_id:itemHolder.product_id,
+          product_name: itemHolder.product_name,
           image: "https://avatars.githubusercontent.com/u/24312128?v=4",
           price: itemHolder.price,
           unit: itemHolder.unit,
+          unit_id: itemHolder.unit_id,
           quantity: itemHolder.quantity,
           lineTotal: itemHolder.price * itemHolder.quantity,
         });
@@ -463,7 +486,7 @@ export default {
     const addNewInvoiceItem = () => {
       invoiceItems.push({
         id: uid(),
-        name: "",
+        product_name: "",
         // product_id:'',
         image: "",
         price: 0,
@@ -491,7 +514,7 @@ export default {
         // formData.append('searchQuery',invoiceInfo.customer)
         axios
           .post("customers/search", {
-            searchQuery: invoiceInfo.customer,
+            searchQuery: invoiceInfo.customer_name,
           })
           .then((response) => {
             // queryResults=response.data;
@@ -517,7 +540,7 @@ export default {
     };
     const selectOption = (customer_id, customer_name) => {
       showCustomerSelect.value = false;
-      invoiceInfo.customer = customer_name;
+      invoiceInfo.customer_name = customer_name;
       invoiceInfo.customer_id = customer_id;
     };
 
@@ -526,7 +549,7 @@ export default {
       // queryResultsProduct =  [{}];
 
       //code
-      if (itemHolder.name === "") {
+      if (itemHolder.product_name === "") {
         // queryResults = [{}];
         queryResultsProduct.splice(0);
         showProductSelect.value = false;
@@ -535,7 +558,7 @@ export default {
         // formData.append('searchQuery',invoiceInfo.customer)
         axios
           .post("product/search", {
-            searchQuery: itemHolder.name,
+            searchQuery: itemHolder.product_name,
           })
           .then((response) => {
             // queryResultsProduct=response.data;
@@ -560,14 +583,37 @@ export default {
       }
     };
 
-    const selectOptionProduct = (product_id, product_name,product_unit,product_price) => {
+    const selectOptionProduct = (product_id, product_name,product_unit,product_price,product_unit_id) => {
       showProductSelect.value = false;
-      itemHolder.name = product_name;
+      itemHolder.product_name = product_name;
       itemHolder.product_id = product_id;
       itemHolder.quantity=1;
       itemHolder.unit=product_unit;
       itemHolder.price=product_price;
+      itemHolder.unit_id=product_unit_id;
     };
+    const createInvoice=()=>{
+      
+
+
+
+      axios
+           .post("/invoice/create", { info: invoiceInfo, items: invoiceItems })
+          .then(response=>{
+
+            //response.data.msg have success message
+
+            console.log(response.data);
+            clearErrorItemHolder();
+            clearItemHolder();
+            clearInvoiceInfo();
+
+          })
+          .catch(error=>{
+            console.log(error);
+          })
+
+    }
 
 
     //end of methods
@@ -629,6 +675,7 @@ export default {
       productSelectInput,
       showProductSelect,
       selectOptionProduct,
+      createInvoice,
     };
   },
 };

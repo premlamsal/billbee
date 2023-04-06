@@ -28,36 +28,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1001</td>
-              <td>2022-03-15</td>
-              <td>John Doe</td>
-              <td>$100.00</td>
-            </tr>
-            <tr>
-              <td>1002</td>
-              <td>2022-03-16</td>
-              <td>Jane Doe</td>
-              <td>$150.00</td>
-            </tr>
-            <tr>
-              <td>1003</td>
-              <td>2022-03-17</td>
-              <td>Mike Smith</td>
-              <td>$200.00</td>
-            </tr>
-            <tr>
-              <td>1004</td>
-              <td>2022-03-18</td>
-              <td>Sarah Johnson</td>
-              <td>$50.00</td>
-            </tr>
-            <tr>
-              <td>1005</td>
-              <td>2022-03-19</td>
-              <td>Tom Brown</td>
-              <td>$75.00</td>
-            </tr>
+            <template v-for="invoice in invoices" v-bind:key="invoice.id">
+
+              <tr>
+                <td>{{ invoice.id }}</td>
+                <td>{{ invoice.invoice_date }}</td>
+                <td>{{ invoice.customer_name }}</td>
+                <td>{{ invoice.grand_total }}</td>
+              </tr>
+          </template>
           </tbody>
         </table>
       </div>
@@ -65,17 +44,64 @@
   </main>
 </template>
 <script>
-export default{
-  data(){
-    return{
+import { computed, reactive, ref, inject ,onMounted} from "vue";
+import { useRoute } from 'vue-router';
 
-    };
-  },
-  methods:{
-    newInvoiceBtn(){
-      this.$router.push({ path: '/new-invoice' })
+export default{
+
+  setup() {
+    const route = useRoute();
+    const invoices = reactive([]);
+    const axios = inject("$axios");
+
+    //on mounted start
+      onMounted(() => {
+        getInvoices();
+
+      });
+
+  //end of onMounted
+
+    const newInvoiceBtn=()=>{
+      route.push({ path: '/new-invoice' })
     }
-  },
+
+    const getInvoices=()=>{
+      
+
+      axios.get('invoices')
+      .then(response=>{
+
+          for (let i = 0; i < response.data.data.length; i++) {
+                invoices.push(response.data.data[i]);
+              }
+
+      })
+      .catch(error=>{
+        console.log(error);
+      })
+
+
+    }
+
+
+
+
+
+  //here you can return data and methods
+  return {
+     invoices, newInvoiceBtn,
+     getInvoices
+    };
+
+
+
+
+
+  },//end of setup
+
+ 
+  
 }
 </script>
 
