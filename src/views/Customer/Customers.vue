@@ -1,6 +1,47 @@
 <template>
     <main id="customers-page">
       <h1>Customers</h1>
+      <div class="modal-container">
+        <div class="modal">
+          <div class="modal-close-btn-container">
+				<span class="material-icons">cancel</span>
+            
+          </div>
+          <div class="modal-tick-btn-container">
+				<span class="material-icons" style="font-size:50px; color:var(--primary)">check_box</span>
+            
+          </div>
+          <div class="modal-header">
+            <h1>Add Customer</h1>
+
+          </div>
+          <div class="modal-body">
+
+           <div class="form-input-customer">
+            <label>Customer Name</label>
+            <input type="text" placeholder="Customer Name" class="customerNameHolder"/>
+           </div>
+           <div class="form-input-customer">
+            <label> Address</label>
+
+            <input type="text" placeholder="Customer Address" class="customerAddressHolder"/>
+           </div>
+           <div class="form-input-customer">
+            <label> Phone</label>
+
+            <input type="text" placeholder="Customer Phone" class="customerPhoneHolder"/>
+           </div>
+           <div class="form-input-customer">
+            <label> Details</label>
+            <textarea type="text" class="customerDetailsHolder"></textarea>
+           </div>
+
+          </div>
+          <div class="modal-footer">
+            <h4>Please fill above details and submit form</h4>
+          </div>
+        </div>
+      </div>
       <div class="customer-header">
         <button class="btn-new-customer" @click="newCustomerBtn()">
          <span class="btn-name"> New Customer</span>
@@ -109,6 +150,107 @@
   </script>
   
   <style scoped>
+   /* for modal */
+   .modal-container {
+    background: #000000d6;
+    padding: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background: #fff;
+    /* padding: 15px; */
+  position: relative;
+}
+.modal-header {
+  background: red;
+    padding: 20px;
+    color: #fff;
+
+}
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+  background: red;
+    padding: 20px;
+  color: #fff;
+
+}
+.modal-close-btn-container {
+  position: absolute;
+    right: -11px;
+    color: white;
+    top: -12px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+
+
+.modal-tick-btn-container {
+  position: absolute;
+    right: -30px;
+    color: white;
+    bottom: -5px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+input.customerNameHolder {
+  border: 0px;
+  padding: 10px;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+
+input.customerPhoneHolder {
+  border: 0px;
+  padding: 10px;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+input.customerAddressHolder {
+  border: 0px;
+  padding: 10px;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+
+textarea.customerDetailsHolder {
+  border: 0px;
+  padding: 10px;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  resize: none;
+  margin-top: 5px;
+}
+.form-input-customer{
+  margin-bottom:15px ;
+}
+
   .customer-header{
     display: flex;
     justify-content: right;
