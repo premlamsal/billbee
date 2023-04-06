@@ -17,8 +17,12 @@
 				<span class="text">Home</span>
 			</router-link>
       <router-link to="/customers" class="button">
-				<span class="material-icons">description</span>
+				<span class="material-icons">supervised_user_circle</span>
 				<span class="text">Customers</span>
+			</router-link>
+      <router-link to="/suppliers" class="button">
+				<span class="material-icons">local_shipping</span>
+				<span class="text">Suppliers</span>
 			</router-link>
             <router-link to="/products" class="button">
 				<span class="material-icons">shopping_bag</span>
