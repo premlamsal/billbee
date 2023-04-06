@@ -28,8 +28,13 @@
 				<span class="material-icons">shopping_bag</span>
 				<span class="text">Product</span>
 			</router-link>
-			<router-link to="/invoices" class="button">
+      <router-link to="/purchases" class="button">
 				<span class="material-icons">description</span>
+				<span class="text">Purchase</span>
+			</router-link>
+
+			<router-link to="/invoices" class="button">
+				<span class="material-icons">receipt_long</span>
 				<span class="text">Invoice</span>
 			</router-link>
 			<router-link to="/users" class="button">

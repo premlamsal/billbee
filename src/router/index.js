@@ -10,15 +10,19 @@ const router = createRouter({
 		},
 		{
 			path: '/invoices',
-			component: () => import('../views/Invoices.vue'),
+			component: () => import('../views/Invoice/Invoices.vue'),
 		},
 		{
 			path: '/new-invoice',
-			component: () => import('../views/NewInvoice.vue')
+			component: () => import('../views/Invoice/NewInvoice.vue')
+		},
+		{
+			path: '/purchases',
+			component: () => import('../views/Purchase/purchases.vue'),
 		},
 		{
 			path: '/products',
-			component: () => import('../views/Products.vue')
+			component: () => import('../views/Product/Products.vue')
 		},
 		{
 			path: '/customers',
@@ -30,11 +34,11 @@ const router = createRouter({
 		},
 		{
 			path: '/users',
-			component: () => import('../views/Users.vue')
+			component: () => import('../views/User/Users.vue')
 		},
 		{
 			path: '/settings',
-			component: () => import('../views/Settings.vue')
+			component: () => import('../views/Setting/Settings.vue')
 		},
 	],
 })
