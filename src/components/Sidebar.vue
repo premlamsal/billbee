@@ -16,6 +16,10 @@
 				<span class="material-icons">home</span>
 				<span class="text">Home</span>
 			</router-link>
+      <router-link to="/customers" class="button">
+				<span class="material-icons">description</span>
+				<span class="text">Customers</span>
+			</router-link>
             <router-link to="/products" class="button">
 				<span class="material-icons">shopping_bag</span>
 				<span class="text">Product</span>

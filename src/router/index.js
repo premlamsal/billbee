@@ -10,7 +10,7 @@ const router = createRouter({
 		},
 		{
 			path: '/invoices',
-			component: () => import('../views/Invoices.vue')
+			component: () => import('../views/Invoices.vue'),
 		},
 		{
 			path: '/new-invoice',
@@ -19,6 +19,10 @@ const router = createRouter({
 		{
 			path: '/products',
 			component: () => import('../views/Products.vue')
+		},
+		{
+			path: '/customers',
+			component: () => import('../views/Customer/Customers.vue')
 		},
 		{
 			path: '/users',
