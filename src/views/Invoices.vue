@@ -25,16 +25,18 @@
               <th>Date</th>
               <th>Customer Name</th>
               <th>Amount</th>
+              <th>Actions</th>
+
             </tr>
           </thead>
           <tbody>
             <template v-for="invoice in invoices" v-bind:key="invoice.id">
-
-              <tr>
-                <td>{{ invoice.id }}</td>
+              <tr v-if="invoices!=null">
+                <td>{{ invoice.custom_invoice_id }}</td>
                 <td>{{ invoice.invoice_date }}</td>
                 <td>{{ invoice.customer_name }}</td>
                 <td>{{ invoice.grand_total }}</td>
+                <td><span class="material-icons" style="color:var(--primary);cursor: pointer;">format_align_justify</span> <span class="material-icons" style="color:blueviolet;cursor: pointer;">edit</span>  <span class="material-icons" style="color:orangered;cursor: pointer;">delete</span></td>
               </tr>
           </template>
           </tbody>
@@ -45,12 +47,13 @@
 </template>
 <script>
 import { computed, reactive, ref, inject ,onMounted} from "vue";
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router'
 
 export default{
 
   setup() {
-    const route = useRoute();
+    const router = useRouter()
+    const route = useRoute()
     const invoices = reactive([]);
     const axios = inject("$axios");
 
@@ -63,7 +66,7 @@ export default{
   //end of onMounted
 
     const newInvoiceBtn=()=>{
-      route.push({ path: '/new-invoice' })
+      router.push({ path: '/new-invoice' })
     }
 
     const getInvoices=()=>{
@@ -110,6 +113,9 @@ export default{
   display: flex;
   justify-content: right;
 }
+.invoices-content{
+  /* background: white; */
+}
 button.btn-new-invoice {
   background: var(--primary);
   color: white;
@@ -119,6 +125,7 @@ button.btn-new-invoice {
   align-items: center;
 }
 table {
+  background: #fff;
   width: 100%;
   border-collapse: collapse;
   border-radius: 10px;
@@ -153,4 +160,6 @@ tr:nth-child(even) {
     font-size: 12px;
   }
 }
+
+
 </style>
