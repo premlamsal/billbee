@@ -157,6 +157,7 @@ export default {
     //end of onMounted
 
     const addCustomerBtn = () => {
+      clearCustomer();
       isModalUpdating.value = false;
       modalHeader.value = "Add";
       displayCustomerModal();
