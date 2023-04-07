@@ -1,21 +1,23 @@
 <template>
-     <main id="Invoice-page">
+  <main id="Invoice-page">
     <h1>Edit Invoice</h1>
     <p>Welcome to Edit Invoice page</p>
     <div class="huge-invoice-container">
       <div class="Invoice-content">
         <div class="invoice-top-section">
+          <div class="head-invoice-section">
+            <div class="sender-section">
+              <h2>{{ store.name }}</h2>
+            </div>
+          </div>
           <div class="top-invoice-section">
             <div class="invoice-top-section-details-left">
-              <div class="invoice-custom-id">
-                <label>Invoice No </label>
-                <label style="color: var(--primary)">{{ info.custom_invoice_id }}</label>
-              </div>
+             
               <div class="form-invoice-customer">
                 <label>Customer </label>
-            <span>
-               {{ info.customer_name }}
-            </span>
+                <span>
+                  {{ info.customer_name }}
+                </span>
               </div>
               <div class="form-invoice-notes">
                 <label>Notes </label>
@@ -23,11 +25,16 @@
               </div>
             </div>
             <div class="invoice-top-section-details-middle">
-                <div class="">
-hello
-                </div>
+              <div class=""></div>
             </div>
             <div class="invoice-top-section-details-right">
+
+              <div class="invoice-custom-id">
+                <label>Invoice No </label>
+                <label style="color: var(--primary)">{{
+                  info.custom_invoice_id
+                }}</label>
+              </div>
               <div class="form-invoice-date">
                 <label>Invoice Date</label>
                 {{ info.invoice_date }}
@@ -39,7 +46,7 @@ hello
             </div>
           </div>
         </div>
-       
+
         <div class="invoice-content-right-side">
           <div v-if="items">
             <!-- <header class="px-5 py-4 border-b border-gray-100">
@@ -56,20 +63,20 @@ hello
               >
                 <table>
                   <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Unit</th>
-                        <th>Price</th>
-                        <th>LineTotal</th>
-                      </tr>
-                    </thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Item</th>
+                      <th>Quantity</th>
+                      <th>Unit</th>
+                      <th>Price</th>
+                      <th>LineTotal</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr v-for="item in items" :key="item.id">
                       <td>
                         {{ item.product.custom_product_id }}
-                    </td>
+                      </td>
                       <td style="width: 34%">
                         <div class="invoiceItemProductName">
                           <div v-if="item.product.image">
@@ -78,7 +85,6 @@ hello
                               :src="item.product.image"
                               width="40"
                               height="40"
-                             
                               :alt="item.product.name"
                             />
                           </div>
@@ -105,19 +111,16 @@ hello
 
                       <td>
                         <div>
-                          {{ ( item.quantity * item.price) }}
+                          {{ item.quantity * item.price }}
                         </div>
                       </td>
-                     
                     </tr>
                   </tbody>
                 </table>
-              
               </div>
               <div class="total-words-container">
-             
                 <p><b>Amount in Words : </b>{{ info.grand_total_words }}</p>
-            </div>
+              </div>
             </div>
           </div>
         </div>
@@ -139,9 +142,7 @@ hello
                       <div>Discount</div>
                     </td>
 
-                    <td>
-                        Rs. {{ info.discount }}
-                    </td>
+                    <td>Rs. {{ info.discount }}</td>
                   </tr>
 
                   <tr>
@@ -157,22 +158,19 @@ hello
                       <div>Grand Total</div>
                     </td>
 
-                    <td> Rs. {{ info.grand_total }}</td>
+                    <td>Rs. {{ info.grand_total }}</td>
                   </tr>
                 </tbody>
               </table>
-
-            
             </div>
-           
           </section>
         </div>
       </div>
     </div>
   </main>
-  
-    <button class="btn btn-success" @click="editInvoice(id)">Edit</button>
-    <router-link to="/invoices" class="btn btn-danger">Close</router-link>
+
+  <button class="btn btn-success" @click="editInvoice(id)">Edit</button>
+  <router-link to="/invoices" class="btn btn-danger">Close</router-link>
 </template>
 <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -206,7 +204,7 @@ export default {
 
       getIdFromUrl();
       fetchInvoice();
-      //   fetchStore();
+        fetchStore();
     });
 
     const getIdFromUrl = () => {
@@ -218,8 +216,7 @@ export default {
       router.push({ path: `/${id}/editInvoice/` });
     };
     const fetchInvoice = () => {
-      axios
-        .get("invoice/" + id.value)
+        axios.get("invoice/" + id.value)
         .then((response) => {
           info.invoice_no = response.data.invoice.id;
           info.custom_invoice_id = response.data.invoice.custom_invoice_id;
@@ -228,6 +225,8 @@ export default {
           info.customer_name = response.data.invoice.customer_name;
           info.invoice_date = response.data.invoice.invoice_date;
           info.due_date = response.data.invoice.due_date;
+          info.note = response.data.invoice.note;
+
           info.discount = response.data.invoice.discount;
           info.sub_total = response.data.invoice.sub_total;
           info.tax_amount = response.data.invoice.tax_amount;
@@ -240,7 +239,7 @@ export default {
 
           //veu.set will make data reactive and updated
           let temp_invoiceItems;
-          items.length=0;
+          items.length = 0;
           temp_invoiceItems = response.data.invoice.invoice_detail;
           for (let i = 0; i < temp_invoiceItems.length; i++) {
             items.push(temp_invoiceItems[i]);
@@ -553,7 +552,8 @@ tr:nth-child(even) {
 
 .top-invoice-section {
   display: flex;
-  justify-content: space-between;
+    justify-content: space-between;
+    margin-top: 15px;
 }
 
 @media (max-width: 767px) {
@@ -659,6 +659,24 @@ tr:nth-child(even) {
 }
 
 .total-words-container {
-    margin-top: 20px;
+  margin-top: 20px;
+}
+.sender-section {
+  display: flex;
+  justify-content: center;
+}
+.head-invoice-section {
+      /* background: var(--primary); */
+      color: #009688;
+    padding: 40px;
+  
+    border-bottom: 1px solid #607d8b30;
+}
+.invoice-top-section-details-right {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+
 }
 </style>
