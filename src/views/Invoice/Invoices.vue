@@ -3,11 +3,9 @@
     <h1>Invoices</h1>
     <div class="invoice-header">
       <button class="btn-new-invoice" @click="newInvoiceBtn()">
-       <span class="btn-name"> New Invoice</span>
-      <span class="material-icons">add_circle</span>
-
+        <span class="btn-name"> New Invoice</span>
+        <span class="material-icons">add_circle</span>
       </button>
-
     </div>
     <div class="invoices-content">
       <div
@@ -26,19 +24,36 @@
               <th>Customer Name</th>
               <th>Amount</th>
               <th>Actions</th>
-
             </tr>
           </thead>
           <tbody>
             <template v-for="invoice in invoices" v-bind:key="invoice.id">
-              <tr v-if="invoices!=null">
+              <tr v-if="invoices != null">
                 <td>{{ invoice.custom_invoice_id }}</td>
                 <td>{{ invoice.invoice_date }}</td>
                 <td>{{ invoice.customer_name }}</td>
                 <td>Rs. {{ invoice.grand_total }}</td>
-                <td><span class="material-icons" style="color:var(--primary);cursor: pointer;">format_align_justify</span> <span class="material-icons" style="color:blueviolet;cursor: pointer;" @click="editInvoice(invoice.custom_invoice_id)">edit</span>  <span class="material-icons" style="color:orangered;cursor: pointer;">delete</span></td>
+                <td>
+                  <span
+                    class="material-icons"
+                    style="color: var(--primary); cursor: pointer"
+                    @click="showInvoice(invoice.custom_invoice_id)"
+                    >format_align_justify</span
+                  >
+                  <span
+                    class="material-icons"
+                    style="color: blueviolet; cursor: pointer"
+                    @click="editInvoice(invoice.custom_invoice_id)"
+                    >edit</span
+                  >
+                  <span
+                    class="material-icons"
+                    style="color: orangered; cursor: pointer"
+                    >delete</span
+                  >
+                </td>
               </tr>
-          </template>
+            </template>
           </tbody>
         </table>
       </div>
@@ -46,79 +61,66 @@
   </main>
 </template>
 <script>
-import { computed, reactive, ref, inject ,onMounted} from "vue";
-import { useRouter, useRoute } from 'vue-router'
+import { computed, reactive, ref, inject, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
-export default{
-
+export default {
   setup() {
-    const router = useRouter()
-    const route = useRoute()
+    const router = useRouter();
+    const route = useRoute();
     const invoices = reactive([]);
     const axios = inject("$axios");
 
     //on mounted start
-      onMounted(() => {
-        getInvoices();
+    onMounted(() => {
+      getInvoices();
+    });
 
-      });
+    //end of onMounted
 
-  //end of onMounted
-
-    const newInvoiceBtn=()=>{
-      router.push({ path: '/new-invoice' })
-    }
-
-    const editInvoice=(id)=>{
-      // router.push({ path: '/edit-invoice',query:'hello-from-query' })
-          router.push({ path: `${id}/edit-invoice/` });
-    }
-    const getInvoices=()=>{
-      
-
-      axios.get('invoices')
-      .then(response=>{
-
-          for (let i = 0; i < response.data.data.length; i++) {
-                invoices.push(response.data.data[i]);
-              }
-
-      })
-      .catch(error=>{
-        console.log(error);
-      })
-
-
-    }
-
-
-
-
-
-  //here you can return data and methods
-  return {
-     invoices, newInvoiceBtn,
-     getInvoices,
-     editInvoice
+    const newInvoiceBtn = () => {
+      router.push({ path: "/new-invoice" });
     };
 
+    const editInvoice = (id) => {
+      // router.push({ path: '/edit-invoice',query:'hello-from-query' })
+      router.push({ path: `${id}/edit-invoice/` });
+    };
+    const getInvoices = () => {
+      axios
+        .get("invoices")
+        .then((response) => {
+          for (let i = 0; i < response.data.data.length; i++) {
+            invoices.push(response.data.data[i]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    const showInvoice = (id) => {
+      // router.push({ path: '/edit-invoice',query:'hello-from-query' })
+      router.push({ path: `${id}/show-invoice/` });
+    };
 
-
-
-
-  },//end of setup
-
- 
-  
-}
+    //here you can return data and methods
+    return {
+      invoices,
+      newInvoiceBtn,
+      getInvoices,
+      editInvoice,
+      showInvoice
+    };
+  }, //end of setup
+};
 </script>
 
 <style scoped>
-.invoice-header{
+.invoice-header {
   display: flex;
   justify-content: right;
 }
-.invoices-content{
+.invoices-content {
   /* background: white; */
 }
 button.btn-new-invoice {
@@ -165,6 +167,4 @@ tr:nth-child(even) {
     font-size: 12px;
   }
 }
-
-
 </style>
