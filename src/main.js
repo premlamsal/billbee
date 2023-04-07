@@ -3,8 +3,10 @@ import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
-
-
+// import the library
+import {createToast} from 'mosha-vue-toastify';
+// import the styling for the toast
+import 'mosha-vue-toastify/dist/style.css'
 
 const app = createApp(App);
 
@@ -24,7 +26,7 @@ Axios.defaults.headers.common = {
 
 const appUrl = import.meta.env.VITE_MY_APP_URL;
 
-Axios.defaults.baseURL =appUrl;
+Axios.defaults.baseURL = appUrl;
 
 // const instance = Axios.create({
 //   baseURL: "https://jobmalai.test/api/v1/",
@@ -32,7 +34,9 @@ Axios.defaults.baseURL =appUrl;
 //axios config
 //end of axios
 
-app.provide('$axios', Axios);  
+app.provide('$axios', Axios);
+
+app.provide('$toast', createToast);
 
 app.use(createPinia());
 app.use(router);
