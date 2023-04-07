@@ -1,7 +1,7 @@
 <template>
   <main id="Invoice-page">
-    <h1>New Invoice</h1>
-    <p>Welcome to new Invoice page</p>
+    <h1>Edit Invoice</h1>
+    <p>Welcome to Edit Invoice page</p>
     <div class="huge-invoice-container">
       <div class="Invoice-content">
         <div class="invoice-top-section">
@@ -9,7 +9,9 @@
             <div class="invoice-top-section-details-left">
               <div class="invoice-custom-id">
                 <label>Invoice No </label>
-                <label style="color: var(--primary)">{{ store.this_invoice_custom_number }}</label>
+                <label style="color: var(--primary)">{{
+                  invoiceInfo.custom_invoice_id
+                }}</label>
               </div>
               <div class="form-invoice-customer">
                 <label>Customer </label>
@@ -72,8 +74,8 @@
           </div>
         </div>
         <!-- <header class="px-5 py-4 border-b border-gray-100">
-                  <h2 class="font-semibold text-gray-800">Invoices</h2>
-              </header> -->
+                    <h2 class="font-semibold text-gray-800">Invoices</h2>
+                </header> -->
         <div class="invoiceItemsTableContainer">
           <div
             class="insideinvoiceItemsContainer"
@@ -188,8 +190,8 @@
         <div class="invoice-content-right-side">
           <div v-if="invoiceItems">
             <!-- <header class="px-5 py-4 border-b border-gray-100">
-                  <h2 class="font-semibold text-gray-800">Invoices</h2>
-              </header> -->
+                    <h2 class="font-semibold text-gray-800">Invoices</h2>
+                </header> -->
             <div class="invoiceItemsTableContainer">
               <div
                 style="
@@ -201,15 +203,15 @@
               >
                 <table>
                   <!-- <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Quantity</th>
-                      <th>Unit</th>
-                      <th>Price</th>
-                      <th>LineTotal</th>
-                      <th></th>
-                    </tr>
-                  </thead> -->
+                      <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Price</th>
+                        <th>LineTotal</th>
+                        <th></th>
+                      </tr>
+                    </thead> -->
                   <tbody>
                     <tr v-for="(item, index) in invoiceItems" :key="index">
                       <td style="width: 34%">
@@ -318,8 +320,8 @@
               </table>
             </div>
             <div class="button-container-down">
-              <button class="create-invoice-btn" @click="createInvoice()">
-                Create Invoice
+              <button class="create-invoice-btn" @click="editInvoice()">
+                Edit Invoice
               </button>
             </div>
           </section>
@@ -328,21 +330,20 @@
     </div>
   </main>
 </template>
-    
-   
-
+      
+     
   
-  <script>
+    
+    <script>
 import { uid } from "uid";
 import { computed, reactive, ref, inject, onMounted } from "vue";
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from "vue-router";
 
 export default {
-  name: "Create New Invoice",
+  name: "Edit Invoice",
   setup() {
-
-    const router = useRouter()
-    const route = useRoute()
+    const router = useRouter();
+    const route = useRoute();
     //data
     const itemHolder = reactive({
       id: "",
@@ -355,6 +356,7 @@ export default {
       lineTotal: 0,
     });
     const store = reactive({});
+    const invoice_id_from_url = ref("");
     const invoiceItems = reactive([]);
     const invoiceInfo = reactive({
       // subTotal:0,
@@ -384,12 +386,66 @@ export default {
 
     //on mounted start
     onMounted(() => {
+      getIdFromUrl();
       getStoreData();
+      getInvoice();
     });
 
     //end of mounted
 
     //methods
+
+    const getIdFromUrl = () => {
+      invoice_id_from_url.value=route.params.id;
+
+    //   let custom_invoice_number = route.params.id;
+
+    //   custom_invoice_number = custom_invoice_number.split("-");
+
+    //   invoice_id_from_url.value = custom_invoice_number[1];
+
+      console.log(invoice_id_from_url.value);
+
+    }; //end of getIdFromUrl
+
+    const getInvoice = () => {
+      axios
+        .get("invoice/" + invoice_id_from_url.value)
+        .then((response) => {
+
+            invoiceInfo.custom_invoice_id=response.data.invoice.custom_invoice_id;
+
+            invoiceInfo.customer_id=response.data.invoice.customer_id;
+            invoiceInfo.customer_name=response.data.invoice.customer_name;
+            invoiceInfo.note=response.data.invoice.note;
+            invoiceInfo.invoice_date=response.data.invoice.invoice_date;
+            invoiceInfo.due_date=response.data.invoice.due_date;
+            invoiceInfo.sub_total=response.data.invoice.sub_total;
+            invoiceInfo.discount=response.data.invoice.discount;
+            invoiceInfo.tax_amount=response.data.invoice.sub_total;
+            invoiceInfo.grand_total=response.data.invoice.grand_total;
+            //loop thorugh invice Items
+
+            let temp_invoiceItems;
+            // invoiceItems.length=0;
+            temp_invoiceItems = response.data.invoice.invoice_detail;
+             for (let i = 0; i < temp_invoiceItems.length; i++) {
+              invoiceItems.push(temp_invoiceItems[i]);
+            }
+            // console.log(temp_invoiceItems[0]);
+          
+          toast(response.data.msg, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-center",
+            transition: "zoom",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     const editInvoiceItem = (id) => {
       isItemHolderUpdating.value = true;
       let indexForItem = invoiceItems.findIndex((item) => item.id === id);
@@ -622,9 +678,9 @@ export default {
       itemHolder.price = product_price;
       itemHolder.unit_id = product_unit_id;
     };
-    const createInvoice = () => {
+    const editInvoice = () => {
       axios
-        .post("/invoice/create", { info: invoiceInfo, items: invoiceItems })
+        .post("/invoice/edit", { 'info': invoiceInfo, 'items': invoiceItems ,'id': invoiceInfo.custom_invoice_id})
         .then((response) => {
           //response.data.msg have success message
 
@@ -640,7 +696,7 @@ export default {
           clearErrorItemHolder();
           clearItemHolder();
           clearInvoiceInfo();
-          router.push({ path: '/invoices' })
+          router.push({ path: "/invoices" });
         })
         .catch((error) => {
           console.log(error);
@@ -653,18 +709,21 @@ export default {
       axios
         .get("store/" + store_id)
         .then((response) => {
-
           store.invoice_id_count = response.data.store.invoice_id_count;
-        
+
           console.log(response.data);
 
-          custom_invoice_number = store.invoice_id_count.split("-");
+          // custom_invoice_number = store.invoice_id_count.split("-");
 
-          custom_invoice_number[1] = parseInt(custom_invoice_number[1]) + 1;
+          // custom_invoice_number[1] = parseInt(custom_invoice_number[1]) + 1;
 
-          store.this_invoice_custom_number = custom_invoice_number.join("-");
+          // store.this_invoice_custom_number = custom_invoice_number.join("-");
 
           // console.log(store.this_invoice_custom_number);
+        //   store.this_invoice_custom_number = store.invoice_id_count;
+        //   store.this_invoice_custom_number = invoice_id_from_url;
+          
+          
 
           toast(response.data.msg, {
             showIcon: true,
@@ -736,15 +795,16 @@ export default {
       productSelectInput,
       showProductSelect,
       selectOptionProduct,
-      createInvoice,
+      editInvoice,
       getStoreData,
       store,
-      
+      getIdFromUrl,
+      getInvoice,
     };
   },
 };
 </script>
-<style scoped>
+  <style scoped>
 input.quantityInputHolder {
   border: 0px;
   padding: 10px;
@@ -1007,4 +1067,4 @@ tr:nth-child(even) {
   opacity: 0.001;
 }
 </style>
- 
+   

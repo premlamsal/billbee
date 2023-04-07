@@ -35,8 +35,8 @@
                 <td>{{ invoice.custom_invoice_id }}</td>
                 <td>{{ invoice.invoice_date }}</td>
                 <td>{{ invoice.customer_name }}</td>
-                <td>{{ invoice.grand_total }}</td>
-                <td><span class="material-icons" style="color:var(--primary);cursor: pointer;">format_align_justify</span> <span class="material-icons" style="color:blueviolet;cursor: pointer;">edit</span>  <span class="material-icons" style="color:orangered;cursor: pointer;">delete</span></td>
+                <td>Rs. {{ invoice.grand_total }}</td>
+                <td><span class="material-icons" style="color:var(--primary);cursor: pointer;">format_align_justify</span> <span class="material-icons" style="color:blueviolet;cursor: pointer;" @click="editInvoice(invoice.custom_invoice_id)">edit</span>  <span class="material-icons" style="color:orangered;cursor: pointer;">delete</span></td>
               </tr>
           </template>
           </tbody>
@@ -69,6 +69,10 @@ export default{
       router.push({ path: '/new-invoice' })
     }
 
+    const editInvoice=(id)=>{
+      // router.push({ path: '/edit-invoice',query:'hello-from-query' })
+          router.push({ path: `${id}/edit-invoice/` });
+    }
     const getInvoices=()=>{
       
 
@@ -94,7 +98,8 @@ export default{
   //here you can return data and methods
   return {
      invoices, newInvoiceBtn,
-     getInvoices
+     getInvoices,
+     editInvoice
     };
 
 
