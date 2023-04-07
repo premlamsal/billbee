@@ -9,7 +9,7 @@
             <div class="invoice-top-section-details-left">
               <div class="invoice-custom-id">
                 <label>Invoice No </label>
-                <label style="color: var(--primary)">INV-GAN-0001</label>
+                <label style="color: var(--primary)">{{ store.this_invoice_custom_number }}</label>
               </div>
               <div class="form-invoice-customer">
                 <label>Customer </label>
@@ -116,7 +116,13 @@
                               >
                                 <li
                                   @click="
-                                    selectOptionProduct(queryResultProduct.id, queryResultProduct.name,queryResultProduct.unit.short_name,queryResultProduct.sp,queryResultProduct.unit.id)
+                                    selectOptionProduct(
+                                      queryResultProduct.id,
+                                      queryResultProduct.name,
+                                      queryResultProduct.unit.short_name,
+                                      queryResultProduct.sp,
+                                      queryResultProduct.unit.id
+                                    )
                                   "
                                 >
                                   {{ queryResultProduct.name }}
@@ -312,7 +318,9 @@
               </table>
             </div>
             <div class="button-container-down">
-              <button class="create-invoice-btn" @click="createInvoice()">Create Invoice</button>
+              <button class="create-invoice-btn" @click="createInvoice()">
+                Create Invoice
+              </button>
             </div>
           </section>
         </div>
@@ -326,22 +334,23 @@
   
   <script>
 import { uid } from "uid";
-import { computed, reactive, ref, inject } from "vue";
+import { computed, reactive, ref, inject, onMounted } from "vue";
 
 export default {
   name: "Create New Invoice",
   setup() {
     //data
     const itemHolder = reactive({
-      id:'',
+      id: "",
       product_name: "",
-      product_id:'',
+      product_id: "",
       quantity: 0,
       image: "",
       unit: "",
       price: 0,
       lineTotal: 0,
     });
+    const store = reactive({});
     const invoiceItems = reactive([]);
     const invoiceInfo = reactive({
       // subTotal:0,
@@ -354,9 +363,9 @@ export default {
     let queryResultsProduct = reactive([]);
 
     const errorItemHolder = reactive({
-      id:'',
+      id: "",
       product_name_name: "",
-      product_id:'',
+      product_id: "",
       quantity: "",
       image: "",
       unit: "",
@@ -364,6 +373,17 @@ export default {
     });
     const showCustomerSelect = ref(false);
     const showProductSelect = ref(false);
+
+    const toast = inject("$toast");
+
+    //mounted
+
+    //on mounted start
+    onMounted(() => {
+      getStoreData();
+    });
+
+    //end of mounted
 
     //methods
     const editInvoiceItem = (id) => {
@@ -385,9 +405,9 @@ export default {
     const deleteInvoiceItem = (id) => {
       console.log(invoiceItems);
       // have to change
-       invoiceItems = invoiceItems.filter((item) => item.id !== id);
+      invoiceItems = invoiceItems.filter((item) => item.id !== id);
 
-      console.log(invoiceItems)
+      console.log(invoiceItems);
     };
     const updateItemToInvoiceBtn = () => {
       if (itemHolder.product_name === "") {
@@ -430,7 +450,7 @@ export default {
     };
     const clearErrorItemHolder = () => {
       errorItemHolder.product_name = "";
-      errorItemHolder.product_id="";
+      errorItemHolder.product_id = "";
       errorItemHolder.quantity = 0;
       // errorItemHolder.image="";
       errorItemHolder.unit = "";
@@ -469,8 +489,8 @@ export default {
         errorItemHolder.quantity = "Enter Quantity";
       } else {
         invoiceItems.push({
-          id:uid(),
-          product_id:itemHolder.product_id,
+          id: uid(),
+          product_id: itemHolder.product_id,
           product_name: itemHolder.product_name,
           image: "https://avatars.githubusercontent.com/u/24312128?v=4",
           price: itemHolder.price,
@@ -583,39 +603,75 @@ export default {
       }
     };
 
-    const selectOptionProduct = (product_id, product_name,product_unit,product_price,product_unit_id) => {
+    const selectOptionProduct = (
+      product_id,
+      product_name,
+      product_unit,
+      product_price,
+      product_unit_id
+    ) => {
       showProductSelect.value = false;
       itemHolder.product_name = product_name;
       itemHolder.product_id = product_id;
-      itemHolder.quantity=1;
-      itemHolder.unit=product_unit;
-      itemHolder.price=product_price;
-      itemHolder.unit_id=product_unit_id;
+      itemHolder.quantity = 1;
+      itemHolder.unit = product_unit;
+      itemHolder.price = product_price;
+      itemHolder.unit_id = product_unit_id;
     };
-    const createInvoice=()=>{
-      
+    const createInvoice = () => {
+      axios
+        .post("/invoice/create", { info: invoiceInfo, items: invoiceItems })
+        .then((response) => {
+          //response.data.msg have success message
 
+          console.log(response.data);
 
+          toast(response.data.msg, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-center",
+            transition: "zoom",
+          });
+
+          clearErrorItemHolder();
+          clearItemHolder();
+          clearInvoiceInfo();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    const getStoreData = () => {
+      const store_id = 1;
+      let custom_invoice_number;
 
       axios
-           .post("/invoice/create", { info: invoiceInfo, items: invoiceItems })
-          .then(response=>{
+        .get("store/" + store_id)
+        .then((response) => {
 
-            //response.data.msg have success message
+          store.invoice_id_count = response.data.store.invoice_id_count;
+        
+          console.log(response.data);
 
-            console.log(response.data);
-            clearErrorItemHolder();
-            clearItemHolder();
-            clearInvoiceInfo();
+          custom_invoice_number = store.invoice_id_count.split("-");
 
-          })
-          .catch(error=>{
-            console.log(error);
-          })
+          custom_invoice_number[1] = parseInt(custom_invoice_number[1]) + 1;
 
-    }
+          store.this_invoice_custom_number = custom_invoice_number.join("-");
 
+          // console.log(store.this_invoice_custom_number);
 
+          toast(response.data.msg, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-center",
+            transition: "zoom",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     //end of methods
 
     //computed
@@ -676,6 +732,9 @@ export default {
       showProductSelect,
       selectOptionProduct,
       createInvoice,
+      getStoreData,
+      store,
+      
     };
   },
 };
@@ -922,7 +981,7 @@ tr:nth-child(even) {
   color: white;
 }
 
-.itemHolderProductInputeContainer{
+.itemHolderProductInputeContainer {
   position: relative;
 }
 
