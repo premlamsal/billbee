@@ -1,15 +1,16 @@
 <template>
     <main id="customers-page">
       <h1>Customers</h1>
-      <div class="modal-container">
+      <Transition :duration="550">
+      <div class="modal-container" v-if="showCustomerModal">
         <div class="modal">
           <div class="modal-close-btn-container">
-				<span class="material-icons">cancel</span>
+				<span class="material-icons" @click="displayCustomerModal()">cancel</span>
             
           </div>
           <div class="modal-tick-btn-container">
-				<span class="material-icons" style="font-size:50px; color:var(--primary)">check_box</span>
-            
+
+				<span class="material-icons" style="font-size:50px; color:var(--primary)" @click="">check_box</span>
           </div>
           <div class="modal-header">
             <h1>Add Customer</h1>
@@ -42,8 +43,9 @@
           </div>
         </div>
       </div>
+      </Transition>
       <div class="customer-header">
-        <button class="btn-new-customer" @click="newCustomerBtn()">
+        <button class="btn-new-customer" @click="displayCustomerModal()">
          <span class="btn-name"> New Customer</span>
         <span class="material-icons">add_circle</span>
   
@@ -96,6 +98,7 @@
       const router = useRouter()
       const route = useRoute()
       const customers = reactive([]);
+      const showCustomerModal= ref(false);
       const axios = inject("$axios");
   
       //on mounted start
@@ -108,7 +111,19 @@
   
       const newCustomerBtn=()=>{
         // router.push({ path: '/new-customer' })
+
+      
+
+
       }
+      const displayCustomerModal=()=>{
+        if(showCustomerModal.value){
+          showCustomerModal.value=false;
+        }else{
+          showCustomerModal.value=true;
+        }
+      }
+    
   
       const getCustomers=()=>{
         
@@ -135,7 +150,7 @@
     //here you can return data and methods
     return {
        customers, newCustomerBtn,
-       getCustomers
+       getCustomers,showCustomerModal,displayCustomerModal
       };
   
   
@@ -170,7 +185,8 @@
   position: relative;
 }
 .modal-header {
-  background: red;
+  background: var(--primary);
+
     padding: 20px;
     color: #fff;
 
@@ -180,7 +196,7 @@
 }
 
 .modal-footer {
-  background: red;
+  background: var(--grey);
     padding: 20px;
   color: #fff;
 
@@ -304,4 +320,20 @@ textarea.customerDetailsHolder {
   }
   
   
+/* vue animation */
+.v-enter-active,
+.v-leave-active {
+  /* transition: opacity 0.5s ease; */
+  transition: all 0.5s ease-in-out;
+  /* transition-delay: 0.25s; */
+}
+
+.v-enter-from {
+  transform: translateY(-500px);
+  opacity: 0.001;
+}
+.v-leave-to {
+  transform: translateY(-500px);
+  opacity: 0.001;
+}
   </style>
