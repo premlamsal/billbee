@@ -18,7 +18,7 @@
             >
           </div>
           <div class="modal-header">
-            <h1>Add Customer</h1>
+            <h1>{{ modalHeader }} Customer</h1>
           </div>
           <div class="modal-body">
             <div class="form-input-customer">
@@ -76,7 +76,7 @@
       </div>
     </Transition>
     <div class="customer-header">
-      <button class="btn-new-customer" @click="displayCustomerModal()">
+      <button class="btn-new-customer" @click="addCustomerBtn()">
         <span class="btn-name"> New Customer</span>
         <span class="material-icons">add_circle</span>
       </button>
@@ -116,6 +116,7 @@
                   <span
                     class="material-icons"
                     style="color: blueviolet; cursor: pointer"
+                    @click="editCustomerModal(customer.id)"
                     >edit</span
                   >
                   <span
@@ -144,8 +145,9 @@ export default {
     const showCustomerModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
-
+    const isModalUpdating = ref(false);
     const customer = reactive({});
+    const modalHeader = ref(""); // Add or Edit Customer
 
     //on mounted start
     onMounted(() => {
@@ -154,9 +156,47 @@ export default {
 
     //end of onMounted
 
-    const newCustomerBtn = () => {
+    const addCustomerBtn = () => {
+      isModalUpdating.value = false;
+      modalHeader.value = "Add";
+      displayCustomerModal();
       // router.push({ path: '/new-customer' })
     };
+    const editCustomerModal = (customer_id) => {
+      isModalUpdating.value = true;
+      modalHeader.value = "Edit";
+      displayCustomerModal();
+      getSingleCustomer(customer_id);
+    };
+    const getSingleCustomer=(customer_id)=>{
+
+      console.log(customer_id);
+
+      axios.get('customer/'+customer_id)
+      .then(response=>{
+        // console.log(response.data.customer.name);
+        customer.name=response.data.customer.name
+        customer.address=response.data.customer.address
+        customer.phone=response.data.customer.phone
+        customer.opening_balance=response.data.customer.opening_balance
+        customer.details=response.data.customer.details;
+        
+        toast(response.data.msg, {
+              showIcon: true,
+              type: response.data.status,
+              position: "top-center",
+              transition: "zoom",
+            });
+
+
+      })
+      .catch(error=>{
+        console.log(error);
+      })
+
+
+
+    }
     const displayCustomerModal = () => {
       if (showCustomerModal.value) {
         showCustomerModal.value = false;
@@ -172,31 +212,64 @@ export default {
       customer.details = "";
     };
     const addCustomer = () => {
-      let formdata = new FormData();
-      formdata.append("name", customer.name);
-      formdata.append("address", customer.address);
-      formdata.append("phone", customer.phone);
-      formdata.append("opening_balance", customer.opening_balance);
-      formdata.append("details", customer.details);
-      axios
-        .post("customer/add", formdata)
-        .then((response) => {
-          toast(response.data.msg, {
-            showIcon: true,
-            type: response.data.status,
-            position: "top-center",
-            transition: "zoom",
+      if (isModalUpdating.value) {
+        // console.log('okay i will update boos')
+
+        let formdata = new FormData();
+        formdata.append("id", customer.id);
+        formdata.append("name", customer.name);
+        formdata.append("address", customer.address);
+        formdata.append("phone", customer.phone);
+        formdata.append("opening_balance", customer.opening_balance);
+        formdata.append("details", customer.details);
+        axios
+          .post("customer/edit", formdata)
+          .then((response) => {
+            toast(response.data.msg, {
+              showIcon: true,
+              type: response.data.status,
+              position: "top-center",
+              transition: "zoom",
+            });
+            //clear customer form
+            clearCustomer();
+            //get new data from api customers
+            getCustomers();
+            //hide the customer modal
+            displayCustomerModal();
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          //clear customer form
-          clearCustomer();
-          //get new data from api customers
-          getCustomers();
-          //hide the customer modal
-          displayCustomerModal();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      } else {
+        // console.log('oaky i will add boss')
+
+        let formdata = new FormData();
+        formdata.append("name", customer.name);
+        formdata.append("address", customer.address);
+        formdata.append("phone", customer.phone);
+        formdata.append("opening_balance", customer.opening_balance);
+        formdata.append("details", customer.details);
+        axios
+          .post("customer/add", formdata)
+          .then((response) => {
+            toast(response.data.msg, {
+              showIcon: true,
+              type: response.data.status,
+              position: "top-center",
+              transition: "zoom",
+            });
+            //clear customer form
+            clearCustomer();
+            //get new data from api customers
+            getCustomers();
+            //hide the customer modal
+            displayCustomerModal();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     };
 
     const getCustomers = () => {
@@ -225,11 +298,13 @@ export default {
       customer,
       toast,
       customers,
-      newCustomerBtn,
+      addCustomerBtn,
       getCustomers,
       showCustomerModal,
       displayCustomerModal,
       addCustomer,
+      editCustomerModal,
+      modalHeader,
     };
   }, //end of setup
 };
