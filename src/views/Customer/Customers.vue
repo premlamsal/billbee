@@ -175,6 +175,7 @@ export default {
       axios.get('customer/'+customer_id)
       .then(response=>{
         // console.log(response.data.customer.name);
+        customer.id=response.data.customer.id
         customer.name=response.data.customer.name
         customer.address=response.data.customer.address
         customer.phone=response.data.customer.phone
@@ -184,7 +185,7 @@ export default {
         toast(response.data.msg, {
               showIcon: true,
               type: response.data.status,
-              position: "top-center",
+              position: "top-right",
               transition: "zoom",
             });
 
@@ -213,7 +214,7 @@ export default {
     };
     const addCustomer = () => {
       if (isModalUpdating.value) {
-        // console.log('okay i will update boos')
+        console.log('okay i will update boos')
 
         let formdata = new FormData();
         formdata.append("id", customer.id);
@@ -242,7 +243,7 @@ export default {
             console.log(error);
           });
       } else {
-        // console.log('oaky i will add boss')
+        console.log('oaky i will add boss')
 
         let formdata = new FormData();
         formdata.append("name", customer.name);
