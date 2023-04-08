@@ -1,185 +1,202 @@
 <template>
   <main id="Invoice-page">
-    <h1>Edit Invoice</h1>
-    <p>Welcome to Edit Invoice page</p>
-    <div class="huge-invoice-container">
-      <div class="Invoice-content">
-        <div class="invoice-top-section">
-          <div class="head-invoice-section">
-            <div class="sender-section">
-              <h2>{{ store.name }}</h2>
-            </div>
+   
+    <button @click="exportToPDF()">Print</button>
+   
+        <div class="huge-invoice-container">
+          <div class="invoice-head">
+            <h1> Invoice # {{ info.custom_invoice_id }}</h1>
           </div>
-          <div class="top-invoice-section">
-            <div class="invoice-top-section-details-left">
-             
-              <div class="form-invoice-customer">
-                <label>Customer </label>
-                <span>
-                  {{ info.customer_name }}
-                </span>
-              </div>
-              <div class="form-invoice-notes">
-                <label>Notes </label>
-                {{ info.note }}
-              </div>
-            </div>
-            <div class="invoice-top-section-details-middle">
-              <div class=""></div>
-            </div>
-            <div class="invoice-top-section-details-right">
 
-              <div class="invoice-custom-id">
-                <label>Invoice No </label>
-                <label style="color: var(--primary)">{{
-                  info.custom_invoice_id
-                }}</label>
+          <div class="Invoice-content">
+
+            <div class="invoice-top-section">
+              <div class="head-invoice-section">
+                <div class="sender-section">
+                  <p>From</p>
+                  <h2>{{ store.name }}</h2>
+                  <p>{{ store.address }}</p>
+                  <p>{{ store.phone }}</p>
+                  <p>TAX NO: {{ store.tax_number }}</p>
+
+                </div>
+                <div class="receiver-section">
+                  <p>To</p>
+                  <h2>{{ info.customer_name }}</h2>
+                  <p>{{ info.customer_address }}</p>
+                  <p>{{ info.customer_phone }}</p>
+                  <p></p>
+
+                </div>
               </div>
-              <div class="form-invoice-date">
-                <label>Invoice Date</label>
-                {{ info.invoice_date }}
-              </div>
-              <div class="form-due-date">
-                <label>Due Date</label>
-                {{ info.due_date }}
+              <div class="top-invoice-section">
+                <div class="invoice-top-section-details-left">
+                  <div class="form-invoice-customer">
+                  </div>
+                </div>
+                <div class="invoice-top-section-details-middle"></div>
+                <div class="invoice-top-section-details-right">
+                  <div class="invoice-custom-id">
+                    <label>Invoice No </label>
+                    <label style="color: var(--primary)">{{
+                      info.custom_invoice_id
+                    }}</label>
+                  </div>
+                  <div class="form-invoice-date">
+                    <label>Date</label>
+                    {{ info.invoice_date }}
+                  </div>
+                  <div class="form-due-date">
+                    <label>Due Date</label>
+                    {{ info.due_date }}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="invoice-content-right-side">
-          <div v-if="items">
-            <!-- <header class="px-5 py-4 border-b border-gray-100">
+            <div class="invoice-content-right-side">
+              <div v-if="items">
+                <!-- <header class="px-5 py-4 border-b border-gray-100">
                     <h2 class="font-semibold text-gray-800">Invoices</h2>
                 </header> -->
-            <div class="invoiceItemsTableContainer">
-              <div
-                style="
-                  overflow-x: auto;
-                  margin-top: 20px;
-                  border-radius: 10px;
-                  box-shadow: black 0px 1px 8px -5px;
-                "
-              >
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Item</th>
-                      <th>Quantity</th>
-                      <th>Unit</th>
-                      <th>Price</th>
-                      <th>LineTotal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in items" :key="item.id">
-                      <td>
-                        {{ item.product.custom_product_id }}
-                      </td>
-                      <td style="width: 34%">
-                        <div class="invoiceItemProductName">
-                          <div v-if="item.product.image">
-                            <img
-                              style="border-radius: 50%"
-                              :src="item.product.image"
-                              width="40"
-                              height="40"
-                              :alt="item.product.name"
-                            />
-                          </div>
-                          <div style="margin-left: 10%">
-                            {{ item.product.name }}
-                          </div>
-                        </div>
-                      </td>
-                      <td style="width: 16%">
-                        <div>
-                          {{ item.quantity }}
-                        </div>
-                      </td>
-                      <td style="width: 10%">
-                        <div>
-                          {{ item.product.unit.short_name }}
-                        </div>
-                      </td>
-                      <td style="width: 22%">
-                        <div>
-                          {{ item.price }}
-                        </div>
-                      </td>
+                <div class="invoiceItemsTableContainer">
+                  <div
+                    style="
+                      overflow-x: auto;
+                      margin-top: 20px;
+                      border-radius: 10px;
+                      box-shadow: black 0px 1px 8px -5px;
+                    "
+                  >
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Item</th>
+                          <th>Quantity</th>
+                          <th>Unit</th>
+                          <th>Price</th>
+                          <th>LineTotal</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in items" :key="item.id">
+                          <td>
+                            {{ item.product.custom_product_id }}
+                          </td>
+                          <td style="width: 34%">
+                            <div class="invoiceItemProductName">
+                              <div v-if="item.product.image">
+                                <img
+                                  style="border-radius: 50%"
+                                  :src="item.product.image"
+                                  width="40"
+                                  height="40"
+                                  :alt="item.product.name"
+                                />
+                              </div>
+                              <div style="margin-left: 10%">
+                                {{ item.product.name }}
+                              </div>
+                            </div>
+                          </td>
+                          <td style="width: 16%">
+                            <div>
+                              {{ item.quantity }}
+                            </div>
+                          </td>
+                          <td style="width: 10%">
+                            <div>
+                              {{ item.product.unit.short_name }}
+                            </div>
+                          </td>
+                          <td style="width: 22%">
+                            <div>
+                              {{ item.price }}
+                            </div>
+                          </td>
 
-                      <td>
-                        <div>
-                          {{ item.quantity * item.price }}
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                          <td>
+                            <div>
+                              {{ item.quantity * item.price }}
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="total-words-container">
+                    <p><b>Amount in Words : </b>{{ info.grand_total_words }}</p>
+                  </div>
+                </div>
               </div>
-              <div class="total-words-container">
-                <p><b>Amount in Words : </b>{{ info.grand_total_words }}</p>
+            </div>
+
+            <div class="mero-table">
+              <div class="form-invoice-notes">
+                <label style="font-weight: bold">Notes </label>
+                <p>{{ info.note }}</p>
               </div>
+
+              <section>
+                <div class="total-sections">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div>Sub Total</div>
+                        </td>
+                        <td>Rs. {{ info.sub_total }}</td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <div>Discount</div>
+                        </td>
+
+                        <td>Rs. {{ info.discount }}</td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <div>Tax</div>
+                        </td>
+
+                        <td>Rs. {{ info.tax_amount }}</td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <div>
+                            <span style="font-weight: bold"> Grand Total</span>
+                          </div>
+                        </td>
+
+                        <td>Rs. {{ info.grand_total }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
             </div>
           </div>
         </div>
-
-        <div class="mero-table">
-          <section>
-            <div class="total-sections">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div>Sub Total</div>
-                    </td>
-                    <td>Rs. {{ info.sub_total }}</td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <div>Discount</div>
-                    </td>
-
-                    <td>Rs. {{ info.discount }}</td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <div>Tax</div>
-                    </td>
-
-                    <td>Rs. {{ info.tax_amount }}</td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <div>Grand Total</div>
-                    </td>
-
-                    <td>Rs. {{ info.grand_total }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
   </main>
 
-  <button class="btn btn-success" @click="editInvoice(id)">Edit</button>
+  <button class="btn btn-success" @click="editInvoice(info.custom_invoice_id)">Edit</button>
   <router-link to="/invoices" class="btn btn-danger">Close</router-link>
 </template>
 <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+
 export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
     const axios = inject("$axios");
+
+
 
     const items = reactive([
       {
@@ -198,13 +215,12 @@ export default {
     const info = reactive({});
     const id = ref("");
     const store = reactive({});
-
     onMounted(() => {
       //   store.store_logo.value = "/img/a.svg";
 
       getIdFromUrl();
       fetchInvoice();
-        fetchStore();
+      fetchStore();
     });
 
     const getIdFromUrl = () => {
@@ -213,10 +229,11 @@ export default {
 
     const editInvoice = (id) => {
       // named route
-      router.push({ path: `/${id}/editInvoice/` });
+      router.push({ path: `/${id}/edit-invoice/` });
     };
     const fetchInvoice = () => {
-        axios.get("invoice/" + id.value)
+      axios
+        .get("invoice/" + id.value)
         .then((response) => {
           info.invoice_no = response.data.invoice.id;
           info.custom_invoice_id = response.data.invoice.custom_invoice_id;
@@ -231,7 +248,7 @@ export default {
           info.sub_total = response.data.invoice.sub_total;
           info.tax_amount = response.data.invoice.tax_amount;
           info.grand_total = response.data.invoice.grand_total;
-          info.customer_address = response.data.invoice.customer_address;
+          info.customer_address = response.data.invoice.customer.address;
           info.grand_total = response.data.invoice.grand_total;
           info.customer_phone = response.data.invoice.customer_phone;
           info.customer_details = response.data.invoice.customer_details;
@@ -257,18 +274,17 @@ export default {
     }; //end of fetchInvoice
 
     const fetchStore = () => {
-      let currObj = this;
+      let store_id=1;
       axios
-        .get("/api/store")
+        .get("store/"+store_id)
         .then(function (response) {
           store.id = response.data.store.id;
           store.name = response.data.store.name;
-          store.detail = response.data.store.id;
-          store.email = response.data.store.id;
-          store.address = response.data.store.id;
-          store.phone = response.data.store.id;
-          store.mobile = response.data.store.id;
-          store.url = response.data.store.id;
+          store.detail = response.data.store.detail;
+          store.email = response.data.store.email;
+          store.address = response.data.store.address;
+          store.phone = response.data.store.phone;
+          store.mobile = response.data.store.mobile;
 
           if (response.data.store.store_logo != null) {
             store.store_logo = "/img/" + response.data.store.store_logo;
@@ -277,7 +293,7 @@ export default {
           }
           store.tax_number = response.data.store.tax_number;
           store.tax_percentage = response.data.store.tax_percentage;
-          store.url = response.data.store.id;
+          store.url = response.data.store.url;
 
           // console.log(data.store.name)
         })
@@ -285,6 +301,10 @@ export default {
           console.log(error);
         });
     }; //end of fetchStore()
+
+    const exportToPDF = () => {
+     console.log('hello from pdf')
+    };
 
     const convertToWords = () => {
       info.grand_total_words = convertNumberToWords(info.grand_total);
@@ -389,7 +409,8 @@ export default {
       store,
       items,
       info,
-      id,
+      editInvoice,
+      exportToPDF
     };
   },
 }; //end of export default
@@ -462,7 +483,7 @@ input.totalInputHolder {
 
 .mero-table {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
 }
 .item-table-holder-button-container {
   display: flex;
@@ -498,9 +519,7 @@ input.discount-input {
 }
 .total-sections {
   background: #fff;
-  padding: 10px;
   border-radius: 10px;
-  margin-top: 30px;
 }
 .invoice-header {
   display: flex;
@@ -542,8 +561,9 @@ td {
 }
 
 th {
-  background-color: var(--primary);
-  color: white;
+      /* background-color: #e9eaea; */
+    /* color: white; */
+    border-bottom: 1px solid #ccc;
 }
 
 tr:nth-child(even) {
@@ -552,8 +572,8 @@ tr:nth-child(even) {
 
 .top-invoice-section {
   display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
+  justify-content: space-between;
+  margin-top: 15px;
 }
 
 @media (max-width: 767px) {
@@ -574,7 +594,9 @@ tr:nth-child(even) {
   align-items: center;
 }
 .top-invoice-section label {
-  margin: 5px;
+  /* margin: 5px;  */
+  color: black;
+  font-weight: bold;
 }
 .form-invoice-notes {
   margin-top: 10px;
@@ -663,20 +685,38 @@ tr:nth-child(even) {
 }
 .sender-section {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
 }
-.head-invoice-section {
-      /* background: var(--primary); */
-      color: #009688;
-    padding: 40px;
-  
-    border-bottom: 1px solid #607d8b30;
-}
-.invoice-top-section-details-right {
-    
-    display: flex;
+.receiver-section{
+  display: flex;
     flex-direction: column;
     align-items: end;
-
+}
+.head-invoice-section {
+    /* background: var(--primary); */
+    /* color: #009688; */
+    /* padding: 40px; */
+    border-bottom: 1px solid #607d8b30;
+    display: flex;
+    justify-content: space-between;
+}
+.invoice-top-section-details-right {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.huge-invoice-container{
+  background: #fff;
+  border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+.invoice-head{
+  background:var(--primary);
+  color: #fff;
+  border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    padding: 10px;
 }
 </style>
