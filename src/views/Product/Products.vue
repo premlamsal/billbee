@@ -39,6 +39,7 @@
             </div>
             <div class="form-input-product">
               <label>Name</label>
+
               <input
                 type="text"
                 placeholder="Product Name"
@@ -96,6 +97,16 @@
                 v-model="product.description"
               ></textarea>
             </div>
+            <div class="form-input-product">
+              <label> Image</label>
+
+              <input
+                type="file"
+                class="productImageHolder"
+                v-on:change="fileSelected"
+              />
+              <img v-bind:src="imagePreview" class="product_logo_img" />
+            </div>
           </div>
           <div class="modal-footer">
             <h4>Please fill above details and submit form</h4>
@@ -133,7 +144,23 @@
             <template v-for="product in products" v-bind:key="product.id">
               <tr v-if="products != null">
                 <td>{{ product.custom_product_id }}</td>
-                <td>{{ product.name }}</td>
+                <td>
+                  <div class="invoiceItemProductName">
+                    <div v-if="product.image">
+                      <img
+                        style="border-radius: 50%"
+                        :src="VITE_MY_APP_BACK_URL_HOME+product.image"
+                        width="40"
+                        height="40"
+                        :alt="product.name"
+                      />
+                    </div>
+
+                    <div style="margin-left: 10%">
+                      {{ product.name }}
+                    </div>
+                  </div>
+                </td>
                 <td>{{ product.category.name }}</td>
                 <td>{{ product.unit.short_name }}</td>
                 <td>{{ product.sp }}</td>
@@ -180,15 +207,44 @@ export default {
     const categories = reactive([]);
     const units = reactive([]);
     const modalHeader = ref(""); // Add or Edit Product
+    const image = ref("");
+    const imagePreview = ref(""); //for displaying image while uploading
+         
+	const VITE_MY_APP_BACK_URL_HOME = ref(import.meta.env.VITE_MY_APP_BACK_URL_HOME );
 
     //on mounted start
     onMounted(() => {
       getProducts();
       getCategories();
       getUnits();
+      setAvtarUploadImage();
     });
 
     //end of onMounted
+
+    const setAvtarUploadImage = () => {
+      imagePreview.value = "/img/upload_image.png";
+    };
+    const fileSelected = (e) => {
+      image.value = e.target.files[0];
+
+      let reader = new FileReader();
+
+      reader.addEventListener(
+        "load",
+        function () {
+          imagePreview.value = reader.result;
+        }.bind(),
+        false
+      );
+
+      if (image.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(image.value.name)) {
+          reader.readAsDataURL(image.value);
+        }
+      }
+    };
+
     const getCategories = () => {
       axios
         .get("categories")
@@ -244,8 +300,8 @@ export default {
           product.cp = response.data.product.cp;
           product.opening_stock = response.data.product.opening_stock;
           product.description = response.data.product.description;
-          product.image = response.data.product.image;
 
+		  
           toast(response.data.msg, {
             showIcon: true,
             type: response.data.status,
@@ -265,16 +321,15 @@ export default {
       }
     };
     const clearProduct = () => {
-	  
-	  product.id = "";
+      product.id = "";
       product.name = "";
       product.product_cat_id = "";
       product.unit_id = "";
       product.cp = "";
       product.sp = "";
-
       product.opening_stock = "";
       product.description = "";
+
     };
     const addProduct = () => {
       if (isModalUpdating.value) {
@@ -289,6 +344,11 @@ export default {
         formdata.append("sp", product.sp);
         formdata.append("opening_stock", product.opening_stock);
         formdata.append("description", product.description);
+        if (image.value) {
+          formdata.append("image", image.value);
+        }
+       
+
         axios
           .post("product/edit", formdata)
           .then((response) => {
@@ -319,6 +379,11 @@ export default {
         formdata.append("sp", product.sp);
         formdata.append("opening_stock", product.opening_stock);
         formdata.append("description", product.description);
+		if (image.value) {
+          formdata.append("image", image.value);
+        }
+        formdata.append("image", "");
+
         axios
           .post("product/add", formdata)
           .then((response) => {
@@ -378,6 +443,11 @@ export default {
       units,
       getCategories,
       getUnits,
+      setAvtarUploadImage,
+      fileSelected,
+      image,
+      imagePreview,
+	  VITE_MY_APP_BACK_URL_HOME
     };
   }, //end of setup
 };
@@ -576,6 +646,25 @@ tr:nth-child(even) {
 .v-leave-to {
   transform: translateY(-500px);
   opacity: 0.001;
+}
+
+.invoiceItemProductName {
+  display: flex;
+  padding: 0px;
+  align-items: center;
+}
+img.product_logo_img {
+  width: 100px;
+  margin-top: 15px;
+}
+input.productImageHolder {
+  border: 0px;
+  padding: 10px;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
 }
 </style>
 

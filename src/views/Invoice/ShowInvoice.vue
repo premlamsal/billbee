@@ -175,17 +175,16 @@
           </section>
         </div>
       </div>
-     
     </div>
     <div class="bottom-button-sections">
-        <button
-          class="btn btn-success"
-          @click="editInvoice(info.custom_invoice_id)"
-        >
-          Edit
-        </button>
-        <router-link to="/invoices" class="btn btn-danger">Close</router-link>
-      </div>
+      <button
+        class="btn btn-success"
+        @click="editInvoice(info.custom_invoice_id)"
+      >
+        Edit
+      </button>
+      <router-link to="/invoices" class="btn btn-danger">Close</router-link>
+    </div>
   </main>
 </template>
 <script>
