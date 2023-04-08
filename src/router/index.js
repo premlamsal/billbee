@@ -31,6 +31,20 @@ const router = createRouter({
 			component: () => import('../views/Purchase/purchases.vue'),
 		},
 		{
+			path: '/new-purchase',
+			component: () => import('../views/Purchase/NewPurchase.vue')
+		},
+		{
+			path: '/:id/edit-purchase',
+			name:'editPurchase',
+			component: () => import('../views/Purchase/EditPurchase.vue')
+		},
+		{
+			path: '/:id/show-purchase',
+			name:'ShowPurchase',
+			component: () => import('../views/Purchase/ShowPurchase.vue')
+		},
+		{
 			path: '/products',
 			component: () => import('../views/Product/Products.vue')
 		},
