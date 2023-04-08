@@ -409,9 +409,10 @@ export default {
     const deleteInvoiceItem = (id) => {
       console.log(invoiceItems);
       // have to change
-      invoiceItems = invoiceItems.filter((item) => item.id !== id);
+      // invoiceItems = invoiceItems.filter((item) => item.id !== id);
 
-      console.log(invoiceItems);
+      console.log('please add delete logic...heheheh');
+
     };
     const updateItemToInvoiceBtn = () => {
       if (itemHolder.product_name === "") {

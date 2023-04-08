@@ -417,9 +417,8 @@
       const deletePurchaseItem = (id) => {
         console.log(purchaseItems);
         // have to change
-        purchaseItems = purchaseItems.filter((item) => item.id !== id);
-  
-        console.log(purchaseItems);
+        // purchaseItems = purchaseItems.filter((item) => item.id !== id);
+        console.log('please add delete logic...heheheh');
       };
       const updateItemToPurchaseBtn = () => {
         if (itemHolder.product_name === "") {
