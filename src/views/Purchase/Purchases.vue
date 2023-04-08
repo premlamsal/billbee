@@ -109,7 +109,7 @@ export default {
       newPurchaseBtn,
       getPurchases,
       editPurchase,
-      showPurchase
+      showPurchase,
     };
   }, //end of setup
 };
