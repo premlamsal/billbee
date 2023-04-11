@@ -85,7 +85,6 @@
                   </div>
                 </label>
                 <img v-bind:src="imagePreview" class="product_logo_img" />
-
                 <input
                   id="file-input"
                   type="file"
@@ -174,13 +173,24 @@
                 <td>
                   <div class="invoiceItemProductName">
                     <div v-if="product.image">
-                      <img
-                        style="border-radius: 50%"
-                        :src="VITE_MY_APP_BACK_URL_HOME + product.image"
-                        width="40"
-                        height="40"
-                        :alt="product.name"
-                      />
+                      <div v-if="isValidHttpUrl(product.image)">
+                        <img
+                          style="border-radius: 50%"
+                          :src="product.image"
+                          width="40"
+                          height="40"
+                          :alt="product.name"
+                        />
+                      </div>
+                      <div v-else>
+                        <img
+                          style="border-radius: 50%"
+                          :src="VITE_MY_APP_BACK_URL_HOME + product.image"
+                          width="40"
+                          height="40"
+                          :alt="product.name"
+                        />
+                      </div>
                     </div>
 
                     <div style="margin-left: 10%">
@@ -195,12 +205,13 @@
                   <span
                     class="material-icons"
                     style="color: var(--primary); cursor: pointer"
+                    @click="showProduct(product.custom_product_id)"
                     >format_align_justify</span
                   >
                   <span
                     class="material-icons"
                     style="color: blueviolet; cursor: pointer"
-                    @click="editProductModal(product.id)"
+                    @click="editProductModal(product.custom_product_id)"
                     >edit</span
                   >
                   <span
@@ -254,6 +265,20 @@ export default {
     const setAvtarUploadImage = () => {
       // imagePreview.value = "/img/upload_image.png";
     };
+
+    const isValidHttpUrl = (check_url) => {
+      const pattern = new RegExp(
+        "^([a-zA-Z]+:\\/\\/)?" + // protocol
+          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+          "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+          "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$", // fragment locator
+        "i"
+      );
+      return pattern.test(check_url);
+    };
+
     const fileSelected = (e) => {
       image.value = e.target.files[0];
 
@@ -272,6 +297,9 @@ export default {
           reader.readAsDataURL(image.value);
         }
       }
+    };
+    const showProduct = (custom_product_id) => {
+      router.push({ path: `${custom_product_id}/show-product/` });
     };
 
     const getCategories = () => {
@@ -325,6 +353,17 @@ export default {
           product.name = response.data.product.name;
           product.product_cat_id = response.data.product.product_cat_id;
           product.unit_id = response.data.product.unit_id;
+
+          if (isValidHttpUrl(response.data.product.image)) {
+            product.image = response.data.product.image;
+            imagePreview.value = product.image;
+          } else {
+            product.image =
+              VITE_MY_APP_BACK_URL_HOME.value + response.data.product.image;
+            imagePreview.value =
+              VITE_MY_APP_BACK_URL_HOME.value + product.image;
+          }
+
           product.sp = response.data.product.sp;
           product.cp = response.data.product.cp;
           product.opening_stock = response.data.product.opening_stock;
@@ -369,6 +408,9 @@ export default {
         formdata.append("unit_id", product.unit_id);
         formdata.append("cp", product.cp);
         formdata.append("sp", product.sp);
+
+        formdata.append("image", product.image);
+
         formdata.append("opening_stock", product.opening_stock);
         formdata.append("description", product.description);
         if (image.value) {
@@ -402,6 +444,7 @@ export default {
         formdata.append("product_cat_id", product.product_cat_id);
         formdata.append("unit_id", product.unit_id);
         formdata.append("cp", product.cp);
+        formdata.append("image", product.image);
         formdata.append("sp", product.sp);
         formdata.append("opening_stock", product.opening_stock);
         formdata.append("description", product.description);
@@ -474,6 +517,8 @@ export default {
       image,
       imagePreview,
       VITE_MY_APP_BACK_URL_HOME,
+      showProduct,
+      isValidHttpUrl
     };
   }, //end of setup
 };
@@ -605,7 +650,7 @@ input.productOpeningBalanceHolder {
 .form-input-product {
   margin-bottom: 15px;
 }
-.image-upload-holder{
+.image-upload-holder {
   display: flex;
 }
 
