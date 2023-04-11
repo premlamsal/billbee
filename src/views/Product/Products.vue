@@ -339,6 +339,7 @@ export default {
     const editProductModal = (product_id) => {
       isModalUpdating.value = true;
       modalHeader.value = "Edit";
+      clearProduct();
       displayProductModal();
       getSingleProduct(product_id);
     };
@@ -357,11 +358,12 @@ export default {
           if (isValidHttpUrl(response.data.product.image)) {
             product.image = response.data.product.image;
             imagePreview.value = product.image;
+            // console.log('valid')
           } else {
-            product.image =
-              VITE_MY_APP_BACK_URL_HOME.value + response.data.product.image;
-            imagePreview.value =
-              VITE_MY_APP_BACK_URL_HOME.value + product.image;
+            // console.log('no-valid')
+            // console.log(VITE_MY_APP_BACK_URL_HOME.value)
+            product.image = VITE_MY_APP_BACK_URL_HOME.value +  response.data.product.image;
+            imagePreview.value = product.image
           }
 
           product.sp = response.data.product.sp;
@@ -396,6 +398,8 @@ export default {
       product.sp = "";
       product.opening_stock = "";
       product.description = "";
+      product.image="";
+      imagePreview.value="";
     };
     const addProduct = () => {
       if (isModalUpdating.value) {
