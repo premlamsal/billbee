@@ -6,28 +6,28 @@
 
         <div class="dash-box-container">
       <div class="box users">
-        <i class="fa fa-users"></i>
-        <h3>Users</h3>
+        <span class="material-icons">receipt_long</span>
+        <h3>Invoices</h3>
         <p>25,000</p>
       </div>
       <div class="box invoices">
-        <i class="fa fa-file-invoice"></i>
-        <h3>Invoices</h3>
+      	<span class="material-icons">description</span>
+        <h3>Purchases</h3>
         <p>1,000</p>
       </div>
       <div class="box orders">
-        <i class="fa fa-shopping-cart"></i>
-        <h3>Orders</h3>
+        <span class="material-icons">shopping_bag</span>
+        <h3>Products</h3>
         <p>500</p>
       </div>
       <div class="box expenses">
-        <i class="fa fa-money-bill"></i>
-        <h3>Expenses</h3>
+        <span class="material-icons">supervised_user_circle</span>
+        <h3>Customers</h3>
         <p>$10,000</p>
       </div>
       <div class="box income">
-        <i class="fa fa-money-bill-alt"></i>
-        <h3>Income</h3>
+      	<span class="material-icons">local_shipping</span>
+        <h3>Suppliers</h3>
         <p>$25,000</p>
       </div>
     </div>

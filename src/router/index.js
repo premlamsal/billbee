@@ -9,6 +9,14 @@ const router = createRouter({
 			component: Home
 		},
 		{
+			path: '/login',
+			component: () => import('../views/Auth/Login.vue'),
+		},
+		{
+			path: '/register',
+			component: () => import('../views/Auth/Register.vue'),
+		},
+		{
 			path: '/invoices',
 			component: () => import('../views/Invoice/Invoices.vue'),
 		},
@@ -64,6 +72,10 @@ const router = createRouter({
 		{
 			path: '/users',
 			component: () => import('../views/User/Users.vue')
+		},
+		{
+			path: '/roles',
+			component: () => import('../views/Role/Roles.vue')
 		},
 		{
 			path: '/settings',
