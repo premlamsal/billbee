@@ -78,6 +78,10 @@ const router = createRouter({
 			component: () => import('../views/Role/Roles.vue')
 		},
 		{
+			path: '/permissions',
+			component: () => import('../views/Permission/Permissions.vue')
+		},
+		{
 			path: '/settings',
 			component: () => import('../views/Setting/Settings.vue')
 		},

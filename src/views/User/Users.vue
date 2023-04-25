@@ -50,24 +50,7 @@
 				  v-model="user.phone"
 				/>
 			  </div>
-			  <div class="form-input-user">
-				<label> Opening Balance</label>
-  
-				<input
-				  type="text"
-				  placeholder="User Opening Balance"
-				  class="userOpeningBalanceHolder"
-				  v-model="user.opening_balance"
-				/>
-			  </div>
-			  <div class="form-input-user">
-				<label> Details</label>
-				<textarea
-				  type="text"
-				  class="userDetailsHolder"
-				  v-model="user.details"
-				></textarea>
-			  </div>
+			
 			</div>
 			<div class="modal-footer">
 			  <h4>Please fill above details and submit form</h4>
