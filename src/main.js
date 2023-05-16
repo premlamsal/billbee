@@ -40,4 +40,9 @@ app.provide('$toast', createToast);
 
 app.use(createPinia());
 app.use(router);
+
+import Prompt from './components/Prompt.vue'
+
+app.component('Prompt', Prompt)
+
 app.mount("#app");

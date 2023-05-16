@@ -1,22 +1,9 @@
 <template>
   <main id="users-page">
     <h1>Users</h1>
-	<Transition name="slide-fade" :duration="550">
-		<div class="prompt-container" v-if="showPrompt">
-		<div class="prompt">
-			<div class="prompt-header">
-				<h2>Please Confirm before proceed</h2>
-			</div>
-			<div class="prompt-body">
-				<p>Are you sure want to perform this action? This action is not reversible.</p>
-			</div>
-			<div class="prompt-footer">
-				<button class="btnConfirm">Confirm?</button>
-				<button class="btnCancel" @click="displayPrompt()">Cancel</button>
-			</div>
-		</div>
-		</div>
-		</Transition>
+    
+    <Prompt :isPrompt="pressedDelete" v-if="pressedDelete" @event-confirm="eventPrompt" @event-cancel="eventPrompt" />
+   
     <Transition :duration="550">
       <div class="modal-container" v-if="showUserModal">
         <div class="modal">
@@ -46,7 +33,7 @@
                 v-model="user.name"
               />
             </div>
-			<div class="form-input-user">
+            <div class="form-input-user">
               <label>Email</label>
               <input
                 type="email"
@@ -55,7 +42,7 @@
                 v-model="user.email"
               />
             </div>
-			<div class="form-input-user">
+            <div class="form-input-user">
               <label>Password</label>
               <input
                 type="password"
@@ -64,22 +51,17 @@
                 v-model="user.password"
               />
             </div>
-			
-         
-			<div class="form-input-user">
+
+            <div class="form-input-user">
               <label> Role</label>
 
-			  <select v-model="user.role_id" class="userRoleHolder">
-                <template
-                  v-for="role in roles"
-                  v-bind:key="role.id"
-                >
+              <select v-model="user.role_id" class="userRoleHolder">
+                <template v-for="role in roles" v-bind:key="role.id">
                   <option selected :value="role.id">
                     {{ role.name }}
                   </option>
                 </template>
               </select>
-
             </div>
           </div>
           <div class="modal-footer">
@@ -90,15 +72,11 @@
     </Transition>
     <div class="user-header">
       <div class="link-button-container">
-        <router-link to="/roles">
-        Roles
-        </router-link>
+        <router-link to="/roles"> Roles </router-link>
 
-        <router-link to="/permissions">
-        Permissions
-        </router-link>
+        <router-link to="/permissions"> Permissions </router-link>
       </div>
-	  
+
       <button class="btn-new-user" @click="addUserBtn()">
         <span class="btn-name"> New User</span>
         <span class="material-icons">add_circle</span>
@@ -146,7 +124,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
-					@click="displayPrompt()"
+                    @click="delBtn()"
                     >delete</span
                   >
                 </td>
@@ -169,9 +147,12 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const users = reactive([]);
-	const roles= reactive([]);
+    const roles = reactive([]);
+
+    //for prompt
+    const pressedDelete = ref(false);
+
     const showUserModal = ref(false);
-	const showPrompt= ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
     const isModalUpdating = ref(false);
@@ -191,6 +172,37 @@ export default {
       store.increment();
       console.log(store.count);
     });
+    
+    //propmt start
+    const eventPrompt = (returned_val) => {
+      console.log(returned_val);
+      if(returned_val){
+        console.log('HELLO CONFIRM');
+
+        
+
+
+
+      }else{
+      console.log('HELLO CANCEL');
+        
+      }
+
+      delBtn();
+    
+    };
+
+    const delBtn = () => {
+      if (pressedDelete.value) {
+        pressedDelete.value = false;
+      } else {
+        pressedDelete.value = true;
+      }
+    };
+//prompt ends
+
+
+
 
     //end of onMounted
 
@@ -221,8 +233,6 @@ export default {
           user.role_id = response.data.user.roles[0].id;
           user.role_id_old = response.data.user.roles[0].id;
 
-
-
           toast(response.data.msg, {
             showIcon: true,
             type: response.data.status,
@@ -241,13 +251,7 @@ export default {
         showUserModal.value = true;
       }
     };
-	const displayPrompt = () => {
-      if (showPrompt.value) {
-        showPrompt.value = false;
-      } else {
-        showPrompt.value = true;
-      }
-    };
+
     const clearUser = () => {
       user.name = "";
       user.email = "";
@@ -265,7 +269,6 @@ export default {
         formdata.append("password", user.password);
         formdata.append("role_id", user.role_id);
         formdata.append("role_id_old", user.role_id_old);
-
 
         axios
           .post("user/edit", formdata)
@@ -290,7 +293,7 @@ export default {
         console.log("oaky i will add boss");
 
         let formdata = new FormData();
-		formdata.append("name", user.name);
+        formdata.append("name", user.name);
         formdata.append("email", user.email);
         formdata.append("password", user.password);
         formdata.append("role_id", user.role_id);
@@ -338,7 +341,7 @@ export default {
         });
     };
 
-	const getRoles = () => {
+    const getRoles = () => {
       // toast("Role Loaded", {
       //   showIcon: true,
       //   type: "info",
@@ -371,10 +374,11 @@ export default {
       addUser,
       editUserModal,
       modalHeader,
-	  getRoles,
-	  roles,
-	  displayPrompt,
-	  showPrompt
+      getRoles,
+      roles,
+      pressedDelete,
+      delBtn,
+      eventPrompt
     };
   }, //end of setup
 };
@@ -585,7 +589,7 @@ tr:nth-child(even) {
   padding: 4px;
   border-radius: 10px;
 }
-.link-button-container a:hover{
+.link-button-container a:hover {
   background: var(--dark);
 }
 
@@ -597,65 +601,5 @@ select.userRoleHolder {
   width: 100%;
   font-size: 14px;
   margin-top: 10px;
-}
-.prompt-container{
-	display: flex;
-    justify-content: center;
-}
-.prompt-footer{
-	display: flex;
-	margin-top:10px ;
-	justify-content: space-between;
-}
-button.btnConfirm {
-    background: var(--primary);
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-}
-button.btnCancel {
-    background: orangered;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-}
-.prompt {
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-	
-}
-.prompt-container{
-	background: #000000d6;
-    padding: 0px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    display: flex;
-    min-height: 100%;
-    justify-content: center;
-    align-items: center;
-}
-/*
-  Enter and leave animations can use different
-  durations and timing functions.
-*/
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
 }
 </style>
