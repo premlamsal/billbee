@@ -13,6 +13,9 @@
 <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+const store = useAuthStore();
+
 
 export default {
   setup() {
@@ -39,27 +42,34 @@ export default {
           // response.data.token
           // response.data.user
 
+          //calling store function to set user data
 
-          localStorage.setItem("token", response.data.data.token);
-          localStorage.setItem("user", response.data.data.user);
+          store.setUser(response.data.data.user,response.data.data.token);
 
-          router.push({ path: "/" });
+
+
+
+
+          // router.push({ path: "/" });
+
+          if (response.data.data.store.length != 0) {
+            // console.log('has store')
+            // redirect to create user
+            // router.push({ path: "/" });
+          } else {
+            //redirect to home page
+            console.log("no store found for this user");
+            // router.push({ path: "/create-store" });
+          }
+
           toast(response.data.message, {
             showIcon: true,
             type: "success",
             position: "top-center",
             transition: "zoom",
           });
-
-
-
-
-
-
         })
         .catch((error) => {
-
-        
           console.log(error);
 
           if (error.response.status == 400) {

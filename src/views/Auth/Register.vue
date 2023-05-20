@@ -50,7 +50,7 @@ export default {
             position: "top-center",
             transition: "zoom",
           });
-          // router.push({ path: "/login" });
+          router.push({ path: "/login" });
           //push to create-store
           isRegisterSuccess.value=true;
         })

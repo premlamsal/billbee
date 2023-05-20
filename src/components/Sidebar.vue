@@ -52,6 +52,7 @@
 				<span class="text">Settings</span>
 			</router-link>
 		</div>
+   
 	</aside>
 </template>
 

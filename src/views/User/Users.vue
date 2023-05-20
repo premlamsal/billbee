@@ -99,6 +99,7 @@
               <th>Role</th>
 
               <th>Last Login</th>
+
               <th>Actions</th>
             </tr>
           </thead>
@@ -107,7 +108,11 @@
               <tr v-if="users != null">
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles[0].name }}</td>
+                <td v-if="user.roles[0]">{{ user.roles[0].name }}</td>
+                <td v-else>Please attach Role</td>
+             
+
+
                 <td>{{ user.last_login }}</td>
                 <td>
                   <span
@@ -124,7 +129,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
-                    @click="delBtn()"
+                    @click="delBtn(user.id)"
                     >delete</span
                   >
                 </td>
@@ -149,8 +154,6 @@ export default {
     const users = reactive([]);
     const roles = reactive([]);
 
-    //for prompt
-    const pressedDelete = ref(false);
 
     const showUserModal = ref(false);
     const axios = inject("$axios");
@@ -174,25 +177,51 @@ export default {
     });
     
     //propmt start
+
+
+    //for prompt
+    const pressedDelete = ref(false);
+    const deleteUserId=ref(""); 
+
     const eventPrompt = (returned_val) => {
-      console.log(returned_val);
+      // console.log(returned_val);
+
       if(returned_val){
-        console.log('HELLO CONFIRM');
+        // console.log('HELLO CONFIRM');
+        axios.delete('user/' + deleteUserId.value)
+        .then(response=>{
 
-        
+          toast(response.data.msg, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
 
+          getUsers();
+
+        })
+        .catch(error=>{
+          console.log(error);
+        })
 
 
       }else{
       console.log('HELLO CANCEL');
-        
+        //nothing to do when cancel button is pressed
       }
 
       delBtn();
     
     };
 
-    const delBtn = () => {
+    const delBtn = (user_id) => {
+      // console.log(user_id);
+      
+      //save user id to pass to prompt function
+      deleteUserId.value=user_id;
+
+
       if (pressedDelete.value) {
         pressedDelete.value = false;
       } else {
@@ -378,7 +407,8 @@ export default {
       roles,
       pressedDelete,
       delBtn,
-      eventPrompt
+      eventPrompt,
+      isModalUpdating
     };
   }, //end of setup
 };

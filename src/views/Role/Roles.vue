@@ -1,6 +1,8 @@
 <template>
   <main id="roles-page">
     <h1>Roles</h1>
+    <Prompt :isPrompt="pressedDelete" v-if="pressedDelete" @event-confirm="eventPrompt" @event-cancel="eventPrompt" />
+
     <Transition :duration="550">
       <div class="modal-container" v-if="showRoleModal">
         <div class="modal">
@@ -87,7 +89,8 @@
             <template v-for="role in roles" v-bind:key="role.id">
               <tr v-if="roles != null">
                 <td>{{ role.name }}</td>
-                <td>{{ role.permissions[0].name }}</td>
+                <td v-if="role.permissions[0]">{{ role.permissions[0].name }}</td>
+                <td v-else>Please attach permissions</td>
                 <td>
                   <!-- <span
                       class="material-icons"
@@ -103,6 +106,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="delBtn(role.id)"
                     >delete</span
                   >
                 </td>
@@ -138,6 +142,58 @@ export default {
     });
 
     //end of onMounted
+
+
+    //propmt start
+
+    //for prompt
+    const pressedDelete = ref(false);
+    const deleteId = ref("");
+
+    const eventPrompt = (returned_val) => {
+      // console.log(returned_val);
+
+      if (returned_val) {
+        // console.log('HELLO CONFIRM');
+        axios
+          .delete("role/" + deleteId.value)
+          .then((response) => {
+            toast(response.data.msg, {
+              showIcon: true,
+              type: response.data.status,
+              position: "top-right",
+              transition: "zoom",
+            });
+
+            getRoles();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log("HELLO CANCEL");
+        //nothing to do when cancel button is pressed
+      }
+
+      delBtn();
+    };
+
+    const delBtn = (id) => {
+      // console.log(id);
+
+      //save user id to pass to prompt function
+      deleteId.value = id;
+
+      if (pressedDelete.value) {
+        pressedDelete.value = false;
+      } else {
+        pressedDelete.value = true;
+      }
+    };
+    //prompt ends
+
+
+ 
 
     const addRoleBtn = () => {
       clearRole();
@@ -307,6 +363,9 @@ export default {
       modalHeader,
       permissions,
       getPermissions,
+      pressedDelete,
+      delBtn,
+      eventPrompt
     };
   }, //end of setup
 };
