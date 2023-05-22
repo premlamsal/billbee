@@ -31,21 +31,21 @@ const router = createRouter({
 			component: () => import('../views/Auth/CreateStore.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/invoices',
 			component: () => import('../views/Invoice/Invoices.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/new-invoice',
 			component: () => import('../views/Invoice/NewInvoice.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/:id/edit-invoice',
@@ -53,7 +53,7 @@ const router = createRouter({
 			component: () => import('../views/Invoice/EditInvoice.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/:id/show-invoice',
@@ -61,21 +61,21 @@ const router = createRouter({
 			component: () => import('../views/Invoice/ShowInvoice.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/purchases',
 			component: () => import('../views/Purchase/purchases.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/new-purchase',
 			component: () => import('../views/Purchase/NewPurchase.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/:id/edit-purchase',
@@ -83,7 +83,7 @@ const router = createRouter({
 			component: () => import('../views/Purchase/EditPurchase.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/:id/show-purchase',
@@ -91,14 +91,14 @@ const router = createRouter({
 			component: () => import('../views/Purchase/ShowPurchase.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/products',
 			component: () => import('../views/Product/Products.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 			beforeEnter(to, from, next) {
 
 				const store = useSnipperStore();
@@ -118,49 +118,49 @@ const router = createRouter({
 			component: () => import('../views/Product/ShowProduct.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/customers',
 			component: () => import('../views/Customer/Customers.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/suppliers',
 			component: () => import('../views/Supplier/Suppliers.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/users',
 			component: () => import('../views/User/Users.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/roles',
 			component: () => import('../views/Role/Roles.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/permissions',
 			component: () => import('../views/Permission/Permissions.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 		{
 			path: '/settings',
 			component: () => import('../views/Setting/Settings.vue'),
 			meta: {
 				requiresAuth: true,
-			  },
+			},
 		},
 	],
 })
@@ -172,23 +172,24 @@ router.beforeEach(async (to, from, next) => {
 	const storeSnipp = useSnipperStore();
 	const storeAuth = useAuthStore();
 
-	//logged IN
-	if(storeAuth.isAuthenticated){
+		//logged IN
+		if (storeAuth.authData.isAuthenticated) {
 
-		storeSnipp.getPermissions();
-		next();
-		return;
-	}
-	else{//not loggedIN
-		if (to.matched.some((record) => record.meta.requiresAuth)) {
-			next("/login");
-			return;
-		  } else {
+		await	storeSnipp.getPermissions();
 			next();
 			return;
-		  }
+		}
+		else {//not loggedIN
+			if (to.matched.some((record) => record.meta.requiresAuth)) {
+				next("/login");
+				return;
+			} else {
+				next();
+				return;
+			}
 
-	}
+		}
+	
 
 
 })

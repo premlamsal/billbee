@@ -19,28 +19,45 @@ axios.defaults.baseURL = appUrl;
 
 export const useAuthStore = defineStore("auth", () => {
 
-    const token=localStorage.getItem("token") || "";
-    const user = reactive({});
-    const isAuthenticated= ref(false);
+    let authData = reactive({
+        token: "",
+        user: "",
+        isAuthenticated: false,
+    });
+
+    authData.token = localStorage.getItem("token") || "";
+
+    authData.isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
+
+    // console.log(authData.isAuthenticated)
 
 
-    function setUser(temp_user,temp_token) {
-        user=temp_user;
-        token=temp_token
+    // const isAuthenticated = computed(() => authData.isAuthenticated)
+    // console.log(isAuthenticated)
+
+    function setUser(temp_user, temp_token) {
+        authData.user = temp_user;
+        authData.token = temp_token
         // console.log(user);
-        isAuthenticated.value=true;
+        authData.isAuthenticated = true;
+        localStorage.setItem("user", authData.user);
+        localStorage.setItem("token", authData.token);
+        localStorage.setItem("isAuthenticated", true);
 
-        localStorage.setItem("token", user);
-        localStorage.setItem("user", token);
 
     }
-    function removeUser(){
-        token="";
-        user={},
-        isAuthenticated.value=false;
+    function removeUser() {
+        authData.token = "";
+        authData.user = "",
+            authData.isAuthenticated = false;
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("isAuthenticated");
+
+
     }
 
-    
 
-    return { setUser,token,user,isAuthenticated,removeUser };
+
+    return { setUser, authData, removeUser};
 });

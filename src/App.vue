@@ -24,10 +24,10 @@
 </template>
 
 <script setup>
-import { useSnipperStore } from "@/stores/snipper";
+import { useAuthStore } from "@/stores/auth";
 import { ref,onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-const store = useSnipperStore();
+const storeAuth = useAuthStore();
 
 onMounted(() => {
 //   await store.getPermissions();
@@ -46,9 +46,9 @@ const showDropDown = () => {
 };
 const router = useRouter();
 const logoutBtn = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+	storeAuth.removeUser();
   router.push({ path: "/login" });
+  showDropDown();
 };
 import Sidebar from "./components/Sidebar.vue";
 </script>
