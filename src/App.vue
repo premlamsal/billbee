@@ -1,10 +1,10 @@
 <template>
   <div class="app">
     <!-- Sidebar -->
-    <Sidebar />
+    <Sidebar v-if="storeAuth.authData.isAuthenticated"/>
 
     <div class="router-view-container">
-      <div class="top-nav-container">
+      <div class="top-nav-container"  v-if="storeAuth.authData.isAuthenticated">
         <div class="top-nav-menu">
           <span class="text">Prem Lamsal</span>
           <button @click="showDropDown()">

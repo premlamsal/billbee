@@ -55,11 +55,11 @@ export default {
           if (response.data.data.store.length != 0) {
             // console.log('has store')
             // redirect to create user
-            // router.push({ path: "/" });
+            router.push({ path: "/" });
           } else {
             //redirect to home page
             console.log("no store found for this user");
-            // router.push({ path: "/create-store" });
+            router.push({ path: "/create-store" });
           }
 
           toast(response.data.message, {
