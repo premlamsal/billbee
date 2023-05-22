@@ -20,6 +20,8 @@ const router = createRouter({
 			path: '/login',
 			name: 'login',
 			component: () => import('../views/Auth/Login.vue'),
+
+
 		},
 		{
 			path: '/register',
@@ -172,24 +174,31 @@ router.beforeEach(async (to, from, next) => {
 	const storeSnipp = useSnipperStore();
 	const storeAuth = useAuthStore();
 
-		//logged IN
-		if (storeAuth.authData.isAuthenticated) {
+	//logged IN
+	if (storeAuth.authData.isAuthenticated) {
 
-		await	storeSnipp.getPermissions();
+
+		if (to.name == 'login' || to.name == 'register') {
+			next('/');
+			return;
+		} else {
+			await storeSnipp.getPermissions();
+			next();
+			return;
+
+		}
+	}
+	else {//not loggedIN
+		if (to.matched.some((record) => record.meta.requiresAuth)) {
+			next("/login");
+			return;
+		} else {
 			next();
 			return;
 		}
-		else {//not loggedIN
-			if (to.matched.some((record) => record.meta.requiresAuth)) {
-				next("/login");
-				return;
-			} else {
-				next();
-				return;
-			}
 
-		}
-	
+	}
+
 
 
 })
