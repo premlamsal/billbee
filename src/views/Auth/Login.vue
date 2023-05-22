@@ -44,11 +44,8 @@ export default {
 
           //calling store function to set user data
 
-          store.setUser(response.data.data.user,response.data.data.token);
-
-
-
-
+           store.setUser(response.data.data.user,response.data.data.token)
+          
 
           // router.push({ path: "/" });
 
@@ -69,6 +66,13 @@ export default {
             transition: "zoom",
           });
         })
+          
+          
+
+
+
+
+
         .catch((error) => {
           console.log(error);
 

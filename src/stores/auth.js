@@ -3,13 +3,7 @@ import { defineStore } from "pinia";
 
 //axios
 import axios from "axios";
-//axios config
-axios.defaults.headers.common = {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-    "Access-Control-Allow-Origin": "*",
-    "Content-Type": "application/json",
-    Accept: "application/json",
-};
+
 
 
 const appUrl = import.meta.env.VITE_MY_APP_URL;
@@ -36,6 +30,7 @@ export const useAuthStore = defineStore("auth", () => {
     // console.log(isAuthenticated)
 
     function setUser(temp_user, temp_token) {
+
         authData.user = temp_user;
         authData.token = temp_token
         // console.log(user);
@@ -44,6 +39,13 @@ export const useAuthStore = defineStore("auth", () => {
         localStorage.setItem("token", authData.token);
         localStorage.setItem("isAuthenticated", true);
 
+        //axios config
+        axios.defaults.headers.common = {
+            Authorization: `Bearer ${authData.token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        };
 
     }
     function removeUser() {
@@ -59,5 +61,5 @@ export const useAuthStore = defineStore("auth", () => {
 
 
 
-    return { setUser, authData, removeUser};
+    return { setUser, authData, removeUser };
 });
