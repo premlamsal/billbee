@@ -176,12 +176,13 @@ router.beforeEach(async (to, from, next) => {
 
 	//logged IN
 	if (storeAuth.authData.isAuthenticated) {
-
+		//this block executes when user is authenticated
 
 		if (to.name == 'login' || to.name == 'register') {
-			next('/');
+			next('/');//redirect to home if user is already logged in while navigating to login || register page
 			return;
 		} else {
+			//when user is authenciated and navigate to different routes and checking routes permissions
 			await storeSnipp.getPermissions();
 			next();
 			return;
@@ -189,6 +190,7 @@ router.beforeEach(async (to, from, next) => {
 		}
 	}
 	else {//not loggedIN
+		//this block executes when user is not logged in but check which routes needs authenticated user to navigate
 		if (to.matched.some((record) => record.meta.requiresAuth)) {
 			next("/login");
 			return;
