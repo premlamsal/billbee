@@ -171,9 +171,9 @@ export default {
 
       getRoles();
 
-      console.log(store.count);
+      // console.log(store.count);
       store.increment();
-      console.log(store.count);
+      // console.log(store.count);
     });
     
     //propmt start

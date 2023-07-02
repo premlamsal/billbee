@@ -126,4 +126,17 @@ button {
 .dropdown-content a:hover {
   background-color: #ddd;
 }
+.mt10{
+	margin-top:10px ;
+}
+.mb10{
+	margin-bottom:10px ;
+}
+.mt20{
+	margin-top:20px ;
+
+}
+.mb20{
+	margin-bottom:20px ;
+}
 </style>

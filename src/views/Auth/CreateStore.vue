@@ -75,7 +75,7 @@
               position: "top-center",
               transition: "zoom",
             });
-            // router.push({ path: "/" });
+            router.push({ path: "/" });
             //push to create-store
             isCreateStoreSuccess.value=true;
           })

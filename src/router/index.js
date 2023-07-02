@@ -17,6 +17,8 @@ const router = createRouter({
 			component: Home,
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 
 		},
@@ -37,6 +39,7 @@ const router = createRouter({
 			component: () => import('../views/Auth/CreateStore.vue'),
 			meta: {
 				requiresAuth: true,
+
 			},
 		},
 		{
@@ -44,6 +47,8 @@ const router = createRouter({
 			component: () => import('../views/Invoice/Invoices.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -51,6 +56,8 @@ const router = createRouter({
 			component: () => import('../views/Invoice/NewInvoice.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -59,6 +66,8 @@ const router = createRouter({
 			component: () => import('../views/Invoice/EditInvoice.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -67,6 +76,8 @@ const router = createRouter({
 			component: () => import('../views/Invoice/ShowInvoice.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -74,6 +85,8 @@ const router = createRouter({
 			component: () => import('../views/Purchase/purchases.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -81,6 +94,8 @@ const router = createRouter({
 			component: () => import('../views/Purchase/NewPurchase.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -89,6 +104,8 @@ const router = createRouter({
 			component: () => import('../views/Purchase/EditPurchase.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -97,6 +114,8 @@ const router = createRouter({
 			component: () => import('../views/Purchase/ShowPurchase.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -104,6 +123,8 @@ const router = createRouter({
 			component: () => import('../views/Product/Products.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 			beforeEnter(to, from, next) {
 
@@ -124,6 +145,8 @@ const router = createRouter({
 			component: () => import('../views/Product/ShowProduct.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -131,6 +154,8 @@ const router = createRouter({
 			component: () => import('../views/Customer/Customers.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -138,6 +163,8 @@ const router = createRouter({
 			component: () => import('../views/Supplier/Suppliers.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -145,6 +172,8 @@ const router = createRouter({
 			component: () => import('../views/User/Users.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -152,6 +181,8 @@ const router = createRouter({
 			component: () => import('../views/Role/Roles.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 		{
@@ -159,6 +190,7 @@ const router = createRouter({
 			component: () => import('../views/Permission/Permissions.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
 			},
 		},
 		{
@@ -166,6 +198,8 @@ const router = createRouter({
 			component: () => import('../views/Setting/Settings.vue'),
 			meta: {
 				requiresAuth: true,
+				requiresStore: true,
+
 			},
 		},
 	],
@@ -177,19 +211,35 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
 	const storeSnipp = useSnipperStore();
 	const storeAuth = useAuthStore();
+	// console.log(storeSnipp.stores)
+	await storeSnipp.getStores();
 
 	//logged IN
 	if (storeAuth.authData.isAuthenticated) {
-		//this block executes when user is authenticated
 
+		//this block executes when user is authenticated
 		if (to.name == 'login' || to.name == 'register') {
 			next('/');//redirect to home if user is already logged in while navigating to login || register page
 			return;
 		} else {
-			//when user is authenciated and navigate to different routes and checking routes permissions
-			await storeSnipp.getPermissions();
-			next();
-			return;
+			//logged in and also need store to open home
+			if (to.matched.some((record) => record.meta.requiresStore)) {
+
+				if (storeSnipp.hasStore) {
+					//when user is authenciated and navigate to different routes and checking routes permissions
+					await storeSnipp.getPermissions();
+					next();
+					return;
+				} else {
+					// console.log('here i am')
+					next('/create-store');
+					return;
+				}
+			} else {
+				await storeSnipp.getPermissions();
+				next();
+				return;
+			}
 
 		}
 	}
