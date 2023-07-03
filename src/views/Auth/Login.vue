@@ -121,7 +121,7 @@ body {
 input[type="email"],
 input[type="password"] {
   padding: 10px;
-  margin: 10px;
+  margin-bottom: 20px;
   border-radius: 5px;
   border: none;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);

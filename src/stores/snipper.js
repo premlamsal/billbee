@@ -34,10 +34,14 @@ export const useSnipperStore = defineStore("snipper", () => {
                 if (data.permissions) {
                     for (let i = 0; i < data.permissions.length; i++) {
                         permissions.push(data.permissions[i])
+
                     }
                     isLoadedPermissions.value=true;//set data loaded success to true
                     console.log('call inside store  permissions')
                 }
+            })
+            .catch((error)=>{
+                console.log('some error')
             })
 
     }

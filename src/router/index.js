@@ -126,18 +126,18 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
-			beforeEnter(to, from, next) {
+			// beforeEnter(to, from, next) {
 
-				const store = useSnipperStore();
+			// 	const store = useSnipperStore();
 
-				let hasAccess = store.permissions
-				if (hasAccess.includes('view_products') || hasAccess.includes('all')) {
-					next()
-				} else {
-					next('/whoops')
-				}
+			// 	let hasAccess = store.permissions
+			// 	if (hasAccess.includes('view_products') || hasAccess.includes('all')) {
+			// 		next()
+			// 	} else {
+			// 		next('/whoops')
+			// 	}
 
-			}
+			// }
 		},
 		{
 			path: '/:id/show-product',
@@ -194,6 +194,14 @@ const router = createRouter({
 			},
 		},
 		{
+			path: '/categories',
+			component: () => import('../views/Category/Categories.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+			},
+		},
+		{
 			path: '/settings',
 			component: () => import('../views/Setting/Settings.vue'),
 			meta: {
@@ -212,7 +220,10 @@ router.beforeEach(async (to, from, next) => {
 	const storeSnipp = useSnipperStore();
 	const storeAuth = useAuthStore();
 	// console.log(storeSnipp.stores)
+
+
 	await storeSnipp.getStores();
+
 
 	//logged IN
 	if (storeAuth.authData.isAuthenticated) {
@@ -255,6 +266,58 @@ router.beforeEach(async (to, from, next) => {
 
 	}
 
+	///new routes
+
+	// if (to.matched.some((record) => record.meta.requiresAuth)) {
+
+
+	// 	if (storeAuth.authData.isAuthenticated) {
+	// 		//if user already authenticated redirect to home or / i.e root url
+
+	// 		//also we need to check that either loggedin user have store assigned or not if not redirect them to create-store page
+	// 		await storeSnipp.getStores();
+	// 		if (storeSnipp.hasStore) {
+	// 			//user has store now redirect to homepage or check permssions for each page url that user have or not
+
+	// 			await storeSnipp.getPermissions();
+
+	// 			let hasAccess = storeSnipp.permissions
+
+	// 			if (hasAccess.includes('view_products') || hasAccess.includes('all')) {
+	// 				//now permisison is check redirect to going route by user
+	// 				next();
+	// 				return;
+	// 			} else {
+	// 				//user dont have permision to access the page check so redirect to opps page
+	// 				next("/oops");
+	// 				return;
+	// 			}
+
+
+	// 		}
+	// 		 else {
+	// 			//user dont have store now redirect to create-store page
+	// 			next("/create-store");
+
+	// 			return;
+	// 		}
+
+
+
+	// 	} else {
+	// 		//if not authenticated redirect to login page
+
+	// 		next("/login");
+
+	// 		return;
+
+	// 	}
+
+	// } else {
+	// 	//routes will redirect to their redirected page if not login required
+	// 	next();
+	// 	return;
+	// }
 
 
 })
