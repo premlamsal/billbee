@@ -84,7 +84,7 @@
                           <div v-if="item.product.image">
                             <img
                               style="border-radius: 50%"
-                              :src="item.product.image"
+                              :src="VITE_MY_APP_BACK_URL_HOME + item.product.image"
                               width="40"
                               height="40"
                               :alt="item.product.name"
@@ -226,6 +226,9 @@ export default {
       id.value = route.params.id;
     }; //end of getIdFromUrl
 
+    const VITE_MY_APP_BACK_URL_HOME = ref(
+      import.meta.env.VITE_MY_APP_BACK_URL_HOME
+    );
     const editInvoice = (id) => {
       // named route
       router.push({ path: `/${id}/edit-invoice/` });
@@ -409,6 +412,7 @@ export default {
       info,
       editInvoice,
       exportToPDF,
+      VITE_MY_APP_BACK_URL_HOME,
     };
   },
 }; //end of export default
