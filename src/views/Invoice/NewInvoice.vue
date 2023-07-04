@@ -666,7 +666,7 @@ export default {
 
           // console.log(store.this_invoice_custom_number);
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-center",
