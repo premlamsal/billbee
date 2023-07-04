@@ -704,11 +704,11 @@ export default {
         });
     };
     const getStoreData = () => {
-      const store_id = 1;
+
       let custom_invoice_number;
 
       axios
-        .get("store/" + store_id)
+        .get("user-store")
         .then((response) => {
           store.invoice_id_count = response.data.store.invoice_id_count;
 

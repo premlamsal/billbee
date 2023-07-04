@@ -715,11 +715,10 @@
           });
       };
       const getStoreData = () => {
-        const store_id = 1;
         let custom_purchase_number;
   
         axios
-          .get("store/" + store_id)
+          .get("user-store")
           .then((response) => {
             store.purchase_id_count = response.data.store.purchase_id_count;
   

@@ -273,9 +273,8 @@ export default {
     }; //end of fetchInvoice
 
     const fetchStore = () => {
-      let store_id = 1;
       axios
-        .get("store/" + store_id)
+        .get("user-store")
         .then(function (response) {
           store.id = response.data.store.id;
           store.name = response.data.store.name;
