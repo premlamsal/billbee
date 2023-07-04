@@ -202,6 +202,14 @@ const router = createRouter({
 			},
 		},
 		{
+			path: '/units',
+			component: () => import('../views/Unit/Units.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+			},
+		},
+		{
 			path: '/settings',
 			component: () => import('../views/Setting/Settings.vue'),
 			meta: {
@@ -224,9 +232,9 @@ router.beforeEach(async (to, from, next) => {
 
 	await storeSnipp.getStores();
 
-
 	//logged IN
 	if (storeAuth.authData.isAuthenticated) {
+
 
 		//this block executes when user is authenticated
 		if (to.name == 'login' || to.name == 'register') {
@@ -258,11 +266,16 @@ router.beforeEach(async (to, from, next) => {
 		//this block executes when user is not logged in but check which routes needs authenticated user to navigate
 		if (to.matched.some((record) => record.meta.requiresAuth)) {
 			next("/login");
+			// console.log('now here')
 			return;
 		} else {
+
+			// console.log('now there')
+
 			next();
 			return;
 		}
+
 
 	}
 

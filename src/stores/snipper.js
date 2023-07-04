@@ -60,6 +60,10 @@ export const useSnipperStore = defineStore("snipper", () => {
                     console.log('call inside store : stores')
                 }
             })
+            .catch((error)=>{
+                // console.log('hello error')
+                // return "hello";
+            })
 
     }
     
