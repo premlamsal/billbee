@@ -1,6 +1,7 @@
 <template>
   <main id="products-page">
     <h1>Products</h1>
+
     <Transition :duration="550">
       <div class="modal-container" v-if="showProductModal">
         <div class="modal">
@@ -141,6 +142,11 @@
       </div>
     </Transition>
     <div class="product-header">
+      <div class="link-button-container">
+        <router-link to="/categories"> Categories </router-link>
+        <router-link to="/units"> Units </router-link>
+
+      </div>
       <button class="btn-new-product" @click="addProductBtn()">
         <span class="btn-name"> New Product</span>
         <span class="material-icons">add_circle</span>
@@ -362,8 +368,9 @@ export default {
           } else {
             // console.log('no-valid')
             // console.log(VITE_MY_APP_BACK_URL_HOME.value)
-            product.image = VITE_MY_APP_BACK_URL_HOME.value +  response.data.product.image;
-            imagePreview.value = product.image
+            product.image =
+              VITE_MY_APP_BACK_URL_HOME.value + response.data.product.image;
+            imagePreview.value = product.image;
           }
 
           product.sp = response.data.product.sp;
@@ -398,8 +405,8 @@ export default {
       product.sp = "";
       product.opening_stock = "";
       product.description = "";
-      product.image="";
-      imagePreview.value="";
+      product.image = "";
+      imagePreview.value = "";
     };
     const addProduct = () => {
       if (isModalUpdating.value) {
@@ -522,7 +529,7 @@ export default {
       imagePreview,
       VITE_MY_APP_BACK_URL_HOME,
       showProduct,
-      isValidHttpUrl
+      isValidHttpUrl,
     };
   }, //end of setup
 };
@@ -660,7 +667,8 @@ input.productOpeningBalanceHolder {
 
 .product-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
+  align-items: center;
 }
 .products-content {
   /* background: white; */
@@ -755,6 +763,17 @@ input.productImageHolder {
 .image-upload-icon-holder {
   width: 60px;
   color: var(--primary);
+}
+.link-button-container a {
+  text-decoration: none;
+  margin-right: 5px;
+  background: var(--grey);
+  color: white;
+  padding: 4px;
+  border-radius: 10px;
+}
+.link-button-container a:hover {
+  background: var(--dark);
 }
 </style>
 

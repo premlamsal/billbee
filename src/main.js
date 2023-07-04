@@ -8,7 +8,6 @@ import {createToast} from 'mosha-vue-toastify';
 // import the styling for the toast
 import 'mosha-vue-toastify/dist/style.css'
 
-import * as ConfirmDialog from 'vuejs-confirm-dialog'
 
 const app = createApp(App);
 
@@ -43,7 +42,6 @@ app.provide('$toast', createToast);
 app.use(createPinia());
 app.use(router);
 
-app.use(ConfirmDialog);
 
 import Prompt from './components/Prompt.vue'
 
