@@ -943,6 +943,7 @@ input.permissionOpeningBalanceHolder {
 .permission-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .permissions-content {
   /* background: white; */

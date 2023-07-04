@@ -481,6 +481,7 @@ input.roleOpeningBalanceHolder {
 .role-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .roles-content {
   /* background: white; */
