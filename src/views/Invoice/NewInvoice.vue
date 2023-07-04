@@ -384,7 +384,7 @@ export default {
 
     //on mounted start
     onMounted(() => {
-      getStoreData();
+      getUserStoreData();
     });
 
     //end of mounted
@@ -647,12 +647,11 @@ export default {
           console.log(error);
         });
     };
-    const getStoreData = () => {
-      const store_id = 1;
+    const getUserStoreData = () => {
       let custom_invoice_number;
 
       axios
-        .get("store/" + store_id)
+        .get("user-store/")
         .then((response) => {
 
           store.invoice_id_count = response.data.store.invoice_id_count;
@@ -738,7 +737,7 @@ export default {
       showProductSelect,
       selectOptionProduct,
       createInvoice,
-      getStoreData,
+      getUserStoreData,
       store,
       
     };
