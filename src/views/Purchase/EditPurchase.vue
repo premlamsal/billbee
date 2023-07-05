@@ -153,12 +153,18 @@
                       />
                     </td>
                     <td>
-                      <select class="unitInputHolder" v-model="itemHolder.unit">
-                        <option selected="">box</option>
-                        <option>pcs</option>
-                        <option>sq.ft</option>
-                        <option>kg</option>
-                      </select>
+                      <select
+                      class="unitInputHolder"
+                      v-model="itemHolder.unit_id"
+                      disabled
+                    >
+                      <option selected="" disabled>Select Unit</option>
+                      <template v-for="unit in units" v-bind:key="unit.id">
+                        <option selected :value="unit.id">
+                          {{ unit.short_name }}
+                        </option>
+                      </template>
+                    </select>
                     </td>
                     <td>
                       <input
@@ -361,6 +367,7 @@
         quantity: 0,
         image: "",
         unit: "",
+        unit_id: "",
         price: 0,
         lineTotal: 0,
       });
@@ -371,6 +378,8 @@
         // subTotal:0,
         // discount:0,
       });
+    const units = reactive([]);
+
       const isItemHolderUpdating = ref(false);
       const currentEditItemIDIndex = ref("");
   
@@ -384,6 +393,7 @@
         quantity: "",
         image: "",
         unit: "",
+        unit_id:"",
         price: "",
       });
       const showSupplierSelect = ref(false);
@@ -398,12 +408,33 @@
         getIdFromUrl();
         getStoreData();
         getPurchase();
+        getUnits();
+
       });
   
       //end of mounted
   
       //methods
-  
+      const getUnits = () => {
+      // toast("Unit Loaded", {
+      //   showIcon: true,
+      //   type: "info",
+      //   position: "top-center",
+      //   transition: "zoom",
+      // });
+
+      units.length = 0;
+      axios
+        .get("units")
+        .then((response) => {
+          for (let i = 0; i < response.data.data.length; i++) {
+            units.push(response.data.data[i]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
       const getIdFromUrl = () => {
         purchase_id_from_url.value=route.params.id;
   
@@ -445,7 +476,7 @@
               }
               // console.log(temp_purchaseItems[0]);
             
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -491,6 +522,9 @@
         if (itemHolder.unit == "") {
           errorItemHolder.unit = "Select Unit";
         }
+        if (itemHolder.unit_id == "") {
+          errorItemHolder.unit_id = "Select Unit";
+        }
         if (itemHolder.quantity == 0) {
           errorItemHolder.quantity = "Enter Quantity";
         } else {
@@ -500,6 +534,7 @@
           purchaseItems[index].product_name = itemHolder.product_name;
           purchaseItems[index].quantity = itemHolder.quantity;
           purchaseItems[index].unit = itemHolder.unit;
+          purchaseItems[index].unit_id = itemHolder.unit_id;
           purchaseItems[index].price = itemHolder.price;
           purchaseItems[index].lineTotal = itemHolder.price * itemHolder.quantity;
   
@@ -526,6 +561,8 @@
         errorItemHolder.quantity = 0;
         // errorItemHolder.image="";
         errorItemHolder.unit = "";
+        errorItemHolder.unit_id = "";
+
         errorItemHolder.price = 0;
         errorItemHolder.lineTotal = 0;
       };
@@ -535,6 +572,8 @@
         itemHolder.quantity = 0;
         // itemHolder.image="";
         itemHolder.unit = "";
+        itemHolder.unit_id = "";
+
         itemHolder.price = 0;
         itemHolder.lineTotal = 0;
       };
@@ -554,8 +593,11 @@
         if (itemHolder.price == 0) {
           errorItemHolder.price = "Enter Price";
         }
-        if (itemHolder.unit == "") {
+        if (itemHolder.unit_id == "") {
           errorItemHolder.unit = "Select Unit";
+        }
+        if (itemHolder.unit_id == "") {
+          errorItemHolder.unit_id = "Select Unit";
         }
         if (itemHolder.quantity == 0) {
           errorItemHolder.quantity = "Enter Quantity";
@@ -687,6 +729,7 @@
         itemHolder.product_id = product_id;
         itemHolder.quantity = 1;
         itemHolder.unit = product_unit;
+        itemHolder.unit_id = product_unit_id;
         itemHolder.price = product_price;
         itemHolder.unit_id = product_unit_id;
       };
@@ -694,11 +737,11 @@
         axios
           .post("/purchase/edit", { 'info': purchaseInfo, 'items': purchaseItems ,'id': purchaseInfo.custom_purchase_id})
           .then((response) => {
-            //response.data.msg have success message
+            //response.data.message have success message
   
             console.log(response.data);
   
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -736,7 +779,7 @@
             
             
   
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -811,6 +854,8 @@
         store,
         getIdFromUrl,
         getPurchase,
+        getUnits,
+        units,
       };
     },
   };

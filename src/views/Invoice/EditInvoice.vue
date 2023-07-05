@@ -144,11 +144,17 @@
                     />
                   </td>
                   <td>
-                    <select class="unitInputHolder" v-model="itemHolder.unit">
-                      <option selected="">box</option>
-                      <option>pcs</option>
-                      <option>sq.ft</option>
-                      <option>kg</option>
+                    <select
+                      class="unitInputHolder"
+                      v-model="itemHolder.unit_id"
+                      disabled
+                    >
+                      <option selected="" disabled>Select Unit</option>
+                      <template v-for="unit in units" v-bind:key="unit.id">
+                        <option selected :value="unit.id">
+                          {{ unit.short_name }}
+                        </option>
+                      </template>
                     </select>
                   </td>
                   <td>
@@ -362,6 +368,8 @@ export default {
       // subTotal:0,
       // discount:0,
     });
+    const units = reactive([]);
+
     const isItemHolderUpdating = ref(false);
     const currentEditItemIDIndex = ref("");
 
@@ -389,12 +397,33 @@ export default {
       getIdFromUrl();
       getStoreData();
       getInvoice();
+      getUnits();
+
     });
 
     //end of mounted
 
     //methods
+    const getUnits = () => {
+      // toast("Unit Loaded", {
+      //   showIcon: true,
+      //   type: "info",
+      //   position: "top-center",
+      //   transition: "zoom",
+      // });
 
+      units.length = 0;
+      axios
+        .get("units")
+        .then((response) => {
+          for (let i = 0; i < response.data.data.length; i++) {
+            units.push(response.data.data[i]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const getIdFromUrl = () => {
       invoice_id_from_url.value=route.params.id;
 
@@ -434,7 +463,7 @@ export default {
             }
             // console.log(temp_invoiceItems[0]);
           
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-center",
@@ -480,6 +509,9 @@ export default {
       if (itemHolder.unit == "") {
         errorItemHolder.unit = "Select Unit";
       }
+      if (itemHolder.unit_id == "") {
+        errorItemHolder.unit_id = "Select Unit";
+      }
       if (itemHolder.quantity == 0) {
         errorItemHolder.quantity = "Enter Quantity";
       } else {
@@ -489,6 +521,7 @@ export default {
         invoiceItems[index].product_name = itemHolder.product_name;
         invoiceItems[index].quantity = itemHolder.quantity;
         invoiceItems[index].unit = itemHolder.unit;
+        invoiceItems[index].unit_id = itemHolder.unit_id;
         invoiceItems[index].price = itemHolder.price;
         invoiceItems[index].lineTotal = itemHolder.price * itemHolder.quantity;
 
@@ -515,6 +548,8 @@ export default {
       errorItemHolder.quantity = 0;
       // errorItemHolder.image="";
       errorItemHolder.unit = "";
+      errorItemHolder.unit_id = "";
+
       errorItemHolder.price = 0;
       errorItemHolder.lineTotal = 0;
     };
@@ -524,6 +559,8 @@ export default {
       itemHolder.quantity = 0;
       // itemHolder.image="";
       itemHolder.unit = "";
+      errorItemHolder.unit_id = "";
+
       itemHolder.price = 0;
       itemHolder.lineTotal = 0;
     };
@@ -545,6 +582,9 @@ export default {
       }
       if (itemHolder.unit == "") {
         errorItemHolder.unit = "Select Unit";
+      }
+      if (itemHolder.unit_id == "") {
+        errorItemHolder.unit_id = "Select Unit";
       }
       if (itemHolder.quantity == 0) {
         errorItemHolder.quantity = "Enter Quantity";
@@ -676,6 +716,7 @@ export default {
       itemHolder.product_id = product_id;
       itemHolder.quantity = 1;
       itemHolder.unit = product_unit;
+      itemHolder.unit_id = product_unit_id;
       itemHolder.price = product_price;
       itemHolder.unit_id = product_unit_id;
     };
@@ -683,11 +724,11 @@ export default {
       axios
         .post("/invoice/edit", { 'info': invoiceInfo, 'items': invoiceItems ,'id': invoiceInfo.custom_invoice_id})
         .then((response) => {
-          //response.data.msg have success message
+          //response.data.message have success message
 
           console.log(response.data);
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-center",
@@ -726,7 +767,7 @@ export default {
           
           
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-center",
@@ -801,6 +842,8 @@ export default {
       store,
       getIdFromUrl,
       getInvoice,
+      getUnits,
+      units,
     };
   },
 };
