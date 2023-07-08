@@ -116,7 +116,7 @@
             <template v-for="account in accounts" v-bind:key="account.id">
               <tr v-if="accounts != null">
                 <td>{{ account.custom_account_id }}</td>
-                <td @click="accountProfile(account.id)" class="cursor">
+                <td  @click="showAccount(account.custom_account_id)" class="cursor">
                   {{ account.name }}
                 </td>
                 <td>Rs. {{ account.balance }}</td>
@@ -127,7 +127,6 @@
                   <span
                     class="material-icons"
                     style="color: var(--primary); cursor: pointer"
-                    @click="showAccount(account.custom_account_id)"
                     >format_align_justify</span
                   >
                   <span

@@ -154,7 +154,7 @@ export default {
     };
     const getAccountDetails = () => {
       axios
-        .get("account/" + custom_account_id.value)
+        .get("custom-account/" + custom_account_id.value)
         .then((response) => {
           account.account_info = response.data.account.account_info;
           account.date = response.data.account.date;

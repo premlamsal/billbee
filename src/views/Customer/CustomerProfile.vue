@@ -1,6 +1,7 @@
 <template>
   <main id="accounts-page">
-    <h1>Accounts Statement</h1>
+    <h1>Customer Profile</h1>
+    <h3>{{ customer.name }} || Customer ID : {{ customer.custom_customer_id }}</h3>
     <div class="account-header"></div>
     <div class="accounts-content">
       <div
@@ -27,7 +28,7 @@
                   v-for="transaction in transactions"
                   v-bind:key="transaction.id"
                 >
-                  <td scope="row">
+                  <td>
                     {{ transaction.date }}
                   </td>
                   <td v-if="transaction.transaction_type === 'opening_balance'">
@@ -286,10 +287,11 @@ export default {
       axios
         .get("customer/transactions/" + custom_customer_id.value)
         .then((response) => {
-          for (let i = 0; i < response.data.data.length; i++) {
-            transactions.push(response.data.data[i]);
-            console.log(transactions);
+          for (let i = 0; i < response.data.transactions.length; i++) {
+            transactions.push(response.data.transactions[i]);
           }
+          console.log(transactions);
+
         })
         .catch((error) => {
           console.log(error);
@@ -333,6 +335,7 @@ export default {
       getCustomerDetails,
       transactions,
       accounts,
+      customer,
       getAccounts,
       totalSales,
       totalPayment,
