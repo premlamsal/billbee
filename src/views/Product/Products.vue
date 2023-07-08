@@ -378,7 +378,7 @@ export default {
           product.opening_stock = response.data.product.opening_stock;
           product.description = response.data.product.description;
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-right",
@@ -431,7 +431,7 @@ export default {
         axios
           .post("product/edit", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -467,7 +467,7 @@ export default {
         axios
           .post("product/add", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -658,6 +658,7 @@ input.productOpeningBalanceHolder {
   font-size: 14px;
   margin-top: 10px;
 }
+
 .form-input-product {
   margin-bottom: 15px;
 }

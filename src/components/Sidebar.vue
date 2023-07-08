@@ -1,71 +1,78 @@
 <template>
-	<aside :class="`${is_expanded ? 'is-expanded' : ''}`">
-		<div class="logo">
-			<img :src="logoURL" alt="Vue" /> 
-		</div>
+  <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
+    <div class="logo">
+      <img :src="logoURL" alt="Vue" />
+    </div>
 
-		<div class="menu-toggle-wrap">
-			<button class="menu-toggle" @click="ToggleMenu">
-				<span class="material-icons">keyboard_double_arrow_right</span>
-			</button>
-		</div>
+    <div class="menu-toggle-wrap">
+      <button class="menu-toggle" @click="ToggleMenu">
+        <span class="material-icons">keyboard_double_arrow_right</span>
+      </button>
+    </div>
 
-		<h3>Menu</h3>
-		<div class="menu">
-			<router-link to="/" class="button">
-				<span class="material-icons">home</span>
-				<span class="text">Home</span>
-			</router-link>
+    <h3>Menu</h3>
+    <div class="menu">
+      <router-link to="/" class="button">
+        <span class="material-icons">home</span>
+        <span class="text">Home</span>
+      </router-link>
+      <router-link to="/accounts" class="button">
+        <span class="material-icons">account_balance_wallet</span>
+        <span class="text">Accounts</span>
+      </router-link>
       <router-link to="/customers" class="button">
-				<span class="material-icons">supervised_user_circle</span>
-				<span class="text">Customers</span>
-			</router-link>
-      <router-link to="/suppliers" class="button">
-				<span class="material-icons">local_shipping</span>
-				<span class="text">Suppliers</span>
-			</router-link>
-            <router-link to="/products" class="button">
-				<span class="material-icons">shopping_bag</span>
-				<span class="text">Product</span>
-			</router-link>
+        <span class="material-icons">supervised_user_circle</span>
+        <span class="text">Customers</span>
+      </router-link>
+      <router-link to="/invoices" class="button">
+        <span class="material-icons">receipt_long</span>
+        <span class="text">Invoice</span>
+      </router-link>
+      <router-link to="/products" class="button">
+        <span class="material-icons">shopping_bag</span>
+        <span class="text">Product</span>
+      </router-link>
       <router-link to="/purchases" class="button">
-				<span class="material-icons">description</span>
-				<span class="text">Purchase</span>
-			</router-link>
+        <span class="material-icons">description</span>
+        <span class="text">Purchase</span>
+      </router-link>
+      <router-link to="/suppliers" class="button">
+        <span class="material-icons">local_shipping</span>
+        <span class="text">Suppliers</span>
+      </router-link>
 
-			<router-link to="/invoices" class="button">
-				<span class="material-icons">receipt_long</span>
-				<span class="text">Invoice</span>
-			</router-link>
-			<router-link to="/users" class="button">
-				<span class="material-icons">group</span>
-				<span class="text">Users</span>
-			</router-link>
-		
-		</div>
+      <router-link to="/transactions" class="button">
+        <span class="material-icons">swap_horiz</span>
+        <span class="text">Transactions</span>
+      </router-link>
 
-		<div class="flex"></div>
-		
-		<div class="menu">
-			<router-link to="/settings" class="button">
-				<span class="material-icons">settings</span>
-				<span class="text">Settings</span>
-			</router-link>
-		</div>
-   
-	</aside>
+      <router-link to="/users" class="button">
+        <span class="material-icons">group</span>
+        <span class="text">Users</span>
+      </router-link>
+    </div>
+
+    <div class="flex"></div>
+
+    <div class="menu">
+      <router-link to="/settings" class="button">
+        <span class="material-icons">settings</span>
+        <span class="text">Settings</span>
+      </router-link>
+    </div>
+  </aside>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import logoURL from '../assets/logo.png'
+import { ref } from "vue";
+import logoURL from "../assets/logo.png";
 
-const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
+const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
 
 const ToggleMenu = () => {
-	is_expanded.value = !is_expanded.value
-	localStorage.setItem("is_expanded", is_expanded.value)
-}
+  is_expanded.value = !is_expanded.value;
+  localStorage.setItem("is_expanded", is_expanded.value);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -109,7 +116,8 @@ aside .menu-toggle-wrap .menu-toggle:hover .material-icons {
   color: var(--primary);
   transform: translateX(0.5rem);
 }
-aside h3, aside .button .text {
+aside h3,
+aside .button .text {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
@@ -141,14 +149,16 @@ aside .menu .button .text {
 aside .menu .button:hover {
   background-color: var(--dark-alt);
 }
-aside .menu .button:hover .material-icons, aside .menu .button:hover .text {
+aside .menu .button:hover .material-icons,
+aside .menu .button:hover .text {
   color: var(--primary);
 }
 aside .menu .button.router-link-exact-active {
   background-color: var(--dark-alt);
   border-right: 5px solid var(--primary);
 }
-aside .menu .button.router-link-exact-active .material-icons, aside .menu .button.router-link-exact-active .text {
+aside .menu .button.router-link-exact-active .material-icons,
+aside .menu .button.router-link-exact-active .text {
   color: var(--primary);
 }
 aside .footer {
@@ -168,7 +178,8 @@ aside.is-expanded .menu-toggle-wrap {
 aside.is-expanded .menu-toggle-wrap .menu-toggle {
   transform: rotate(-180deg);
 }
-aside.is-expanded h3, aside.is-expanded .button .text {
+aside.is-expanded h3,
+aside.is-expanded .button .text {
   opacity: 1;
 }
 aside.is-expanded .button .material-icons {

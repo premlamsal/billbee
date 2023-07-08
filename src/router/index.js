@@ -210,6 +210,30 @@ const router = createRouter({
 			},
 		},
 		{
+			path: '/accounts',
+			component: () => import('../views/Account/Accounts.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+			},
+		},
+		{
+			path: '/:id/show-account',
+			component: () => import('../views/Account/AccountProfile.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+			},
+		},
+		{
+			path: '/transactions',
+			component: () => import('../views/Transaction/Transactions.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+			},
+		},
+		{
 			path: '/settings',
 			component: () => import('../views/Setting/Settings.vue'),
 			meta: {
