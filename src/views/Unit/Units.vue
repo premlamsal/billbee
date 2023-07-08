@@ -168,7 +168,7 @@ export default {
           unit.short_name = response.data.unit.short_name;
           unit.long_name = response.data.unit.long_name;
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-right",
@@ -201,7 +201,7 @@ export default {
         axios
           .post("unit/edit", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -226,7 +226,7 @@ export default {
         axios
           .post("unit/add", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",

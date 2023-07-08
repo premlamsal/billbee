@@ -104,7 +104,7 @@
             <template v-for="customer in customers" v-bind:key="customer.id">
               <tr v-if="customers != null">
                 <td>{{ customer.custom_customer_id }}</td>
-                <td>{{ customer.name }}</td>
+                <td @click="showCustomer(customer.custom_customer_id)">{{ customer.name }}</td>
                 <td>{{ customer.address }}</td>
                 <td>{{ customer.phone }}</td>
                 <td>
@@ -183,7 +183,7 @@ export default {
         customer.opening_balance=response.data.customer.opening_balance
         customer.details=response.data.customer.details;
         
-        toast(response.data.msg, {
+        toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-right",
@@ -227,7 +227,7 @@ export default {
         axios
           .post("customer/edit", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -255,7 +255,7 @@ export default {
         axios
           .post("customer/add", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -272,6 +272,10 @@ export default {
             console.log(error);
           });
       }
+    };
+
+    const showCustomer = (custom_customer_id) => {
+      router.push({ path: `${custom_customer_id}/show-customer/` });
     };
 
     const getCustomers = () => {
@@ -307,6 +311,7 @@ export default {
       addCustomer,
       editCustomerModal,
       modalHeader,
+      showCustomer
     };
   }, //end of setup
 };

@@ -80,7 +80,7 @@ export default {
           product.opening_stock = response.data.product.opening_stock;
           product.description = response.data.product.description;
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-right",

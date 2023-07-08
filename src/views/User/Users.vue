@@ -191,7 +191,7 @@ export default {
         axios.delete('user/' + deleteUserId.value)
         .then(response=>{
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-right",
@@ -262,7 +262,7 @@ export default {
           user.role_id = response.data.user.roles[0].id;
           user.role_id_old = response.data.user.roles[0].id;
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-right",
@@ -302,7 +302,7 @@ export default {
         axios
           .post("user/edit", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -330,7 +330,7 @@ export default {
         axios
           .post("user/add", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",

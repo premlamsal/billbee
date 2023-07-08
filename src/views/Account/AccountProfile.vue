@@ -26,7 +26,7 @@
 
             <tr v-for="transaction in transactions" v-bind:key="transaction.id">
               <td scope="row">
-                {{ transaction.created_at }}
+                {{ transaction.date }}
               </td>
               <td v-if="transaction.transaction_type === 'opening_balance'">
                 Opening Balance
@@ -157,6 +157,8 @@ export default {
         .get("account/" + custom_account_id.value)
         .then((response) => {
           account.account_info = response.data.account.account_info;
+          account.date = response.data.account.date;
+
           account.balance = response.data.account.balance;
           account.bank_name = response.data.account.bank_name;
           account.holder_name = response.data.account.holder_name;

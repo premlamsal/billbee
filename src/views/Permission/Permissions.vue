@@ -647,7 +647,7 @@ export default {
         axios
           .delete("permission/" + deleteId.value)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-right",
@@ -704,7 +704,7 @@ export default {
           permission.name = response.data.permission.name;
           checkedPermissions.value = response.data.permission.actions;
 
-          // toast(response.data.msg, {
+          // toast(response.data.message, {
           //       showIcon: true,
           //       type: response.data.status,
           //       position: "top-right",
@@ -738,7 +738,7 @@ export default {
         axios
           .post("permission/edit", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -764,7 +764,7 @@ export default {
         axios
           .post("permission/add", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",

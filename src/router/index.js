@@ -150,8 +150,28 @@ const router = createRouter({
 			},
 		},
 		{
+			path: '/:id/show-customer',
+			name: 'ShowCustomer',
+			component: () => import('../views/Customer/CustomerProfile.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
 			path: '/customers',
 			component: () => import('../views/Customer/Customers.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
+			path: '/:id/show-supplier',
+			name: 'ShowSupplier',
+			component: () => import('../views/Supplier/SupplierProfile.vue'),
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,

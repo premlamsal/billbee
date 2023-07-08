@@ -183,7 +183,7 @@ export default {
         supplier.opening_balance=response.data.supplier.opening_balance
         supplier.details=response.data.supplier.details;
         
-        toast(response.data.msg, {
+        toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-right",
@@ -227,7 +227,7 @@ export default {
         axios
           .post("supplier/edit", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -255,7 +255,7 @@ export default {
         axios
           .post("supplier/add", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",

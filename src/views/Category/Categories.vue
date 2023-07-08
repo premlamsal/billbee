@@ -149,7 +149,7 @@
           category.name=response.data.category.name
           category.description=response.data.category.description;
           
-          toast(response.data.msg, {
+          toast(response.data.message, {
                 showIcon: true,
                 type: response.data.status,
                 position: "top-right",
@@ -187,7 +187,7 @@
           axios
             .post("category/edit", formdata)
             .then((response) => {
-              toast(response.data.msg, {
+              toast(response.data.message, {
                 showIcon: true,
                 type: response.data.status,
                 position: "top-center",
@@ -212,7 +212,7 @@
           axios
             .post("category/add", formdata)
             .then((response) => {
-              toast(response.data.msg, {
+              toast(response.data.message, {
                 showIcon: true,
                 type: response.data.status,
                 position: "top-center",

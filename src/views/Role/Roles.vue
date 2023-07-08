@@ -158,7 +158,7 @@ export default {
         axios
           .delete("role/" + deleteId.value)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-right",
@@ -220,7 +220,7 @@ export default {
           role.permission_id = response.data.role.permissions[0].id;
           role.permission_id_old = response.data.role.permissions[0].id;
 
-          toast(response.data.msg, {
+          toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
             position: "top-right",
@@ -255,7 +255,7 @@ export default {
         axios
           .post("role/edit", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -281,7 +281,7 @@ export default {
         axios
           .post("role/add", formdata)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",

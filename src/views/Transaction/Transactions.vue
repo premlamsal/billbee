@@ -422,7 +422,7 @@ export default {
         axios
           .post("transaction/edit", formData, config)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
@@ -460,7 +460,7 @@ export default {
         axios
           .post("transaction/add", formData, config)
           .then((response) => {
-            toast(response.data.msg, {
+            toast(response.data.message, {
               showIcon: true,
               type: response.data.status,
               position: "top-center",
