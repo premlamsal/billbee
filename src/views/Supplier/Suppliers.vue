@@ -104,7 +104,9 @@
             <template v-for="supplier in suppliers" v-bind:key="supplier.id">
               <tr v-if="suppliers != null">
                 <td>{{ supplier.custom_supplier_id }}</td>
-                <td>{{ supplier.name }}</td>
+                <td @click="showSupplier(supplier.custom_supplier_id)">
+                  {{ supplier.name }}
+                </td>
                 <td>{{ supplier.address }}</td>
                 <td>{{ supplier.phone }}</td>
                 <td>
@@ -155,7 +157,9 @@ export default {
     });
 
     //end of onMounted
-
+    const showSupplier = (custom_supplier_id) => {
+      router.push({ path: `${custom_supplier_id}/show-supplier/` });
+    };
     const addSupplierBtn = () => {
       clearSupplier();
       isModalUpdating.value = false;
@@ -169,36 +173,32 @@ export default {
       displaySupplierModal();
       getSingleSupplier(supplier_id);
     };
-    const getSingleSupplier=(supplier_id)=>{
-
+    const getSingleSupplier = (supplier_id) => {
       console.log(supplier_id);
 
-      axios.get('supplier/'+supplier_id)
-      .then(response=>{
-        // console.log(response.data.supplier.name);
-        supplier.id=response.data.supplier.id
-        supplier.name=response.data.supplier.name
-        supplier.address=response.data.supplier.address
-        supplier.phone=response.data.supplier.phone
-        supplier.opening_balance=response.data.supplier.opening_balance
-        supplier.details=response.data.supplier.details;
-        
-        toast(response.data.message, {
-              showIcon: true,
-              type: response.data.status,
-              position: "top-right",
-              transition: "zoom",
-            });
+      axios
+        .get("supplier/" + supplier_id)
+        .then((response) => {
+          // console.log(response.data.supplier.name);
+          supplier.id = response.data.supplier.id;
+          supplier.name = response.data.supplier.name;
+          supplier.address = response.data.supplier.address;
+          supplier.phone = response.data.supplier.phone;
+          supplier.opening_balance = response.data.supplier.opening_balance;
+          supplier.details = response.data.supplier.details;
 
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
-      })
-      .catch(error=>{
-        console.log(error);
-      })
-
-
-
-    }
     const displaySupplierModal = () => {
       if (showSupplierModal.value) {
         showSupplierModal.value = false;
@@ -215,7 +215,7 @@ export default {
     };
     const addSupplier = () => {
       if (isModalUpdating.value) {
-        console.log('okay i will update boos')
+        console.log("okay i will update boos");
 
         let formdata = new FormData();
         formdata.append("id", supplier.id);
@@ -244,7 +244,7 @@ export default {
             console.log(error);
           });
       } else {
-        console.log('oaky i will add boss')
+        console.log("oaky i will add boss");
 
         let formdata = new FormData();
         formdata.append("name", supplier.name);
@@ -307,6 +307,7 @@ export default {
       addSupplier,
       editSupplierModal,
       modalHeader,
+      showSupplier,
     };
   }, //end of setup
 };

@@ -127,15 +127,25 @@
                                 <li
                                   @click="
                                     selectOptionProduct(
+                                      queryResultProduct.product.id,
+                                      queryResultProduct.product.name,
+                                      queryResultProduct.product.unit
+                                        .short_name,
+                                      queryResultProduct.product.sp,
+                                      queryResultProduct.product.unit.id,
                                       queryResultProduct.id,
-                                      queryResultProduct.name,
-                                      queryResultProduct.unit.short_name,
-                                      queryResultProduct.sp,
-                                      queryResultProduct.unit.id
+                                      queryResultProduct.product.image
                                     )
                                   "
                                 >
-                                  {{ queryResultProduct.name }}
+                                  {{ queryResultProduct.product.name }} --
+                                  {{ queryResultProduct.quantity }}
+                                  {{
+                                    queryResultProduct.product.unit.short_name
+                                  }}
+                                  -- Rs. {{ queryResultProduct.price }}
+
+                                  <!-- {{ queryResultProduct.name }} -->
                                 </li>
                               </template>
                             </ul>
@@ -367,6 +377,8 @@ export default {
       image: "",
       unit: "",
       unit_id: "",
+      stock_id: "",
+      image: "",
 
       price: 0,
       lineTotal: 0,
@@ -390,6 +402,7 @@ export default {
       product_id: "",
       quantity: "",
       image: "",
+      stock_id: "",
       unit: "",
       unit_id: "",
       price: "",
@@ -444,6 +457,9 @@ export default {
       // itemHolder.image="";
       itemHolder.unit = purchaseItems[indexForItem].unit;
       itemHolder.unit_id = purchaseItems[indexForItem].unit_id;
+      itemHolder.unit_id = purchaseItems[indexForItem].unit_id;
+      itemHolder.stock_id = purchaseItems[indexForItem].stock_id;
+      itemHolder.image = purchaseItems[indexForItem].image;
       itemHolder.price = purchaseItems[indexForItem].price;
       itemHolder.lineTotal = purchaseItems[indexForItem].lineTotal;
     };
@@ -476,6 +492,8 @@ export default {
         purchaseItems[index].quantity = itemHolder.quantity;
         purchaseItems[index].unit = itemHolder.unit;
         purchaseItems[index].unit_id = itemHolder.unit_id;
+        invoiceItems[index].stock_id = itemHolder.stock_id;
+        invoiceItems[index].image = itemHolder.image;
 
         purchaseItems[index].price = itemHolder.price;
         purchaseItems[index].lineTotal = itemHolder.price * itemHolder.quantity;
@@ -504,7 +522,8 @@ export default {
       // errorItemHolder.image="";
       errorItemHolder.unit = "";
       errorItemHolder.unit_id = "";
-
+      errorItemHolder.stock_id = "";
+      errorItemHolder.image = "";
       errorItemHolder.price = 0;
       errorItemHolder.lineTotal = 0;
     };
@@ -516,6 +535,8 @@ export default {
       itemHolder.unit = "";
       itemHolder.unit_id = "";
       itemHolder.price = 0;
+      itemHolder.stock_id = "";
+      itemHolder.image = "";
       itemHolder.lineTotal = 0;
     };
     const clearPurchaseInfo = () => {
@@ -547,7 +568,8 @@ export default {
           id: uid(),
           product_id: itemHolder.product_id,
           product_name: itemHolder.product_name,
-          image: "https://avatars.githubusercontent.com/u/24312128?v=4",
+          image: itemHolder.image,
+          stock_id: itemHolder.stock_id,
           price: itemHolder.price,
           unit: itemHolder.unit,
           unit_id: itemHolder.unit_id,
@@ -663,7 +685,9 @@ export default {
       product_name,
       product_unit,
       product_price,
-      product_unit_id
+      product_unit_id,
+      product_stock_id,
+      product_image
     ) => {
       showProductSelect.value = false;
       itemHolder.product_name = product_name;
@@ -672,6 +696,8 @@ export default {
       itemHolder.unit = product_unit;
       itemHolder.price = product_price;
       itemHolder.unit_id = product_unit_id;
+      itemHolder.stock_id = product_stock_id;
+      itemHolder.image = product_image;
     };
     const createPurchase = () => {
       axios

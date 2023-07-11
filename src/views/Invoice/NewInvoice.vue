@@ -563,10 +563,11 @@ export default {
           product_id: itemHolder.product_id,
           product_name: itemHolder.product_name,
           image: itemHolder.image,
+          stock_id: itemHolder.stock_id,
           price: itemHolder.price,
           unit: itemHolder.unit,
           unit_id: itemHolder.unit_id,
-          stock_id: itemHolder.stock_id,
+
           quantity: itemHolder.quantity,
           lineTotal: itemHolder.price * itemHolder.quantity,
         });
