@@ -62,8 +62,8 @@
                   <td></td>
 
                   <td></td>
-                  <td style="font-weight: bold">Dr.{{ totalSales }}</td>
-                  <td style="font-weight: bold">Cr.{{ totalPayment }}</td>
+                  <td style="font-weight: bold">Dr. {{ totalSales }}</td>
+                  <td style="font-weight: bold">Cr. {{ totalPayment }}</td>
                   <td></td>
                 </tr>
               </tfoot>

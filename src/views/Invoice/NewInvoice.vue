@@ -9,7 +9,9 @@
             <div class="invoice-top-section-details-left">
               <div class="invoice-custom-id">
                 <label>Invoice No </label>
-                <label style="color: var(--primary)">{{ store.this_invoice_custom_number }}</label>
+                <label style="color: var(--primary)">{{
+                  store.this_invoice_custom_number
+                }}</label>
               </div>
               <div class="form-invoice-customer">
                 <label>Customer </label>
@@ -117,15 +119,25 @@
                                 <li
                                   @click="
                                     selectOptionProduct(
+                                      queryResultProduct.product.id,
+                                      queryResultProduct.product.name,
+                                      queryResultProduct.product.unit
+                                        .short_name,
+                                      queryResultProduct.product.sp,
+                                      queryResultProduct.product.unit.id,
                                       queryResultProduct.id,
-                                      queryResultProduct.name,
-                                      queryResultProduct.unit.short_name,
-                                      queryResultProduct.sp,
-                                      queryResultProduct.unit.id
+                                      queryResultProduct.product.image
                                     )
                                   "
                                 >
-                                  {{ queryResultProduct.name }}
+                                  {{ queryResultProduct.product.name }} --
+                                  {{ queryResultProduct.quantity }}
+                                  {{
+                                    queryResultProduct.product.unit.short_name
+                                  }}
+                                  -- Rs. {{ queryResultProduct.price }}
+
+                                  <!-- {{ queryResultProduct.name }} -->
                                 </li>
                               </template>
                             </ul>
@@ -341,14 +353,13 @@
   <script>
 import { uid } from "uid";
 import { computed, reactive, ref, inject, onMounted } from "vue";
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   name: "Create New Invoice",
   setup() {
-
-    const router = useRouter()
-    const route = useRoute()
+    const router = useRouter();
+    const route = useRoute();
     //data
     const itemHolder = reactive({
       id: "",
@@ -357,6 +368,8 @@ export default {
       quantity: 0,
       image: "",
       unit: "",
+      stock_id: "",
+
       price: 0,
       lineTotal: 0,
     });
@@ -381,6 +394,9 @@ export default {
       quantity: "",
       image: "",
       unit: "",
+      image: "",
+      stock_id: "",
+
       price: "",
     });
     const showCustomerSelect = ref(false);
@@ -394,7 +410,6 @@ export default {
     onMounted(() => {
       getUserStoreData();
       getUnits();
-
     });
 
     //end of mounted
@@ -433,6 +448,9 @@ export default {
       // itemHolder.image="";
       itemHolder.unit = invoiceItems[indexForItem].unit;
       itemHolder.unit_id = invoiceItems[indexForItem].unit_id;
+      itemHolder.stock_id = invoiceItems[indexForItem].stock_id;
+      itemHolder.image = invoiceItems[indexForItem].image;
+
       itemHolder.price = invoiceItems[indexForItem].price;
       itemHolder.lineTotal = invoiceItems[indexForItem].lineTotal;
     };
@@ -441,8 +459,7 @@ export default {
       // have to change
       // invoiceItems = invoiceItems.filter((item) => item.id !== id);
 
-      console.log('please add delete logic...heheheh');
-
+      console.log("please add delete logic...heheheh");
     };
     const updateItemToInvoiceBtn = () => {
       if (itemHolder.product_name === "") {
@@ -467,6 +484,8 @@ export default {
         invoiceItems[index].quantity = itemHolder.quantity;
         invoiceItems[index].unit = itemHolder.unit;
         invoiceItems[index].unit_id = itemHolder.unit_id;
+        invoiceItems[index].stock_id = itemHolder.stock_id;
+        invoiceItems[index].image = itemHolder.image;
 
         invoiceItems[index].price = itemHolder.price;
         invoiceItems[index].lineTotal = itemHolder.price * itemHolder.quantity;
@@ -495,6 +514,8 @@ export default {
       // errorItemHolder.image="";
       errorItemHolder.unit = "";
       errorItemHolder.unit_id = "";
+      errorItemHolder.stock_id = "";
+      errorItemHolder.image = "";
 
       errorItemHolder.price = 0;
       errorItemHolder.lineTotal = 0;
@@ -506,6 +527,8 @@ export default {
       // itemHolder.image="";
       itemHolder.unit = "";
       itemHolder.unit_id = "";
+      itemHolder.stock_id = "";
+      itemHolder.image = "";
 
       itemHolder.price = 0;
       itemHolder.lineTotal = 0;
@@ -539,10 +562,11 @@ export default {
           id: uid(),
           product_id: itemHolder.product_id,
           product_name: itemHolder.product_name,
-          image: "https://avatars.githubusercontent.com/u/24312128?v=4",
+          image: itemHolder.image,
           price: itemHolder.price,
           unit: itemHolder.unit,
           unit_id: itemHolder.unit_id,
+          stock_id: itemHolder.stock_id,
           quantity: itemHolder.quantity,
           lineTotal: itemHolder.price * itemHolder.quantity,
         });
@@ -655,7 +679,9 @@ export default {
       product_name,
       product_unit,
       product_price,
-      product_unit_id
+      product_unit_id,
+      product_stock_id,
+      product_image
     ) => {
       showProductSelect.value = false;
       itemHolder.product_name = product_name;
@@ -665,6 +691,8 @@ export default {
       itemHolder.unit_id = product_unit_id;
       itemHolder.price = product_price;
       itemHolder.unit_id = product_unit_id;
+      itemHolder.stock_id = product_stock_id;
+      itemHolder.image = product_image;
     };
     const createInvoice = () => {
       axios
@@ -684,7 +712,7 @@ export default {
           clearErrorItemHolder();
           clearItemHolder();
           clearInvoiceInfo();
-          router.push({ path: '/invoices' })
+          router.push({ path: "/invoices" });
         })
         .catch((error) => {
           console.log(error);
@@ -696,9 +724,8 @@ export default {
       axios
         .get("user-store/")
         .then((response) => {
-
           store.invoice_id_count = response.data.store.invoice_id_count;
-        
+
           console.log(response.data);
 
           custom_invoice_number = store.invoice_id_count.split("-");
@@ -784,7 +811,6 @@ export default {
       store,
       getUnits,
       units,
-      
     };
   },
 };
