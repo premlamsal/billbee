@@ -119,15 +119,25 @@
                                 <li
                                   @click="
                                     selectOptionProduct(
+                                      queryResultProduct.product.id,
+                                      queryResultProduct.product.name,
+                                      queryResultProduct.product.unit
+                                        .short_name,
+                                      queryResultProduct.product.sp,
+                                      queryResultProduct.product.unit.id,
                                       queryResultProduct.id,
-                                      queryResultProduct.name,
-                                      queryResultProduct.unit.short_name,
-                                      queryResultProduct.sp,
-                                      queryResultProduct.unit.id
+                                      queryResultProduct.product.image
                                     )
                                   "
                                 >
-                                  {{ queryResultProduct.name }}
+                                  {{ queryResultProduct.product.name }} --
+                                  {{ queryResultProduct.quantity }}
+                                  {{
+                                    queryResultProduct.product.unit.short_name
+                                  }}
+                                  -- Rs. {{ queryResultProduct.price }}
+
+                                  <!-- {{ queryResultProduct.name }} -->
                                 </li>
                               </template>
                             </ul>
@@ -357,6 +367,7 @@ export default {
       product_id: "",
       quantity: 0,
       image: "",
+      stock_id: "",
       unit: "",
       price: 0,
       lineTotal: 0,
@@ -383,6 +394,7 @@ export default {
       quantity: "",
       image: "",
       unit: "",
+      stock_id: "",
       price: "",
     });
     const showCustomerSelect = ref(false);
@@ -398,7 +410,6 @@ export default {
       getStoreData();
       getInvoice();
       getUnits();
-
     });
 
     //end of mounted
@@ -425,44 +436,43 @@ export default {
         });
     };
     const getIdFromUrl = () => {
-      invoice_id_from_url.value=route.params.id;
+      invoice_id_from_url.value = route.params.id;
 
-    //   let custom_invoice_number = route.params.id;
+      //   let custom_invoice_number = route.params.id;
 
-    //   custom_invoice_number = custom_invoice_number.split("-");
+      //   custom_invoice_number = custom_invoice_number.split("-");
 
-    //   invoice_id_from_url.value = custom_invoice_number[1];
+      //   invoice_id_from_url.value = custom_invoice_number[1];
 
       console.log(invoice_id_from_url.value);
-
     }; //end of getIdFromUrl
 
     const getInvoice = () => {
       axios
         .get("invoice/" + invoice_id_from_url.value)
         .then((response) => {
+          invoiceInfo.custom_invoice_id =
+            response.data.invoice.custom_invoice_id;
+          invoiceInfo.id = response.data.invoice.id;
+          invoiceInfo.customer_id = response.data.invoice.customer_id;
+          invoiceInfo.customer_name = response.data.invoice.customer_name;
+          invoiceInfo.note = response.data.invoice.note;
+          invoiceInfo.invoice_date = response.data.invoice.invoice_date;
+          invoiceInfo.due_date = response.data.invoice.due_date;
+          invoiceInfo.sub_total = response.data.invoice.sub_total;
+          invoiceInfo.discount = response.data.invoice.discount;
+          invoiceInfo.tax_amount = response.data.invoice.sub_total;
+          invoiceInfo.grand_total = response.data.invoice.grand_total;
+          //loop thorugh invice Items
 
-            invoiceInfo.custom_invoice_id=response.data.invoice.custom_invoice_id;
+          let temp_invoiceItems;
+          // invoiceItems.length=0;
+          temp_invoiceItems = response.data.invoice.invoice_detail;
+          for (let i = 0; i < temp_invoiceItems.length; i++) {
+            invoiceItems.push(temp_invoiceItems[i]);
+          }
+          // console.log(temp_invoiceItems[0]);
 
-            invoiceInfo.customer_id=response.data.invoice.customer_id;
-            invoiceInfo.customer_name=response.data.invoice.customer_name;
-            invoiceInfo.note=response.data.invoice.note;
-            invoiceInfo.invoice_date=response.data.invoice.invoice_date;
-            invoiceInfo.due_date=response.data.invoice.due_date;
-            invoiceInfo.sub_total=response.data.invoice.sub_total;
-            invoiceInfo.discount=response.data.invoice.discount;
-            invoiceInfo.tax_amount=response.data.invoice.sub_total;
-            invoiceInfo.grand_total=response.data.invoice.grand_total;
-            //loop thorugh invice Items
-
-            let temp_invoiceItems;
-            // invoiceItems.length=0;
-            temp_invoiceItems = response.data.invoice.invoice_detail;
-             for (let i = 0; i < temp_invoiceItems.length; i++) {
-              invoiceItems.push(temp_invoiceItems[i]);
-            }
-            // console.log(temp_invoiceItems[0]);
-          
           toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
@@ -488,6 +498,9 @@ export default {
       // itemHolder.image="";
       itemHolder.unit = invoiceItems[indexForItem].unit;
       itemHolder.unit_id = invoiceItems[indexForItem].unit_id;
+      itemHolder.stock_id = invoiceItems[indexForItem].stock_id;
+      itemHolder.image = invoiceItems[indexForItem].image;
+
       itemHolder.price = invoiceItems[indexForItem].price;
       itemHolder.lineTotal = invoiceItems[indexForItem].lineTotal;
     };
@@ -496,8 +509,7 @@ export default {
       // have to change
       // invoiceItems = invoiceItems.filter((item) => item.id !== id);
 
-      console.log('please add delete logic...heheheh');
-
+      console.log("please add delete logic...heheheh");
     };
     const updateItemToInvoiceBtn = () => {
       if (itemHolder.product_name === "") {
@@ -522,6 +534,8 @@ export default {
         invoiceItems[index].quantity = itemHolder.quantity;
         invoiceItems[index].unit = itemHolder.unit;
         invoiceItems[index].unit_id = itemHolder.unit_id;
+        invoiceItems[index].stock_id = itemHolder.stock_id;
+        invoiceItems[index].image = itemHolder.image;
         invoiceItems[index].price = itemHolder.price;
         invoiceItems[index].lineTotal = itemHolder.price * itemHolder.quantity;
 
@@ -549,7 +563,8 @@ export default {
       // errorItemHolder.image="";
       errorItemHolder.unit = "";
       errorItemHolder.unit_id = "";
-
+      errorItemHolder.stock_id = "";
+      errorItemHolder.image = "";
       errorItemHolder.price = 0;
       errorItemHolder.lineTotal = 0;
     };
@@ -559,8 +574,9 @@ export default {
       itemHolder.quantity = 0;
       // itemHolder.image="";
       itemHolder.unit = "";
-      errorItemHolder.unit_id = "";
-
+      itemHolder.unit_id = "";
+      itemHolder.stock_id = "";
+      itemHolder.image = "";
       itemHolder.price = 0;
       itemHolder.lineTotal = 0;
     };
@@ -593,7 +609,8 @@ export default {
           id: uid(),
           product_id: itemHolder.product_id,
           product_name: itemHolder.product_name,
-          image: "https://avatars.githubusercontent.com/u/24312128?v=4",
+          image: itemHolder.image,
+          unit_id: itemHolder.unit_id,
           price: itemHolder.price,
           unit: itemHolder.unit,
           unit_id: itemHolder.unit_id,
@@ -709,7 +726,9 @@ export default {
       product_name,
       product_unit,
       product_price,
-      product_unit_id
+      product_unit_id,
+      product_stock_id,
+      product_image
     ) => {
       showProductSelect.value = false;
       itemHolder.product_name = product_name;
@@ -719,10 +738,16 @@ export default {
       itemHolder.unit_id = product_unit_id;
       itemHolder.price = product_price;
       itemHolder.unit_id = product_unit_id;
+      itemHolder.stock_id = product_stock_id;
+      itemHolder.image = product_image;
     };
     const editInvoice = () => {
       axios
-        .post("/invoice/edit", { 'info': invoiceInfo, 'items': invoiceItems ,'id': invoiceInfo.custom_invoice_id})
+        .post("/invoice/edit", {
+          info: invoiceInfo,
+          items: invoiceItems,
+          id: invoiceInfo.id,
+        })
         .then((response) => {
           //response.data.message have success message
 
@@ -745,7 +770,6 @@ export default {
         });
     };
     const getStoreData = () => {
-
       let custom_invoice_number;
 
       axios
@@ -762,10 +786,8 @@ export default {
           // store.this_invoice_custom_number = custom_invoice_number.join("-");
 
           // console.log(store.this_invoice_custom_number);
-        //   store.this_invoice_custom_number = store.invoice_id_count;
-        //   store.this_invoice_custom_number = invoice_id_from_url;
-          
-          
+          //   store.this_invoice_custom_number = store.invoice_id_count;
+          //   store.this_invoice_custom_number = invoice_id_from_url;
 
           toast(response.data.message, {
             showIcon: true,

@@ -378,7 +378,6 @@ export default {
       unit: "",
       unit_id: "",
       stock_id: "",
-      image: "",
 
       price: 0,
       lineTotal: 0,
