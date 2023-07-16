@@ -235,11 +235,11 @@
                           <div>
                             <img
                               style="border-radius: 50%"
-                              :src="item.image"
+                              :src="
+                                VITE_MY_APP_BACK_URL_HOME + item.product.image
+                              "
                               width="40"
                               height="40"
-                              v-if="item.image"
-                              :alt="item.product_name"
                             />
                           </div>
                           <div style="margin-left: 10%">
@@ -400,6 +400,9 @@ export default {
     const showCustomerSelect = ref(false);
     const showProductSelect = ref(false);
 
+    const VITE_MY_APP_BACK_URL_HOME = ref(
+      import.meta.env.VITE_MY_APP_BACK_URL_HOME
+    );
     const toast = inject("$toast");
 
     //mounted
@@ -410,6 +413,7 @@ export default {
       getStoreData();
       getInvoice();
       getUnits();
+      invoiceInfo.discount = 0;
     });
 
     //end of mounted
@@ -866,6 +870,7 @@ export default {
       getInvoice,
       getUnits,
       units,
+      VITE_MY_APP_BACK_URL_HOME,
     };
   },
 };

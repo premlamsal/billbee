@@ -150,6 +150,16 @@ const router = createRouter({
 			},
 		},
 		{
+			path: '/:id/customer-payments',
+			name: 'CustomerPayments',
+			component: () => import('../views/Customer/CustomerPayments.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
 			path: '/:id/show-customer',
 			name: 'ShowCustomer',
 			component: () => import('../views/Customer/CustomerProfile.vue'),
