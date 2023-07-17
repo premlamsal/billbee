@@ -179,6 +179,16 @@ const router = createRouter({
 			},
 		},
 		{
+			path: '/:id/supplier-payments',
+			name: 'SupplierPayments',
+			component: () => import('../views/Supplier/SupplierPayments.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
 			path: '/:id/show-supplier',
 			name: 'ShowSupplier',
 			component: () => import('../views/Supplier/SupplierProfile.vue'),

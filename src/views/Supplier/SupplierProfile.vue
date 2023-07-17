@@ -4,7 +4,9 @@
     <h3>
       {{ supplier.name }} || Supplier ID : {{ supplier.custom_supplier_id }}
     </h3>
-    <div class="account-header"></div>
+    <div class="account-header">
+      <button @click="goToSupplierPayments()">Payments</button>
+    </div>
     <div class="accounts-content">
       <div
         style="
@@ -307,6 +309,12 @@ export default {
           console.log(error);
         });
     };
+    const goToSupplierPayments = () => {
+      // router.push({
+      //   path: `${custom_supplier_id.value}/supplier-payments/`,
+      // });
+      router.push({ name: "SupplierPayments", params: { custom_supplier_id } }); // -> /user/eduardo
+    };
     const getSupplierDetails = () => {
       axios
         .get("custom-supplier/" + custom_supplier_id.value)
@@ -340,6 +348,7 @@ export default {
       getAccounts,
       totalPurchases,
       totalPayment,
+      goToSupplierPayments,
     };
   }, //end of setup
 };
