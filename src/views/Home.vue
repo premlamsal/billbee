@@ -3,40 +3,85 @@
     <h1>Dashboard</h1>
     <p>Welcome to Dashboad</p>
     <div class="dash-content">
-
-        <div class="dash-box-container">
-      <div class="box users">
-        <span class="material-icons">receipt_long</span>
-        <h3>Invoices</h3>
-        <p>25,000</p>
+      <div class="dash-box-container">
+        <div class="box users">
+          <span class="material-icons">receipt_long</span>
+          <h3>Invoices</h3>
+          <p>Rs. {{ dash.invoice }}</p>
+        </div>
+        <div class="box invoices">
+          <span class="material-icons">description</span>
+          <h3>Purchases</h3>
+          <p>Rs. {{ dash.purchase }}</p>
+        </div>
+        <div class="box orders">
+          <span class="material-icons">shopping_bag</span>
+          <h3>Products</h3>
+          <p>{{ dash.product }}</p>
+        </div>
+        <div class="box expenses">
+          <span class="material-icons">supervised_user_circle</span>
+          <h3>Customers</h3>
+          <p>{{ dash.customer }}</p>
+        </div>
+        <div class="box income">
+          <span class="material-icons">local_shipping</span>
+          <h3>Suppliers</h3>
+          <p>{{ dash.supplier }}</p>
+        </div>
       </div>
-      <div class="box invoices">
-      	<span class="material-icons">description</span>
-        <h3>Purchases</h3>
-        <p>1,000</p>
-      </div>
-      <div class="box orders">
-        <span class="material-icons">shopping_bag</span>
-        <h3>Products</h3>
-        <p>500</p>
-      </div>
-      <div class="box expenses">
-        <span class="material-icons">supervised_user_circle</span>
-        <h3>Customers</h3>
-        <p>$10,000</p>
-      </div>
-      <div class="box income">
-      	<span class="material-icons">local_shipping</span>
-        <h3>Suppliers</h3>
-        <p>$25,000</p>
-      </div>
-    </div>
     </div>
   </main>
 </template>
+<script>
+import { computed, reactive, ref, inject, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
+export default {
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+    const dash = reactive([]);
+    const VITE_MY_APP_BACK_URL_HOME = ref(
+      import.meta.env.VITE_MY_APP_BACK_URL_HOME
+    );
+    const axios = inject("$axios");
+    const toast = inject("$toast");
+
+    onMounted(() => {
+      getDashInfo();
+    });
+    const getDashInfo = () => {
+      dash.length = 0;
+      axios
+        .get("dashInfo")
+        .then((response) => {
+          // console.log(response.data.product);
+          dash.product = response.data.product;
+          dash.stock = response.data.stock;
+          dash.invoice = response.data.invoice;
+          dash.purchase = response.data.purchase;
+          dash.supplier = response.data.supplier;
+          dash.customer = response.data.customer;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    return {
+      dash,
+      VITE_MY_APP_BACK_URL_HOME,
+    };
+  },
+};
+</script>
 <style>
-.dash-content{
-    margin-top:20px ;
+.dash-content {
+  margin-top: 20px;
+}
+.dash-content span.material-icons {
+  font-size: 40px;
 }
 .dash-box-container {
   display: flex;
