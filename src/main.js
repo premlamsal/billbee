@@ -4,7 +4,7 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 // import the library
-import {createToast} from 'mosha-vue-toastify';
+import { createToast } from 'mosha-vue-toastify';
 // import the styling for the toast
 import 'mosha-vue-toastify/dist/style.css'
 
@@ -13,6 +13,7 @@ const app = createApp(App);
 
 
 import "./assets/main.css";
+
 
 //axios
 import Axios from "axios";
@@ -38,6 +39,8 @@ Axios.defaults.baseURL = appUrl;
 app.provide('$axios', Axios);
 
 app.provide('$toast', createToast);
+
+
 
 app.use(createPinia());
 app.use(router);

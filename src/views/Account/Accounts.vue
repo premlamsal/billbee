@@ -116,7 +116,10 @@
             <template v-for="account in accounts" v-bind:key="account.id">
               <tr v-if="accounts != null">
                 <td>{{ account.custom_account_id }}</td>
-                <td  @click="showAccount(account.custom_account_id)" class="cursor">
+                <td
+                  @click="showAccount(account.custom_account_id)"
+                  class="cursor"
+                >
                   {{ account.name }}
                 </td>
                 <td>Rs. {{ account.balance }}</td>
@@ -161,6 +164,7 @@ export default {
     const showAccountModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
+
     const isModalUpdating = ref(false);
     const account = reactive({});
     const modalHeader = ref(""); // Add or Edit Account
@@ -204,12 +208,12 @@ export default {
 
           account.id = response.data.account.id; //to send id to the update controller
 
-        //   toast(response.data.message, {
-        //     showIcon: true,
-        //     type: response.data.status,
-        //     position: "top-right",
-        //     transition: "zoom",
-        //   });
+          //   toast(response.data.message, {
+          //     showIcon: true,
+          //     type: response.data.status,
+          //     position: "top-right",
+          //     transition: "zoom",
+          //   });
         })
         .catch((error) => {
           console.log(error);
