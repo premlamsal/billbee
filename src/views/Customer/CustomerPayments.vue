@@ -1,6 +1,6 @@
 <template>
   <main id="payments-page">
-    <h1>Payments</h1>
+    <h1>Customer Payments</h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showPaymentModal">
         <div class="modal">
@@ -94,6 +94,7 @@
             <tr>
               <th>Date</th>
               <th>Amount</th>
+              <th>Image</th>
               <th>Modify</th>
             </tr>
           </thead>
@@ -102,13 +103,29 @@
               <td>{{ payment.date }}</td>
               <td>Rs. {{ payment.amount }}</td>
               <td>
-                <span class="custom-link" @click="editViewPayment(payment.id)"
-                  >View | Edit
-                </span>
-                /
-                <span class="custom-link" @click="deletePayment(payment.id)"
-                  >Delete
-                </span>
+                <img
+                  :src="VITE_MY_APP_BACK_URL_HOME + payment.image"
+                  width="40"
+                  height="40"
+                />
+              </td>
+              <td>
+                <span
+                  class="material-icons"
+                  style="color: var(--primary); cursor: pointer"
+                  >format_align_justify</span
+                >
+                <span
+                  class="material-icons"
+                  style="color: blueviolet; cursor: pointer"
+                  @click="editPaymentModal(payment.id)"
+                  >edit</span
+                >
+                <span
+                  class="material-icons"
+                  style="color: orangered; cursor: pointer"
+                  >delete</span
+                >
               </td>
             </tr>
           </tbody>
@@ -146,7 +163,6 @@ export default {
     //on mounted start
     onMounted(() => {
       getIdFromUrl();
-
       getPayments();
       getAccounts();
     });
@@ -168,14 +184,14 @@ export default {
     };
     const getIdFromUrl = () => {
       custom_customer_id.value = route.params.id;
-      //   console.log(custom_customer_id.value);
+      // console.log(custom_customer_id.value);
     }; //end of getIdFromUrl
 
     const getSinglePayment = (payment_id) => {
       console.log(payment_id);
 
       axios
-        .get("payment/" + payment_id)
+        .get("customer/payment/" + payment_id)
         .then((response) => {
           // console.log(response.data.payment.name);
           payment.id = response.data.data[0].id;
@@ -183,9 +199,10 @@ export default {
           payment.date = response.data.data[0].date;
           payment.amount = response.data.data[0].amount;
           payment.old_amount = response.data.data[0].amount;
-          payment.account_id = response.data.data[0].account_id;
+          payment.account_id = response.data.account_id;
           payment.old_account_id = response.data.account_id;
-          imagePreview = "/img/" + response.data.data[0].image;
+          imagePreview.value =
+            VITE_MY_APP_BACK_URL_HOME.value + response.data.data[0].image;
 
           toast(response.data.message, {
             showIcon: true,
@@ -219,12 +236,12 @@ export default {
         let formData = new FormData();
         formData.append("_METHOD", "POST");
         formData.append("payment_id", payment.id);
-        formData.append("customer_id", custom_customer_id.value);
+        // formData.append("customer_id", custom_customer_id.value);
         formData.append("date", payment.date);
         formData.append("amount", payment.amount);
         formData.append("old_amount", payment.old_amount);
         formData.append("notes", payment.notes);
-        formData.append("image", image);
+        formData.append("image", image.value);
         formData.append("account_id", payment.account_id);
         formData.append("old_account_id", payment.old_account_id);
 
@@ -261,7 +278,7 @@ export default {
         formData.append("date", payment.date);
         formData.append("account_id", payment.account_id);
 
-        formData.append("image", image);
+        formData.append("image", image.value);
 
         const config = {
           headers: { "content-type": "multipart/form-data" },
