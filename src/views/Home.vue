@@ -83,6 +83,10 @@ export default {
 .dash-content span.material-icons {
   font-size: 40px;
 }
+/* .dash-content span.material-icons:hover {
+  font-size: 50px;
+  transition: all 0.3s ease-in-out;
+} */
 .dash-box-container {
   display: flex;
   flex-wrap: wrap;
