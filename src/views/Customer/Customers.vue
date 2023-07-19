@@ -26,9 +26,20 @@
               <input
                 type="text"
                 placeholder="Customer Name"
-                class="customerNameHolder"
+                :class="['customerNameHolder', errors.name ? 'is-invalid' : '']"
                 v-model="customer.name"
               />
+              <div v-if="errors.name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-customer">
               <label> Address</label>
@@ -36,9 +47,23 @@
               <input
                 type="text"
                 placeholder="Customer Address"
-                class="customerAddressHolder"
                 v-model="customer.address"
+                :class="[
+                  'customerAddressHolder',
+                  errors.address ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.address" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.address"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-customer">
               <label> Phone</label>
@@ -46,9 +71,23 @@
               <input
                 type="text"
                 placeholder="Customer Phone"
-                class="customerPhoneHolder"
+                :class="[
+                  'customerPhoneHolder',
+                  errors.phone ? 'is-invalid' : '',
+                ]"
                 v-model="customer.phone"
               />
+              <div v-if="errors.phone" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.phone"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-customer">
               <label> Opening Balance</label>
@@ -56,17 +95,45 @@
               <input
                 type="text"
                 placeholder="Customer Opening Balance"
-                class="customerOpeningBalanceHolder"
                 v-model="customer.opening_balance"
+                :class="[
+                  'customerOpeningBalanceHolder',
+                  errors.opening_balance ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.opening_balance" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.opening_balance"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-customer">
               <label> Details</label>
               <textarea
                 type="text"
-                class="customerDetailsHolder"
                 v-model="customer.details"
+                :class="[
+                  'customerDetailsHolder',
+                  errors.details ? 'is-invalid' : '',
+                ]"
               ></textarea>
+              <div v-if="errors.details" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.details"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -104,7 +171,9 @@
             <template v-for="customer in customers" v-bind:key="customer.id">
               <tr v-if="customers != null">
                 <td>{{ customer.custom_customer_id }}</td>
-                <td @click="showCustomer(customer.custom_customer_id)">{{ customer.name }}</td>
+                <td @click="showCustomer(customer.custom_customer_id)">
+                  {{ customer.name }}
+                </td>
                 <td>{{ customer.address }}</td>
                 <td>{{ customer.phone }}</td>
                 <td>
@@ -142,6 +211,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const customers = reactive([]);
+    const errors = ref({});
+
     const showCustomerModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
@@ -169,36 +240,31 @@ export default {
       displayCustomerModal();
       getSingleCustomer(customer_id);
     };
-    const getSingleCustomer=(customer_id)=>{
-
+    const getSingleCustomer = (customer_id) => {
       console.log(customer_id);
 
-      axios.get('customer/'+customer_id)
-      .then(response=>{
-        // console.log(response.data.customer.name);
-        customer.id=response.data.customer.id
-        customer.name=response.data.customer.name
-        customer.address=response.data.customer.address
-        customer.phone=response.data.customer.phone
-        customer.opening_balance=response.data.customer.opening_balance
-        customer.details=response.data.customer.details;
-        
-        toast(response.data.message, {
-              showIcon: true,
-              type: response.data.status,
-              position: "top-right",
-              transition: "zoom",
-            });
+      axios
+        .get("customer/" + customer_id)
+        .then((response) => {
+          // console.log(response.data.customer.name);
+          customer.id = response.data.customer.id;
+          customer.name = response.data.customer.name;
+          customer.address = response.data.customer.address;
+          customer.phone = response.data.customer.phone;
+          customer.opening_balance = response.data.customer.opening_balance;
+          customer.details = response.data.customer.details;
 
-
-      })
-      .catch(error=>{
-        console.log(error);
-      })
-
-
-
-    }
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const displayCustomerModal = () => {
       if (showCustomerModal.value) {
         showCustomerModal.value = false;
@@ -212,10 +278,11 @@ export default {
       customer.phone = "";
       customer.opening_balance = "";
       customer.details = "";
+      errors.value = "";
     };
     const addCustomer = () => {
       if (isModalUpdating.value) {
-        console.log('okay i will update boos')
+        console.log("okay i will update boos");
 
         let formdata = new FormData();
         formdata.append("id", customer.id);
@@ -241,10 +308,12 @@ export default {
             displayCustomerModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
-        console.log('oaky i will add boss')
+        console.log("oaky i will add boss");
 
         let formdata = new FormData();
         formdata.append("name", customer.name);
@@ -269,7 +338,9 @@ export default {
             displayCustomerModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       }
     };
@@ -311,7 +382,8 @@ export default {
       addCustomer,
       editCustomerModal,
       modalHeader,
-      showCustomer
+      showCustomer,
+      errors,
     };
   }, //end of setup
 };

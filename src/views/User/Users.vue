@@ -1,9 +1,14 @@
 <template>
   <main id="users-page">
     <h1>Users</h1>
-    
-    <Prompt :isPrompt="pressedDelete" v-if="pressedDelete" @event-confirm="eventPrompt" @event-cancel="eventPrompt" />
-   
+
+    <Prompt
+      :isPrompt="pressedDelete"
+      v-if="pressedDelete"
+      @event-confirm="eventPrompt"
+      @event-cancel="eventPrompt"
+    />
+
     <Transition :duration="550">
       <div class="modal-container" v-if="showUserModal">
         <div class="modal">
@@ -29,39 +34,89 @@
               <input
                 type="text"
                 placeholder="User Name"
-                class="userNameHolder"
                 v-model="user.name"
+                :class="['userNameHolder', errors.name ? 'is-invalid' : '']"
               />
+              <div v-if="errors.name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-user">
               <label>Email</label>
               <input
                 type="email"
                 placeholder="User Email"
-                class="userEmailHolder"
                 v-model="user.email"
+                :class="['userEmailHolder', errors.email ? 'is-invalid' : '']"
               />
+              <div v-if="errors.email" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.email"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-user">
               <label>Password</label>
               <input
                 type="password"
                 placeholder="User Password"
-                class="userPasswordHolder"
                 v-model="user.password"
+                :class="[
+                  'userPasswordHolder',
+                  errors.password ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.password" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.password"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             <div class="form-input-user">
               <label> Role</label>
 
-              <select v-model="user.role_id" class="userRoleHolder">
+              <select
+                v-model="user.role_id"
+                :class="['userRoleHolder', errors.role_id ? 'is-invalid' : '']"
+              >
                 <template v-for="role in roles" v-bind:key="role.id">
                   <option selected :value="role.id">
                     {{ role.name }}
                   </option>
                 </template>
               </select>
+              <div v-if="errors.role_id" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.role_id"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -110,8 +165,6 @@
                 <td>{{ user.email }}</td>
                 <td v-if="user.roles[0]">{{ user.roles[0].name }}</td>
                 <td v-else>Please attach Role</td>
-             
-
 
                 <td>{{ user.last_login }}</td>
                 <td>
@@ -153,7 +206,7 @@ export default {
     const route = useRoute();
     const users = reactive([]);
     const roles = reactive([]);
-
+    const errors = ref({});
 
     const showUserModal = ref(false);
     const axios = inject("$axios");
@@ -175,52 +228,46 @@ export default {
       store.increment();
       // console.log(store.count);
     });
-    
-    //propmt start
 
+    //propmt start
 
     //for prompt
     const pressedDelete = ref(false);
-    const deleteUserId=ref(""); 
+    const deleteUserId = ref("");
 
     const eventPrompt = (returned_val) => {
       // console.log(returned_val);
 
-      if(returned_val){
+      if (returned_val) {
         // console.log('HELLO CONFIRM');
-        axios.delete('user/' + deleteUserId.value)
-        .then(response=>{
+        axios
+          .delete("user/" + deleteUserId.value)
+          .then((response) => {
+            toast(response.data.message, {
+              showIcon: true,
+              type: response.data.status,
+              position: "top-right",
+              transition: "zoom",
+            });
 
-          toast(response.data.message, {
-            showIcon: true,
-            type: response.data.status,
-            position: "top-right",
-            transition: "zoom",
+            getUsers();
+          })
+          .catch((error) => {
+            console.log(error);
           });
-
-          getUsers();
-
-        })
-        .catch(error=>{
-          console.log(error);
-        })
-
-
-      }else{
-      console.log('HELLO CANCEL');
+      } else {
+        console.log("HELLO CANCEL");
         //nothing to do when cancel button is pressed
       }
 
       delBtn();
-    
     };
 
     const delBtn = (user_id) => {
       // console.log(user_id);
-      
-      //save user id to pass to prompt function
-      deleteUserId.value=user_id;
 
+      //save user id to pass to prompt function
+      deleteUserId.value = user_id;
 
       if (pressedDelete.value) {
         pressedDelete.value = false;
@@ -228,15 +275,13 @@ export default {
         pressedDelete.value = true;
       }
     };
-//prompt ends
-
-
-
+    //prompt ends
 
     //end of onMounted
 
     const addUserBtn = () => {
       clearUser();
+      errors.value = "";
       isModalUpdating.value = false;
       modalHeader.value = "Add";
       displayUserModal();
@@ -244,6 +289,7 @@ export default {
     };
     const editUserModal = (user_id) => {
       isModalUpdating.value = true;
+      errors.value = "";
       modalHeader.value = "Edit";
       displayUserModal();
       getSingleUser(user_id);
@@ -316,7 +362,9 @@ export default {
             displayUserModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
         console.log("oaky i will add boss");
@@ -344,7 +392,11 @@ export default {
             displayUserModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
+            // errors.name = "hello error name";
+            console.log(errors);
           });
       }
     };
@@ -396,6 +448,7 @@ export default {
       user,
       toast,
       users,
+      errors,
       addUserBtn,
       getUsers,
       showUserModal,
@@ -408,7 +461,7 @@ export default {
       pressedDelete,
       delBtn,
       eventPrompt,
-      isModalUpdating
+      isModalUpdating,
     };
   }, //end of setup
 };
@@ -433,6 +486,7 @@ export default {
   background: #fff;
   /* padding: 15px; */
   position: relative;
+  transition: all 2s ease-in-out;
 }
 .modal-header {
   background: var(--primary);
@@ -632,5 +686,17 @@ select.userRoleHolder {
   width: 100%;
   font-size: 14px;
   margin-top: 10px;
+}
+.errorText {
+  transition: all 2s ease-in-out;
+  margin-top: 10px;
+  color: rgb(220, 19, 19);
+  font-size: 13px;
+  margin-left: 16px;
+}
+input.is-invalid,
+select.is-invalid {
+  border: 1px solid red;
+  transition: all 2s ease-in-out;
 }
 </style>

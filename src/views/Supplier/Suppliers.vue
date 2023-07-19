@@ -26,9 +26,20 @@
               <input
                 type="text"
                 placeholder="Supplier Name"
-                class="supplierNameHolder"
                 v-model="supplier.name"
+                :class="['supplierNameHolder', errors.name ? 'is-invalid' : '']"
               />
+              <div v-if="errors.name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-supplier">
               <label> Address</label>
@@ -36,9 +47,23 @@
               <input
                 type="text"
                 placeholder="Supplier Address"
-                class="supplierAddressHolder"
+                :class="[
+                  'supplierAddressHolder',
+                  errors.address ? 'is-invalid' : '',
+                ]"
                 v-model="supplier.address"
               />
+              <div v-if="errors.address" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.address"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-supplier">
               <label> Phone</label>
@@ -46,9 +71,23 @@
               <input
                 type="text"
                 placeholder="Supplier Phone"
-                class="supplierPhoneHolder"
+                :class="[
+                  'supplierPhoneHolder',
+                  errors.phone ? 'is-invalid' : '',
+                ]"
                 v-model="supplier.phone"
               />
+              <div v-if="errors.phone" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.phone"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-supplier">
               <label> Opening Balance</label>
@@ -56,17 +95,45 @@
               <input
                 type="text"
                 placeholder="Supplier Opening Balance"
-                class="supplierOpeningBalanceHolder"
+                :class="[
+                  'supplierOpeningBalanceHolder',
+                  errors.opening_balance ? 'is-invalid' : '',
+                ]"
                 v-model="supplier.opening_balance"
               />
+              <div v-if="errors.opening_balance" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.opening_balance"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-supplier">
               <label> Details</label>
               <textarea
                 type="text"
-                class="supplierDetailsHolder"
+                :class="[
+                  'supplierDetailsHolder',
+                  errors.details ? 'is-invalid' : '',
+                ]"
                 v-model="supplier.details"
               ></textarea>
+              <div v-if="errors.details" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.details"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -144,6 +211,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const suppliers = reactive([]);
+    const errors = ref({});
+
     const showSupplierModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
@@ -212,6 +281,7 @@ export default {
       supplier.phone = "";
       supplier.opening_balance = "";
       supplier.details = "";
+      errors.value = "";
     };
     const addSupplier = () => {
       if (isModalUpdating.value) {
@@ -241,7 +311,9 @@ export default {
             displaySupplierModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
         console.log("oaky i will add boss");
@@ -269,7 +341,9 @@ export default {
             displaySupplierModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       }
     };
@@ -308,6 +382,7 @@ export default {
       editSupplierModal,
       modalHeader,
       showSupplier,
+      errors,
     };
   }, //end of setup
 };

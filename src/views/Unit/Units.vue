@@ -27,8 +27,23 @@
                 type="text"
                 placeholder="Unit Short Name"
                 class="unitShortNameHolder"
+                :class="[
+                  'unitShortNameHolder',
+                  errors.short_name ? 'is-invalid' : '',
+                ]"
                 v-model="unit.short_name"
               />
+              <div v-if="errors.short_name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.short_name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-unit">
               <label> Long Name</label>
@@ -36,9 +51,23 @@
               <input
                 type="text"
                 placeholder="Unit Long Name"
-                class="unitLongNameHolder"
+                :class="[
+                  'unitLongNameHolder',
+                  errors.long_name ? 'is-invalid' : '',
+                ]"
                 v-model="unit.long_name"
               />
+              <div v-if="errors.long_name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.long_name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -102,20 +131,18 @@
       </div>
     </div>
   </main>
-
 </template>
     <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
-import ModalDialog from "@/components/ModalDialog.vue";
-import { createConfirmDialog } from "vuejs-confirm-dialog";
 
 export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
     const units = reactive([]);
+    const errors = ref({});
+
     const showUnitModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
@@ -128,8 +155,7 @@ export default {
     //on mounted start
     onMounted(() => {
       getUnits();
-    reveal();//modal function to show modal
-
+      reveal(); //modal function to show modal
     });
 
     //end of onMounted
@@ -189,6 +215,7 @@ export default {
     const clearUnit = () => {
       unit.short_name = "";
       unit.long_name = "";
+      errors.value = "";
     };
     const addUnit = () => {
       if (isModalUpdating.value) {
@@ -215,7 +242,9 @@ export default {
             displayUnitModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
         console.log("oaky i will add boss");
@@ -240,7 +269,9 @@ export default {
             displayUnitModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       }
     };
@@ -278,6 +309,7 @@ export default {
       addUnit,
       editUnitModal,
       modalHeader,
+      errors,
     };
   }, //end of setup
 };

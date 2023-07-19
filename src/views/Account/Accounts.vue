@@ -26,9 +26,20 @@
               <input
                 type="text"
                 placeholder="Account Name"
-                class="form-input-holder"
                 v-model="account.name"
+                :class="['form-input-holder', errors.name ? 'is-invalid' : '']"
               />
+              <div v-if="errors.name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-account">
               <label> Bank Name</label>
@@ -36,9 +47,23 @@
               <input
                 type="text"
                 placeholder="Bank Name"
-                class="form-input-holder"
                 v-model="account.bank_name"
+                :class="[
+                  'form-input-holder',
+                  errors.bank_name ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.bank_name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.bank_name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-account">
               <label> Account Holder Name</label>
@@ -46,9 +71,23 @@
               <input
                 type="text"
                 placeholder="Account Holder Name"
-                class="form-input-holder"
+                :class="[
+                  'form-input-holder',
+                  errors.holder_name ? 'is-invalid' : '',
+                ]"
                 v-model="account.holder_name"
               />
+              <div v-if="errors.holder_name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.holder_name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-account">
               <label> Bank Account Number</label>
@@ -56,9 +95,23 @@
               <input
                 type="text"
                 placeholder="Bank Account Number"
-                class="form-input-holder"
+                :class="[
+                  'form-input-holder',
+                  errors.bank_acc_num ? 'is-invalid' : '',
+                ]"
                 v-model="account.bank_acc_num"
               />
+              <div v-if="errors.bank_acc_num" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.bank_acc_num"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-account">
               <label> Opening Balance</label>
@@ -66,17 +119,45 @@
               <input
                 type="text"
                 placeholder="Opening Balance"
-                class="form-input-holder"
                 v-model="account.opening_balance"
+                :class="[
+                  'form-input-holder',
+                  errors.opening_balance ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.opening_balance" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.opening_balance"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-account">
               <label> Account Information :</label>
               <textarea
                 type="text"
-                class="form-input-holder"
                 v-model="account.account_info"
+                :class="[
+                  'form-input-holder',
+                  errors.account_info ? 'is-invalid' : '',
+                ]"
               ></textarea>
+              <div v-if="errors.account_info" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.account_info"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -161,6 +242,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const accounts = reactive([]);
+    const errors = ref({});
+
     const showAccountModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
@@ -234,6 +317,7 @@ export default {
       account.holder_name = "";
       account.account_info = "";
       account.bank_acc_num = "";
+      errors.value = "";
     };
     const addAccount = () => {
       if (isModalUpdating.value) {
@@ -266,7 +350,9 @@ export default {
             displayAccountModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
         console.log("oaky i will add boss");
@@ -296,7 +382,9 @@ export default {
             displayAccountModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       }
     };
@@ -338,6 +426,7 @@ export default {
       editAccountModal,
       modalHeader,
       showAccount,
+      errors,
     };
   }, //end of setup
 };

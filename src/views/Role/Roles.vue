@@ -1,7 +1,12 @@
 <template>
   <main id="roles-page">
     <h1>Roles</h1>
-    <Prompt :isPrompt="pressedDelete" v-if="pressedDelete" @event-confirm="eventPrompt" @event-cancel="eventPrompt" />
+    <Prompt
+      :isPrompt="pressedDelete"
+      v-if="pressedDelete"
+      @event-confirm="eventPrompt"
+      @event-cancel="eventPrompt"
+    />
 
     <Transition :duration="550">
       <div class="modal-container" v-if="showRoleModal">
@@ -28,14 +33,31 @@
               <input
                 type="text"
                 placeholder="Role Name"
-                class="roleNameHolder"
                 v-model="role.name"
+                :class="['roleNameHolder', errors.name ? 'is-invalid' : '']"
               />
+              <div v-if="errors.name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-role">
               <label> Permission Name</label>
 
-              <select v-model="role.permission_id" class="rolePermissionHolder">
+              <select
+                v-model="role.permission_id"
+                :class="[
+                  'rolePermissionHolder',
+                  errors.permission_id ? 'is-invalid' : '',
+                ]"
+              >
                 <template
                   v-for="permission in permissions"
                   v-bind:key="permission.id"
@@ -45,6 +67,17 @@
                   </option>
                 </template>
               </select>
+              <div v-if="errors.permission_id" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.permission_id"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -55,13 +88,9 @@
     </Transition>
     <div class="role-header">
       <div class="link-button-container">
-        <router-link to="/users">
-        Users
-        </router-link>
+        <router-link to="/users"> Users </router-link>
 
-        <router-link to="/permissions">
-        Permissions
-        </router-link>
+        <router-link to="/permissions"> Permissions </router-link>
       </div>
       <button class="btn-new-role" @click="addRoleBtn()">
         <span class="btn-name"> New Role</span>
@@ -89,7 +118,9 @@
             <template v-for="role in roles" v-bind:key="role.id">
               <tr v-if="roles != null">
                 <td>{{ role.name }}</td>
-                <td v-if="role.permissions[0]">{{ role.permissions[0].name }}</td>
+                <td v-if="role.permissions[0]">
+                  {{ role.permissions[0].name }}
+                </td>
                 <td v-else>Please attach permissions</td>
                 <td>
                   <!-- <span
@@ -127,6 +158,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const roles = reactive([]);
+    const errors = ref({});
     const showRoleModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
@@ -142,7 +174,6 @@ export default {
     });
 
     //end of onMounted
-
 
     //propmt start
 
@@ -192,9 +223,6 @@ export default {
     };
     //prompt ends
 
-
- 
-
     const addRoleBtn = () => {
       clearRole();
       isModalUpdating.value = false;
@@ -241,6 +269,7 @@ export default {
     const clearRole = () => {
       role.name = "";
       role.permission_id = "";
+      errors.value = "";
     };
     const addRole = () => {
       if (isModalUpdating.value) {
@@ -269,7 +298,9 @@ export default {
             displayRoleModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
         console.log("oaky i will add boss");
@@ -295,7 +326,9 @@ export default {
             displayRoleModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       }
     };
@@ -365,7 +398,8 @@ export default {
       getPermissions,
       pressedDelete,
       delBtn,
-      eventPrompt
+      eventPrompt,
+      errors,
     };
   }, //end of setup
 };
@@ -564,7 +598,7 @@ select.rolePermissionHolder {
   padding: 4px;
   border-radius: 10px;
 }
-.link-button-container a:hover{
+.link-button-container a:hover {
   background: var(--dark);
 }
 </style>

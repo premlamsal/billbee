@@ -21,60 +21,16 @@
             <h1>{{ modalHeader }} Transaction</h1>
           </div>
           <div class="modal-body">
-            <!-- <div class="form-input-transaction">
-                <label>Transaction Name</label>
-                <input
-                  type="text"
-                  placeholder="Transaction Name"
-                  class="transactionNameHolder"
-                  v-model="transaction.name"
-                />
-              </div>
-              <div class="form-input-transaction">
-                <label> Address</label>
-  
-                <input
-                  type="text"
-                  placeholder="Transaction Address"
-                  class="transactionAddressHolder"
-                  v-model="transaction.address"
-                />
-              </div>
-              <div class="form-input-transaction">
-                <label> Phone</label>
-  
-                <input
-                  type="text"
-                  placeholder="Transaction Phone"
-                  class="transactionPhoneHolder"
-                  v-model="transaction.phone"
-                />
-              </div>
-              <div class="form-input-transaction">
-                <label> Opening Balance</label>
-  
-                <input
-                  type="text"
-                  placeholder="Transaction Opening Balance"
-                  class="transactionOpeningBalanceHolder"
-                  v-model="transaction.opening_balance"
-                />
-              </div>
-              <div class="form-input-transaction">
-                <label> Details</label>
-                <textarea
-                  type="text"
-                  class="transactionDetailsHolder"
-                  v-model="transaction.details"
-                ></textarea>
-              </div> -->
             <div class="form-input-transaction">
               <input type="hidden" v-model="transaction.id" />
               <div class="form-input-transaction">
                 <label for="User Type">Account</label>
                 <select
-                  class="transactionAccountHolder"
                   v-model="transaction.account_id"
+                  :class="[
+                    'transactionAccountHolder',
+                    errors.account_id ? 'is-invalid' : '',
+                  ]"
                 >
                   <option
                     selected=""
@@ -85,6 +41,17 @@
                     {{ account.name }}
                   </option>
                 </select>
+                <div v-if="errors.account_id" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.account_id"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
 
               <div class="form-input-transaction">
@@ -94,8 +61,11 @@
                     type="radio"
                     id="income"
                     value="income"
-                    class="transactionTypeHolder"
                     v-model="transaction.transaction_type"
+                    :class="[
+                      'transactionTypeHolder',
+                      errors.transaction_type ? 'is-invalid' : '',
+                    ]"
                   />
                   <label for="Income">Income</label>
                 </div>
@@ -109,47 +79,134 @@
                   />
                   <label for="Expense">Expense</label>
                 </div>
+                <div v-if="errors.transaction_type" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.transaction_type"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
 
               <label for="Amount">Amount:</label>
               <input
                 type="text"
                 v-model="transaction.amount"
-                :class="['transactionAmountHolder']"
+                :class="[
+                  'transactionAmountHolder',
+                  errors.amount ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.amount" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.amount"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-transaction">
               <label for="Date">Date:</label>
               <input
                 type="date"
                 v-model="transaction.date"
-                :class="['transactionDateHolder']"
+                :class="[
+                  'transactionDateHolder',
+                  errors.date ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.date" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.date"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-transaction">
               <label for="Name">TransactionName:</label>
               <input
                 type="text"
                 v-model="transaction.transaction_name"
-                :class="['transactionNameHolder']"
+                :class="[
+                  'transactionNameHolder',
+                  errors.transaction_name ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.transaction_name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.transaction_name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-transaction">
               <label for="Phone">Notes:</label>
               <textarea
                 v-model="transaction.notes"
-                :class="['transactionNotesHolder']"
+                :class="[
+                  'transactionNotesHolder',
+                  errors.notes ? 'is-invalid' : '',
+                ]"
               ></textarea>
+              <div v-if="errors.notes" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.notes"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="form-input-transaction" >
+            <div class="form-input-transaction">
               <label>Reference Image</label>
               <br />
-              <img v-bind:src="imagePreview" v-if="imagePreview" class="product_logo_img" width="40" height="40" />
+              <img
+                v-bind:src="imagePreview"
+                v-if="imagePreview"
+                class="product_logo_img"
+                width="40"
+                height="40"
+              />
               <input
                 type="file"
-                :class="['transactionImageHolder']"
+                :class="[
+                  'transactionImageHolder',
+                  errors.image ? 'is-invalid' : '',
+                ]"
                 v-on:change="fileSelected"
               />
+              <div v-if="errors.image" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.image"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -172,7 +229,6 @@
           border-radius: 10px;
           box-shadow: black 0px 1px 8px -5px;
         "
-        
       >
         <table>
           <thead>
@@ -243,6 +299,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const accounts = reactive([]);
+    const errors = ref({});
+
     // const transaction_id = reactive("");
     const image = ref("");
     const imagePreview = ref("");
@@ -250,9 +308,6 @@ export default {
     const VITE_MY_APP_BACK_URL_HOME = ref(
       import.meta.env.VITE_MY_APP_BACK_URL_HOME
     );
-  
-
-    
 
     const transaction = reactive({
       date: "",
@@ -262,8 +317,8 @@ export default {
       refID: "",
       amount: "",
       account_id: "",
-      old_account_id:"",
-      oldamount:'',
+      old_account_id: "",
+      oldamount: "",
       image: "",
       store_id: "",
     });
@@ -338,10 +393,10 @@ export default {
           transaction.oldamount = response.data.data[0].amount;
           transaction.transaction_name = response.data.data[0].transaction_name;
           transaction.date = response.data.data[0].date;
-          transaction.transaction_type =response.data.data[0].transaction_type;
+          transaction.transaction_type = response.data.data[0].transaction_type;
           transaction.account_id = response.data.data[0].account_id;
           imagePreview.value = response.data.data[0].image;
-        
+
           if (isValidHttpUrl(response.data.data[0].image)) {
             transaction.image = response.data.data[0].image;
             imagePreview.value = transaction.image;
@@ -354,12 +409,12 @@ export default {
             imagePreview.value = transaction.image;
           }
 
-        //   toast(response.data.message, {
-        //     showIcon: true,
-        //     type: response.data.status,
-        //     position: "top-right",
-        //     transition: "zoom",
-        //   });
+          //   toast(response.data.message, {
+          //     showIcon: true,
+          //     type: response.data.status,
+          //     position: "top-right",
+          //     transition: "zoom",
+          //   });
         })
         .catch((error) => {
           console.log(error);
@@ -394,7 +449,8 @@ export default {
       transaction.account_id = "";
       transaction.date = "";
       image.value = "";
-      imagePreview.value="";
+      imagePreview.value = "";
+      errors.value = "";
     };
     const addTransaction = () => {
       if (isModalUpdating.value) {
@@ -411,10 +467,9 @@ export default {
         formData.append("account_id", transaction.account_id);
         formData.append("date", transaction.date);
         if (image.value) {
-            formData.append("image", image.value);
+          formData.append("image", image.value);
         }
         formData.append("image", "");
-
 
         const config = {
           headers: { "content-type": "multipart/form-data" },
@@ -436,7 +491,9 @@ export default {
             displayTransactionModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
         console.log("oaky i will add boss");
@@ -450,7 +507,7 @@ export default {
         formData.append("transaction_name", transaction.transaction_name);
         formData.append("account_id", transaction.account_id);
         if (image.value) {
-            formData.append("image", image.value);
+          formData.append("image", image.value);
         }
         formData.append("image", "");
 
@@ -474,7 +531,9 @@ export default {
             displayTransactionModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       }
     };
@@ -534,8 +593,9 @@ export default {
       setAvtarUploadImage,
       isValidHttpUrl,
 
-    //   transaction_id,
+      //   transaction_id,
       imagePreview,
+      errors,
     };
   }, //end of setup
 };
@@ -598,7 +658,6 @@ input.transactionNameHolder,
 input.transactionDateHolder,
 input.transactionAmountHolder,
 input.transactionAccountHolder,
-
 input.transactionImageHolder {
   border: 0px;
   padding: 10px;

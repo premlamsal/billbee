@@ -1,3 +1,14 @@
-body{
-    
+.errorText {
+    transition: all 2s ease-in-out;
+    margin-top: 10px;
+    color: rgb(220, 19, 19);
+    font-size: 13px;
+    margin-left: 16px;
+}
+
+input.is-invalid,
+textarea.is-invalid,
+select.is-invalid {
+    border: 1px solid red !important;
+    transition: all 2s ease-in-out;
 }

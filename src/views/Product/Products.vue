@@ -27,7 +27,10 @@
                 <label>Product Category</label>
                 <select
                   v-model="product.product_cat_id"
-                  class="productCategoryHolder"
+                  :class="[
+                    'productCategoryHolder',
+                    errors.product_cat_id ? 'is-invalid' : '',
+                  ]"
                 >
                   <template
                     v-for="category in categories"
@@ -38,6 +41,17 @@
                     </option>
                   </template>
                 </select>
+                <div v-if="errors.product_cat_id" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.product_cat_id"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-input-product">
                 <label>Name</label>
@@ -45,21 +59,52 @@
                 <input
                   type="text"
                   placeholder="Product Name"
-                  class="productNameHolder"
+                  :class="[
+                    'productNameHolder',
+                    errors.name ? 'is-invalid' : '',
+                  ]"
                   v-model="product.name"
                 />
+                <div v-if="errors.name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
 
               <div class="form-input-product">
                 <label>Unit</label>
 
-                <select v-model="product.unit_id" class="productUnitHolder">
+                <select
+                  v-model="product.unit_id"
+                  :class="[
+                    'productUnitHolder',
+                    errors.unit_id ? 'is-invalid' : '',
+                  ]"
+                >
                   <template v-for="unit in units" v-bind:key="unit.id">
                     <option selected :value="unit.id">
                       {{ unit.short_name }}
                     </option>
                   </template>
                 </select>
+                <div v-if="errors.unit_id" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.unit_id"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-input-product image-upload-holder">
                 <label for="file-input">
@@ -89,9 +134,23 @@
                 <input
                   id="file-input"
                   type="file"
-                  class="productImageHolder"
                   v-on:change="fileSelected"
+                  :class="[
+                    'productImageHolder',
+                    errors.image ? 'is-invalid' : '',
+                  ]"
                 />
+                <div v-if="errors.image" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.image"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-product-right">
@@ -101,9 +160,23 @@
                 <input
                   type="text"
                   placeholder="Product Cost Price"
-                  class="productCostPriceHolder"
                   v-model="product.cp"
+                  :class="[
+                    'productCostPriceHolder',
+                    errors.cp ? 'is-invalid' : '',
+                  ]"
                 />
+                <div v-if="errors.cp" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.cp"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-input-product">
                 <label> Selling Price</label>
@@ -111,9 +184,23 @@
                 <input
                   type="text"
                   placeholder="Product Selling Price"
-                  class="productSellingPriceHolder"
                   v-model="product.sp"
+                  :class="[
+                    'productSellingPriceHolder',
+                    errors.sp ? 'is-invalid' : '',
+                  ]"
                 />
+                <div v-if="errors.sp" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.sp"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-input-product">
                 <label> Opening Stock</label>
@@ -121,17 +208,45 @@
                 <input
                   type="text"
                   placeholder="Product Opening Stock"
-                  class="productOpeningStockHolder"
+                  :class="[
+                    'productOpeningStockHolder',
+                    errors.opening_stock ? 'is-invalid' : '',
+                  ]"
                   v-model="product.opening_stock"
                 />
+                <div v-if="errors.opening_stock" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.opening_stock"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-input-product">
                 <label> Description</label>
                 <textarea
                   type="text"
-                  class="productDescriptionHolder"
+                  :class="[
+                    'productDescriptionHolder',
+                    errors.description ? 'is-invalid' : '',
+                  ]"
                   v-model="product.description"
                 ></textarea>
+                <div v-if="errors.description" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.description"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -145,7 +260,6 @@
       <div class="link-button-container">
         <router-link to="/categories"> Categories </router-link>
         <router-link to="/units"> Units </router-link>
-
       </div>
       <button class="btn-new-product" @click="addProductBtn()">
         <span class="btn-name"> New Product</span>
@@ -243,6 +357,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const products = reactive([]);
+    const errors = ref({});
+
     const showProductModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
@@ -407,6 +523,7 @@ export default {
       product.description = "";
       product.image = "";
       imagePreview.value = "";
+      errors.value = "";
     };
     const addProduct = () => {
       if (isModalUpdating.value) {
@@ -445,7 +562,9 @@ export default {
             displayProductModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
         console.log("oaky i will add boss");
@@ -481,7 +600,9 @@ export default {
             displayProductModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       }
     };
@@ -530,6 +651,7 @@ export default {
       VITE_MY_APP_BACK_URL_HOME,
       showProduct,
       isValidHttpUrl,
+      errors,
     };
   }, //end of setup
 };

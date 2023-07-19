@@ -23,7 +23,13 @@
           <div class="modal-body">
             <div class="form-input-account">
               <label for="User Type">Account</label>
-              <select class="paymentAccountHolder" v-model="payment.account_id">
+              <select
+                v-model="payment.account_id"
+                :class="[
+                  'paymentAccountHolder',
+                  errors.account_id ? 'is-invalid' : '',
+                ]"
+              >
                 <option
                   selected=""
                   v-for="account in accounts"
@@ -33,29 +39,79 @@
                   {{ account.name }}
                 </option>
               </select>
+              <div v-if="errors.account_id" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.account_id"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-amount">
               <label for="Amount">Amount:</label>
               <input
                 type="text"
                 v-model="payment.amount"
-                class="paymentAmountHolder"
+                :class="[
+                  'paymentAmountHolder',
+                  errors.amount ? 'is-invalid' : '',
+                ]"
               />
+              <div v-if="errors.amount" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.amount"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-date">
               <label for="Date">Date:</label>
               <input
                 type="date"
                 v-model="payment.date"
-                class="paymentDateHolder"
+                :class="['paymentDateHolder', errors.date ? 'is-invalid' : '']"
               />
+              <div v-if="errors.date" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.date"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-notes">
               <label for="Phone">Notes:</label>
               <textarea
                 v-model="payment.notes"
-                class="paymentNotesHolder"
+                :class="[
+                  'paymentNotesHolder',
+                  errors.notes ? 'is-invalid' : '',
+                ]"
               ></textarea>
+              <div v-if="errors.notes" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.notes"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="form-input-image">
               <label>Reference Image</label>
@@ -63,9 +119,23 @@
               <img v-bind:src="imagePreview" class="payment_image_upload" />
               <input
                 type="file"
-                class="paymentImageHolder"
+                :class="[
+                  'paymentImageHolder',
+                  errors.image ? 'is-invalid' : '',
+                ]"
                 v-on:change="fileSelected"
               />
+              <div v-if="errors.image" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.image"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -145,6 +215,8 @@ export default {
     const route = useRoute();
     const payments = reactive([]);
     const accounts = reactive([]);
+    const errors = ref({});
+
     const showPaymentModal = ref(false);
     const axios = inject("$axios");
     const toast = inject("$toast");
@@ -228,6 +300,7 @@ export default {
       payment.notes = "";
       payment.data = "";
       payment.image = "";
+      errors.value = "";
     };
     const addPayment = () => {
       if (isModalUpdating.value) {
@@ -265,7 +338,9 @@ export default {
             displayPaymentModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       } else {
         console.log("oaky i will add boss");
@@ -300,7 +375,9 @@ export default {
             displayPaymentModal();
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status == 422) {
+              errors.value = error.response.data.errors;
+            }
           });
       }
     };
@@ -389,6 +466,7 @@ export default {
       imagePreview,
       VITE_MY_APP_BACK_URL_HOME,
       setAvtarUploadImage,
+      errors,
     };
   }, //end of setup
 };
