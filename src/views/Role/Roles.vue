@@ -28,54 +28,56 @@
             <h1>{{ modalHeader }} Role</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-holder-container">
-              <label>Role Name</label>
-              <input
-                type="text"
-                placeholder="Role Name"
-                v-model="role.name"
-                :class="['roleNameHolder', errors.name ? 'is-invalid' : '']"
-              />
-              <div v-if="errors.name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>Role Name</label>
+                <input
+                  type="text"
+                  placeholder="Role Name"
+                  v-model="role.name"
+                  :class="['roleNameHolder', errors.name ? 'is-invalid' : '']"
+                />
+                <div v-if="errors.name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-input-holder-container">
-              <label> Permission Name</label>
+              <div class="form-input-holder-container">
+                <label> Permission Name</label>
 
-              <select
-                v-model="role.permission_id"
-                :class="[
-                  'rolePermissionHolder',
-                  errors.permission_id ? 'is-invalid' : '',
-                ]"
-              >
-                <template
-                  v-for="permission in permissions"
-                  v-bind:key="permission.id"
+                <select
+                  v-model="role.permission_id"
+                  :class="[
+                    'rolePermissionHolder',
+                    errors.permission_id ? 'is-invalid' : '',
+                  ]"
                 >
-                  <option selected :value="permission.id">
-                    {{ permission.name }}
-                  </option>
-                </template>
-              </select>
-              <div v-if="errors.permission_id" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.permission_id"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                  <template
+                    v-for="permission in permissions"
+                    v-bind:key="permission.id"
+                  >
+                    <option selected :value="permission.id">
+                      {{ permission.name }}
+                    </option>
+                  </template>
+                </select>
+                <div v-if="errors.permission_id" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.permission_id"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>

@@ -22,7 +22,7 @@
             <h1>{{ modalHeader }} Product</h1>
           </div>
           <div class="modal-body">
-            <div class="form-product-left">
+            <div class="inside-two-input-container">
               <div class="form-input-holder-container">
                 <label>Product Category</label>
                 <select
@@ -77,7 +77,8 @@
                   </div>
                 </div>
               </div>
-
+            </div>
+            <div class="inside-two-input-container">
               <div class="form-input-holder-container">
                 <label>Unit</label>
 
@@ -106,44 +107,22 @@
                   </div>
                 </div>
               </div>
-              <div class="form-input-holder-container image-upload-holder">
-                <label for="file-input">
-                  <div class="image-upload-icon-holder">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 2v3m0 3V5m0 0h3m-3 0h-3"
-                      />
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        d="M13 2H5a3 3 0 0 0-3 3v10.5c0 .086.011.17.032.25A1 1 0 0 0 2 16v3a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-7a1 1 0 0 0-.032-.25A1 1 0 0 0 22 11.5V11h-2v.016c-4.297.139-7.4 1.174-9.58 2.623.826.293 1.75.71 2.656 1.256 1.399.84 2.821 2.02 3.778 3.583a1 1 0 1 1-1.706 1.044c-.736-1.203-1.878-2.178-3.102-2.913-1.222-.734-2.465-1.192-3.327-1.392a15.466 15.466 0 0 0-3.703-.386h-.022c-.348.005-.68.02-.994.045V5a1 1 0 0 1 1-1h8V2zM8.5 6a2.68 2.68 0 0 0-1.522.488C6.408 6.898 6 7.574 6 8.5c0 .926.408 1.601.978 2.011A2.674 2.674 0 0 0 8.5 11c.41 0 1.003-.115 1.522-.489.57-.41.978-1.085.978-2.011 0-.926-.408-1.601-.978-2.012A2.674 2.674 0 0 0 8.5 6z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                </label>
-                <img v-bind:src="imagePreview" class="product_logo_img" />
+              <div class="form-input-holder-container">
+                <label> Opening Stock</label>
+
                 <input
-                  id="file-input"
-                  type="file"
-                  v-on:change="fileSelected"
+                  type="text"
+                  placeholder="Product Opening Stock"
                   :class="[
-                    'productImageHolder',
-                    errors.image ? 'is-invalid' : '',
+                    'productOpeningStockHolder',
+                    errors.opening_stock ? 'is-invalid' : '',
                   ]"
+                  v-model="product.opening_stock"
                 />
-                <div v-if="errors.image" :class="['errorText']">
+                <div v-if="errors.opening_stock" :class="['errorText']">
                   <div
                     class="errorText-inner"
-                    v-for="error in errors.image"
+                    v-for="error in errors.opening_stock"
                     v-bind:key="error.id"
                   >
                     <ul>
@@ -153,7 +132,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-product-right">
+            <div class="inside-two-input-container">
               <div class="form-input-holder-container">
                 <label> Cost Price</label>
 
@@ -202,30 +181,8 @@
                   </div>
                 </div>
               </div>
-              <div class="form-input-holder-container">
-                <label> Opening Stock</label>
-
-                <input
-                  type="text"
-                  placeholder="Product Opening Stock"
-                  :class="[
-                    'productOpeningStockHolder',
-                    errors.opening_stock ? 'is-invalid' : '',
-                  ]"
-                  v-model="product.opening_stock"
-                />
-                <div v-if="errors.opening_stock" :class="['errorText']">
-                  <div
-                    class="errorText-inner"
-                    v-for="error in errors.opening_stock"
-                    v-bind:key="error.id"
-                  >
-                    <ul>
-                      <li>{{ error }}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+            </div>
+            <div class="inside-two-input-container">
               <div class="form-input-holder-container">
                 <label> Description</label>
                 <textarea
@@ -240,6 +197,54 @@
                   <div
                     class="errorText-inner"
                     v-for="error in errors.description"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container image-upload-holder">
+                <label for="file-input">
+                  <div class="image-upload-icon-holder">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 2v3m0 3V5m0 0h3m-3 0h-3"
+                      />
+                      <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        d="M13 2H5a3 3 0 0 0-3 3v10.5c0 .086.011.17.032.25A1 1 0 0 0 2 16v3a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-7a1 1 0 0 0-.032-.25A1 1 0 0 0 22 11.5V11h-2v.016c-4.297.139-7.4 1.174-9.58 2.623.826.293 1.75.71 2.656 1.256 1.399.84 2.821 2.02 3.778 3.583a1 1 0 1 1-1.706 1.044c-.736-1.203-1.878-2.178-3.102-2.913-1.222-.734-2.465-1.192-3.327-1.392a15.466 15.466 0 0 0-3.703-.386h-.022c-.348.005-.68.02-.994.045V5a1 1 0 0 1 1-1h8V2zM8.5 6a2.68 2.68 0 0 0-1.522.488C6.408 6.898 6 7.574 6 8.5c0 .926.408 1.601.978 2.011A2.674 2.674 0 0 0 8.5 11c.41 0 1.003-.115 1.522-.489.57-.41.978-1.085.978-2.011 0-.926-.408-1.601-.978-2.012A2.674 2.674 0 0 0 8.5 6z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </label>
+                <img v-bind:src="imagePreview" class="product_logo_img" />
+                <input
+                  id="file-input"
+                  type="file"
+                  v-on:change="fileSelected"
+                  :class="[
+                    'productImageHolder',
+                    errors.image ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.image" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.image"
                     v-bind:key="error.id"
                   >
                     <ul>
@@ -685,7 +690,6 @@ export default {
 }
 .modal-body {
   padding: 20px;
-  display: flex;
 }
 
 .modal-footer {
