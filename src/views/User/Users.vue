@@ -29,7 +29,7 @@
             <h1>{{ modalHeader }} User</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-user">
+            <div class="form-input-holder-container">
               <label>User Name</label>
               <input
                 type="text"
@@ -49,7 +49,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-input-user">
+            <div class="form-input-holder-container">
               <label>Email</label>
               <input
                 type="email"
@@ -69,7 +69,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-input-user">
+            <div class="form-input-holder-container">
               <label>Password</label>
               <input
                 type="password"
@@ -93,7 +93,7 @@
               </div>
             </div>
 
-            <div class="form-input-user">
+            <div class="form-input-holder-container">
               <label> Role</label>
 
               <select
@@ -590,7 +590,7 @@ input.userOpeningBalanceHolder {
   font-size: 14px;
   margin-top: 10px;
 }
-.form-input-user {
+.form-input-holder-container {
   margin-bottom: 15px;
 }
 

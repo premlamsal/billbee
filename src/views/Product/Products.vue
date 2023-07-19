@@ -23,7 +23,7 @@
           </div>
           <div class="modal-body">
             <div class="form-product-left">
-              <div class="form-input-product">
+              <div class="form-input-holder-container">
                 <label>Product Category</label>
                 <select
                   v-model="product.product_cat_id"
@@ -53,7 +53,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-input-product">
+              <div class="form-input-holder-container">
                 <label>Name</label>
 
                 <input
@@ -78,7 +78,7 @@
                 </div>
               </div>
 
-              <div class="form-input-product">
+              <div class="form-input-holder-container">
                 <label>Unit</label>
 
                 <select
@@ -106,7 +106,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-input-product image-upload-holder">
+              <div class="form-input-holder-container image-upload-holder">
                 <label for="file-input">
                   <div class="image-upload-icon-holder">
                     <svg
@@ -154,7 +154,7 @@
               </div>
             </div>
             <div class="form-product-right">
-              <div class="form-input-product">
+              <div class="form-input-holder-container">
                 <label> Cost Price</label>
 
                 <input
@@ -178,7 +178,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-input-product">
+              <div class="form-input-holder-container">
                 <label> Selling Price</label>
 
                 <input
@@ -202,7 +202,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-input-product">
+              <div class="form-input-holder-container">
                 <label> Opening Stock</label>
 
                 <input
@@ -226,7 +226,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-input-product">
+              <div class="form-input-holder-container">
                 <label> Description</label>
                 <textarea
                   type="text"
@@ -781,7 +781,7 @@ input.productOpeningBalanceHolder {
   margin-top: 10px;
 }
 
-.form-input-product {
+.form-input-holder-container {
   margin-bottom: 15px;
 }
 .image-upload-holder {

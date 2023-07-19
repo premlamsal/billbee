@@ -28,7 +28,7 @@
             <h1>{{ modalHeader }} Role</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-role">
+            <div class="form-input-holder-container">
               <label>Role Name</label>
               <input
                 type="text"
@@ -48,7 +48,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-input-role">
+            <div class="form-input-holder-container">
               <label> Permission Name</label>
 
               <select
@@ -508,7 +508,7 @@ input.roleOpeningBalanceHolder {
   font-size: 14px;
   margin-top: 10px;
 }
-.form-input-role {
+.form-input-holder-container {
   margin-bottom: 15px;
 }
 

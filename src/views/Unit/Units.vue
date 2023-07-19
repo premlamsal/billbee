@@ -21,51 +21,53 @@
             <h1>{{ modalHeader }} Unit</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-unit">
-              <label>Unit Short Name</label>
-              <input
-                type="text"
-                placeholder="Unit Short Name"
-                class="unitShortNameHolder"
-                :class="[
-                  'unitShortNameHolder',
-                  errors.short_name ? 'is-invalid' : '',
-                ]"
-                v-model="unit.short_name"
-              />
-              <div v-if="errors.short_name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.short_name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>Unit Short Name</label>
+                <input
+                  type="text"
+                  placeholder="Unit Short Name"
+                  class="unitShortNameHolder"
+                  :class="[
+                    'unitShortNameHolder',
+                    errors.short_name ? 'is-invalid' : '',
+                  ]"
+                  v-model="unit.short_name"
+                />
+                <div v-if="errors.short_name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.short_name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-input-unit">
-              <label> Long Name</label>
+              <div class="form-input-holder-container">
+                <label> Long Name</label>
 
-              <input
-                type="text"
-                placeholder="Unit Long Name"
-                :class="[
-                  'unitLongNameHolder',
-                  errors.long_name ? 'is-invalid' : '',
-                ]"
-                v-model="unit.long_name"
-              />
-              <div v-if="errors.long_name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.long_name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                <input
+                  type="text"
+                  placeholder="Unit Long Name"
+                  :class="[
+                    'unitLongNameHolder',
+                    errors.long_name ? 'is-invalid' : '',
+                  ]"
+                  v-model="unit.long_name"
+                />
+                <div v-if="errors.long_name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.long_name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -150,25 +152,12 @@ export default {
     const unit = reactive({});
     const modalHeader = ref(""); // Add or Edit Unit
 
-    const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalDialog);
-
     //on mounted start
     onMounted(() => {
       getUnits();
-      reveal(); //modal function to show modal
     });
 
     //end of onMounted
-
-    //modal
-    onConfirm(() => {
-      console.log("Confirmed!");
-    });
-    onCancel(() => {
-      console.log("Canceled!");
-    });
-
-    //modal
 
     const addUnitBtn = () => {
       clearUnit();
@@ -379,7 +368,7 @@ input.unitLongNameHolder {
   margin-top: 10px;
 }
 
-.form-input-unit {
+.form-input-holder-container {
   margin-bottom: 15px;
 }
 

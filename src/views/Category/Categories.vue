@@ -21,7 +21,7 @@
             <h1>{{ modalHeader }} Category</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-category">
+            <div class="form-input-holder-container">
               <label>Category Name</label>
               <input
                 type="text"
@@ -42,7 +42,7 @@
               </div>
             </div>
 
-            <div class="form-input-category">
+            <div class="form-input-holder-container">
               <label> Details</label>
               <textarea
                 type="text"
@@ -400,7 +400,7 @@ input.categoryOpeningBalanceHolder {
   font-size: 14px;
   margin-top: 10px;
 }
-.form-input-category {
+.form-input-holder-container {
   margin-bottom: 15px;
 }
 
@@ -471,5 +471,8 @@ tr:nth-child(even) {
 .v-leave-to {
   transform: translateY(-500px);
   opacity: 0.001;
+}
+.form-input-holder-container {
+  margin: 0px;
 }
 </style>

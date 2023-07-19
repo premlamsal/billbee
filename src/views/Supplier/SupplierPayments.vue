@@ -21,119 +21,130 @@
             <h1>{{ modalHeader }} Payment</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-account">
-              <label for="User Type">Account</label>
-              <select
-                v-model="payment.account_id"
-                :class="[
-                  'paymentAccountHolder',
-                  errors.account_id ? 'is-invalid' : '',
-                ]"
-              >
-                <option
-                  selected=""
-                  v-for="account in accounts"
-                  :value="account.id"
-                  v-bind:key="account.id"
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label for="User Type">Account</label>
+                <select
+                  v-model="payment.account_id"
+                  :class="[
+                    'paymentAccountHolder',
+                    errors.account_id ? 'is-invalid' : '',
+                  ]"
                 >
-                  {{ account.name }}
-                </option>
-              </select>
-              <div v-if="errors.account_id" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.account_id"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                  <option
+                    selected=""
+                    v-for="account in accounts"
+                    :value="account.id"
+                    v-bind:key="account.id"
+                  >
+                    {{ account.name }}
+                  </option>
+                </select>
+                <div v-if="errors.account_id" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.account_id"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="form-input-holder-container">
+                <label for="Amount">Amount:</label>
+                <input
+                  type="text"
+                  v-model="payment.amount"
+                  :class="[
+                    'paymentAmountHolder',
+                    errors.amount ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.amount" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.amount"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-amount">
-              <label for="Amount">Amount:</label>
-              <input
-                type="text"
-                v-model="payment.amount"
-                :class="[
-                  'paymentAmountHolder',
-                  errors.amount ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.amount" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.amount"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label for="Date">Date:</label>
+                <input
+                  type="date"
+                  v-model="payment.date"
+                  :class="[
+                    'paymentDateHolder',
+                    errors.date ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.date" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.date"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="form-input-holder-container">
+                <label for="Phone">Notes:</label>
+                <textarea
+                  v-model="payment.notes"
+                  :class="[
+                    'paymentNotesHolder',
+                    errors.notes ? 'is-invalid' : '',
+                  ]"
+                ></textarea>
+                <div v-if="errors.notes" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.notes"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-date">
-              <label for="Date">Date:</label>
-              <input
-                type="date"
-                v-model="payment.date"
-                :class="['paymentDateHolder', errors.date ? 'is-invalid' : '']"
-              />
-              <div v-if="errors.date" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.date"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="form-input-notes">
-              <label for="Phone">Notes:</label>
-              <textarea
-                v-model="payment.notes"
-                :class="[
-                  'paymentNotesHolder',
-                  errors.notes ? 'is-invalid' : '',
-                ]"
-              ></textarea>
-              <div v-if="errors.notes" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.notes"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="form-input-image">
-              <label>Reference Image</label>
-              <br />
-              <img v-bind:src="imagePreview" class="payment_image_upload" />
-              <input
-                type="file"
-                :class="[
-                  'paymentImageHolder',
-                  errors.image ? 'is-invalid' : '',
-                ]"
-                v-on:change="fileSelected"
-              />
-              <div v-if="errors.image" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.image"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>Reference Image</label>
+                <br />
+                <img v-bind:src="imagePreview" class="payment_image_upload" />
+                <input
+                  type="file"
+                  :class="[
+                    'paymentImageHolder',
+                    errors.image ? 'is-invalid' : '',
+                  ]"
+                  v-on:change="fileSelected"
+                />
+                <div v-if="errors.image" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.image"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -575,7 +586,7 @@ input.paymentImageHolder {
   font-size: 14px;
   margin-top: 10px;
 }
-.form-input-payment {
+.form-input-holder-container {
   margin-bottom: 15px;
 }
 

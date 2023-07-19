@@ -21,68 +21,91 @@
             <h1>{{ modalHeader }} Transaction</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-transaction">
-              <input type="hidden" v-model="transaction.id" />
-              <div class="form-input-transaction">
-                <label for="User Type">Account</label>
-                <select
-                  v-model="transaction.account_id"
-                  :class="[
-                    'transactionAccountHolder',
-                    errors.account_id ? 'is-invalid' : '',
-                  ]"
-                >
-                  <option
-                    selected=""
-                    v-for="account in accounts"
-                    :value="account.id"
-                    v-bind:key="account.id"
-                  >
-                    {{ account.name }}
-                  </option>
-                </select>
-                <div v-if="errors.account_id" :class="['errorText']">
-                  <div
-                    class="errorText-inner"
-                    v-for="error in errors.account_id"
-                    v-bind:key="error.id"
-                  >
-                    <ul>
-                      <li>{{ error }}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-input-transaction">
-                <div class="">Transaction Type</div>
-                <div class="transactionTypeOuterHolder">
-                  <input
-                    type="radio"
-                    id="income"
-                    value="income"
-                    v-model="transaction.transaction_type"
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <input type="hidden" v-model="transaction.id" />
+                <div class="form-input-holder-container">
+                  <label for="User Type">Account</label>
+                  <select
+                    v-model="transaction.account_id"
                     :class="[
-                      'transactionTypeHolder',
-                      errors.transaction_type ? 'is-invalid' : '',
+                      'transactionAccountHolder',
+                      errors.account_id ? 'is-invalid' : '',
                     ]"
-                  />
-                  <label for="Income">Income</label>
+                  >
+                    <option
+                      selected=""
+                      v-for="account in accounts"
+                      :value="account.id"
+                      v-bind:key="account.id"
+                    >
+                      {{ account.name }}
+                    </option>
+                  </select>
+                  <div v-if="errors.account_id" :class="['errorText']">
+                    <div
+                      class="errorText-inner"
+                      v-for="error in errors.account_id"
+                      v-bind:key="error.id"
+                    >
+                      <ul>
+                        <li>{{ error }}</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-                <div class="transactionTypeOuterHolder">
-                  <input
-                    type="radio"
-                    id="expense"
-                    value="expense"
-                    class="transactionTypeHolder"
-                    v-model="transaction.transaction_type"
-                  />
-                  <label for="Expense">Expense</label>
+
+                <div class="form-input-holder-container">
+                  <div class="">Transaction Type</div>
+                  <div class="transactionTypeOuterHolder">
+                    <input
+                      type="radio"
+                      id="income"
+                      value="income"
+                      v-model="transaction.transaction_type"
+                      :class="[
+                        'transactionTypeHolder',
+                        errors.transaction_type ? 'is-invalid' : '',
+                      ]"
+                    />
+                    <label for="Income">Income</label>
+                  </div>
+                  <div class="transactionTypeOuterHolder">
+                    <input
+                      type="radio"
+                      id="expense"
+                      value="expense"
+                      class="transactionTypeHolder"
+                      v-model="transaction.transaction_type"
+                    />
+                    <label for="Expense">Expense</label>
+                  </div>
+                  <div v-if="errors.transaction_type" :class="['errorText']">
+                    <div
+                      class="errorText-inner"
+                      v-for="error in errors.transaction_type"
+                      v-bind:key="error.id"
+                    >
+                      <ul>
+                        <li>{{ error }}</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-                <div v-if="errors.transaction_type" :class="['errorText']">
+
+                <label for="Amount">Amount:</label>
+                <input
+                  type="text"
+                  v-model="transaction.amount"
+                  :class="[
+                    'transactionAmountHolder',
+                    errors.amount ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.amount" :class="['errorText']">
                   <div
                     class="errorText-inner"
-                    v-for="error in errors.transaction_type"
+                    v-for="error in errors.amount"
                     v-bind:key="error.id"
                   >
                     <ul>
@@ -91,120 +114,103 @@
                   </div>
                 </div>
               </div>
-
-              <label for="Amount">Amount:</label>
-              <input
-                type="text"
-                v-model="transaction.amount"
-                :class="[
-                  'transactionAmountHolder',
-                  errors.amount ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.amount" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.amount"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+              <div class="form-input-holder-container">
+                <label for="Date">Date:</label>
+                <input
+                  type="date"
+                  v-model="transaction.date"
+                  :class="[
+                    'transactionDateHolder',
+                    errors.date ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.date" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.date"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-transaction">
-              <label for="Date">Date:</label>
-              <input
-                type="date"
-                v-model="transaction.date"
-                :class="[
-                  'transactionDateHolder',
-                  errors.date ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.date" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.date"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label for="Name">TransactionName:</label>
+                <input
+                  type="text"
+                  v-model="transaction.transaction_name"
+                  :class="[
+                    'transactionNameHolder',
+                    errors.transaction_name ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.transaction_name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.transaction_name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="form-input-holder-container">
+                <label for="Phone">Notes:</label>
+                <textarea
+                  v-model="transaction.notes"
+                  :class="[
+                    'transactionNotesHolder',
+                    errors.notes ? 'is-invalid' : '',
+                  ]"
+                ></textarea>
+                <div v-if="errors.notes" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.notes"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-transaction">
-              <label for="Name">TransactionName:</label>
-              <input
-                type="text"
-                v-model="transaction.transaction_name"
-                :class="[
-                  'transactionNameHolder',
-                  errors.transaction_name ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.transaction_name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.transaction_name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="form-input-transaction">
-              <label for="Phone">Notes:</label>
-              <textarea
-                v-model="transaction.notes"
-                :class="[
-                  'transactionNotesHolder',
-                  errors.notes ? 'is-invalid' : '',
-                ]"
-              ></textarea>
-              <div v-if="errors.notes" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.notes"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="form-input-transaction">
-              <label>Reference Image</label>
-              <br />
-              <img
-                v-bind:src="imagePreview"
-                v-if="imagePreview"
-                class="product_logo_img"
-                width="40"
-                height="40"
-              />
-              <input
-                type="file"
-                :class="[
-                  'transactionImageHolder',
-                  errors.image ? 'is-invalid' : '',
-                ]"
-                v-on:change="fileSelected"
-              />
-              <div v-if="errors.image" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.image"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>Reference Image</label>
+                <br />
+                <img
+                  v-bind:src="imagePreview"
+                  v-if="imagePreview"
+                  class="product_logo_img"
+                  width="40"
+                  height="40"
+                />
+                <input
+                  type="file"
+                  :class="[
+                    'transactionImageHolder',
+                    errors.image ? 'is-invalid' : '',
+                  ]"
+                  v-on:change="fileSelected"
+                />
+                <div v-if="errors.image" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.image"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -694,7 +700,7 @@ textarea.transactionNotesHolder {
   margin-top: 5px;
 }
 
-.form-input-transaction {
+.form-input-holder-container {
   margin-bottom: 15px;
 }
 

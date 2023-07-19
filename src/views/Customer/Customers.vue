@@ -21,117 +21,128 @@
             <h1>{{ modalHeader }} Customer</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-customer">
-              <label>Customer Name</label>
-              <input
-                type="text"
-                placeholder="Customer Name"
-                :class="['customerNameHolder', errors.name ? 'is-invalid' : '']"
-                v-model="customer.name"
-              />
-              <div v-if="errors.name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>Customer Name</label>
+                <input
+                  type="text"
+                  placeholder="Customer Name"
+                  :class="[
+                    'customerNameHolder',
+                    errors.name ? 'is-invalid' : '',
+                  ]"
+                  v-model="customer.name"
+                />
+                <div v-if="errors.name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-input-customer">
-              <label> Address</label>
+              <div class="form-input-holder-container">
+                <label> Address</label>
 
-              <input
-                type="text"
-                placeholder="Customer Address"
-                v-model="customer.address"
-                :class="[
-                  'customerAddressHolder',
-                  errors.address ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.address" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.address"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                <input
+                  type="text"
+                  placeholder="Customer Address"
+                  v-model="customer.address"
+                  :class="[
+                    'customerAddressHolder',
+                    errors.address ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.address" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.address"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-customer">
-              <label> Phone</label>
 
-              <input
-                type="text"
-                placeholder="Customer Phone"
-                :class="[
-                  'customerPhoneHolder',
-                  errors.phone ? 'is-invalid' : '',
-                ]"
-                v-model="customer.phone"
-              />
-              <div v-if="errors.phone" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.phone"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="form-input-customer">
-              <label> Opening Balance</label>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label> Phone</label>
 
-              <input
-                type="text"
-                placeholder="Customer Opening Balance"
-                v-model="customer.opening_balance"
-                :class="[
-                  'customerOpeningBalanceHolder',
-                  errors.opening_balance ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.opening_balance" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.opening_balance"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                <input
+                  type="text"
+                  placeholder="Customer Phone"
+                  :class="[
+                    'customerPhoneHolder',
+                    errors.phone ? 'is-invalid' : '',
+                  ]"
+                  v-model="customer.phone"
+                />
+                <div v-if="errors.phone" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.phone"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="form-input-holder-container">
+                <label> Opening Balance</label>
+
+                <input
+                  type="text"
+                  placeholder="Customer Opening Balance"
+                  v-model="customer.opening_balance"
+                  :class="[
+                    'customerOpeningBalanceHolder',
+                    errors.opening_balance ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.opening_balance" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.opening_balance"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-customer">
-              <label> Details</label>
-              <textarea
-                type="text"
-                v-model="customer.details"
-                :class="[
-                  'customerDetailsHolder',
-                  errors.details ? 'is-invalid' : '',
-                ]"
-              ></textarea>
-              <div v-if="errors.details" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.details"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label> Details</label>
+                <textarea
+                  type="text"
+                  v-model="customer.details"
+                  :class="[
+                    'customerDetailsHolder',
+                    errors.details ? 'is-invalid' : '',
+                  ]"
+                ></textarea>
+                <div v-if="errors.details" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.details"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -492,7 +503,7 @@ input.customerOpeningBalanceHolder {
   font-size: 14px;
   margin-top: 10px;
 }
-.form-input-customer {
+.form-input-holder-container {
   margin-bottom: 15px;
 }
 

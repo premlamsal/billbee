@@ -21,141 +21,151 @@
             <h1>{{ modalHeader }} Account</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-account">
-              <label>Account Name</label>
-              <input
-                type="text"
-                placeholder="Account Name"
-                v-model="account.name"
-                :class="['form-input-holder', errors.name ? 'is-invalid' : '']"
-              />
-              <div v-if="errors.name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>Account Name</label>
+                <input
+                  type="text"
+                  placeholder="Account Name"
+                  v-model="account.name"
+                  :class="[
+                    'form-input-holder',
+                    errors.name ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-input-account">
-              <label> Bank Name</label>
 
-              <input
-                type="text"
-                placeholder="Bank Name"
-                v-model="account.bank_name"
-                :class="[
-                  'form-input-holder',
-                  errors.bank_name ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.bank_name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.bank_name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="form-input-account">
-              <label> Account Holder Name</label>
+              <div class="form-input-holder-container">
+                <label> Bank Name</label>
 
-              <input
-                type="text"
-                placeholder="Account Holder Name"
-                :class="[
-                  'form-input-holder',
-                  errors.holder_name ? 'is-invalid' : '',
-                ]"
-                v-model="account.holder_name"
-              />
-              <div v-if="errors.holder_name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.holder_name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                <input
+                  type="text"
+                  placeholder="Bank Name"
+                  v-model="account.bank_name"
+                  :class="[
+                    'form-input-holder',
+                    errors.bank_name ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.bank_name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.bank_name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-account">
-              <label> Bank Account Number</label>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label> Account Holder Name</label>
 
-              <input
-                type="text"
-                placeholder="Bank Account Number"
-                :class="[
-                  'form-input-holder',
-                  errors.bank_acc_num ? 'is-invalid' : '',
-                ]"
-                v-model="account.bank_acc_num"
-              />
-              <div v-if="errors.bank_acc_num" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.bank_acc_num"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                <input
+                  type="text"
+                  placeholder="Account Holder Name"
+                  :class="[
+                    'form-input-holder',
+                    errors.holder_name ? 'is-invalid' : '',
+                  ]"
+                  v-model="account.holder_name"
+                />
+                <div v-if="errors.holder_name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.holder_name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-input-account">
-              <label> Opening Balance</label>
+              <div class="form-input-holder-container">
+                <label> Bank Account Number</label>
 
-              <input
-                type="text"
-                placeholder="Opening Balance"
-                v-model="account.opening_balance"
-                :class="[
-                  'form-input-holder',
-                  errors.opening_balance ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.opening_balance" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.opening_balance"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                <input
+                  type="text"
+                  placeholder="Bank Account Number"
+                  :class="[
+                    'form-input-holder',
+                    errors.bank_acc_num ? 'is-invalid' : '',
+                  ]"
+                  v-model="account.bank_acc_num"
+                />
+                <div v-if="errors.bank_acc_num" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.bank_acc_num"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-account">
-              <label> Account Information :</label>
-              <textarea
-                type="text"
-                v-model="account.account_info"
-                :class="[
-                  'form-input-holder',
-                  errors.account_info ? 'is-invalid' : '',
-                ]"
-              ></textarea>
-              <div v-if="errors.account_info" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.account_info"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label> Opening Balance</label>
+
+                <input
+                  type="text"
+                  placeholder="Opening Balance"
+                  v-model="account.opening_balance"
+                  :class="[
+                    'form-input-holder',
+                    errors.opening_balance ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.opening_balance" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.opening_balance"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="form-input-holder-container">
+                <label> Account Information :</label>
+                <textarea
+                  type="text"
+                  v-model="account.account_info"
+                  :class="[
+                    'form-input-holder',
+                    errors.account_info ? 'is-invalid' : '',
+                  ]"
+                ></textarea>
+                <div v-if="errors.account_info" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.account_info"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -485,29 +495,10 @@ export default {
   cursor: pointer;
 }
 
-input.form-input-holder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
+.form-input-holder-container {
+  /* margin-bottom: 15px; */
   width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.form-input-holder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-.form-input-account {
-  margin-bottom: 15px;
+  margin: 10px;
 }
 
 .account-header {
