@@ -299,6 +299,7 @@ export default {
         });
     };
     const displayPaymentModal = () => {
+      clearPayment();
       if (showPaymentModal.value) {
         showPaymentModal.value = false;
       } else {

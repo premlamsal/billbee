@@ -262,6 +262,7 @@ export default {
         });
     };
     const displayRoleModal = () => {
+      clearRole();
       if (showRoleModal.value) {
         showRoleModal.value = false;
       } else {

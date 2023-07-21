@@ -188,6 +188,7 @@ export default {
         });
     };
     const displayCategoryModal = () => {
+      clearCategory();
       if (showCategoryModal.value) {
         showCategoryModal.value = false;
       } else {

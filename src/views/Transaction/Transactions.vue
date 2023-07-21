@@ -441,6 +441,7 @@ export default {
         });
     };
     const displayTransactionModal = () => {
+      clearTransaction();
       if (showTransactionModal.value) {
         showTransactionModal.value = false;
       } else {

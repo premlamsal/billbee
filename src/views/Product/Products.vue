@@ -511,6 +511,7 @@ export default {
         });
     };
     const displayProductModal = () => {
+      clearProduct();
       if (showProductModal.value) {
         showProductModal.value = false;
       } else {

@@ -320,6 +320,7 @@ export default {
         });
     };
     const displayUserModal = () => {
+      clearUser();
       if (showUserModal.value) {
         showUserModal.value = false;
       } else {

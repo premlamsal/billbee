@@ -195,6 +195,7 @@ export default {
         });
     };
     const displayUnitModal = () => {
+      clearUnit();
       if (showUnitModal.value) {
         showUnitModal.value = false;
       } else {

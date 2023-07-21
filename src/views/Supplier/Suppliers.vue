@@ -278,6 +278,7 @@ export default {
     };
 
     const displaySupplierModal = () => {
+      clearSupplier();
       if (showSupplierModal.value) {
         showSupplierModal.value = false;
       } else {

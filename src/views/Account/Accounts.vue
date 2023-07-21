@@ -313,6 +313,7 @@ export default {
         });
     };
     const displayAccountModal = () => {
+      clearAccount();
       if (showAccountModal.value) {
         showAccountModal.value = false;
       } else {
