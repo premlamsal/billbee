@@ -276,8 +276,8 @@ export default {
           console.log(error);
         });
     };
-    const displayCustomerModal = () => 
-    clearCustomer();
+    const displayCustomerModal = () => {
+      clearCustomer();
       if (showCustomerModal.value) {
         showCustomerModal.value = false;
       } else {
