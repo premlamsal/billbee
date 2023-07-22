@@ -59,6 +59,7 @@ export default {
 .return-card:hover {
   box-shadow: 2px 4px 12px -6px #000;
   transform: translateY(-5px);
+  background: #c9362c;
 }
 .return-card span.material-icons {
   font-size: 5rem;
