@@ -382,6 +382,16 @@ const router = createRouter({
 			},
 		},
 		{
+			path: '/stocks',
+			name: 'stocks',
+			component: () => import('../views/Stock/Stocks.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
 			path: "/:notFound",
 			component: () => import('../views/Error.vue'),
 		},

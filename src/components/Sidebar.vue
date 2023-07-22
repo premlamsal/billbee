@@ -24,6 +24,7 @@
         <span class="material-icons">supervised_user_circle</span>
         <span class="text">Customers</span>
       </router-link>
+
       <router-link to="/invoices" class="button">
         <span class="material-icons">receipt_long</span>
         <span class="text">Invoice</span>
@@ -44,7 +45,10 @@
         <span class="material-icons">local_shipping</span>
         <span class="text">Suppliers</span>
       </router-link>
-
+      <router-link to="/stocks" class="button">
+        <span class="material-icons">inventory_2</span>
+        <span class="text">Stocks</span>
+      </router-link>
       <router-link to="/transactions" class="button">
         <span class="material-icons">swap_horiz</span>
         <span class="text">Transactions</span>
