@@ -186,135 +186,6 @@ export default {
 </script>
       
       <style scoped>
-/* for modal */
-.modal-container {
-  background: #000000d6;
-  padding: 0px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  display: flex;
-  min-height: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  background: #fff;
-  /* padding: 15px; */
-  position: relative;
-}
-.modal-header {
-  background: var(--primary);
-
-  padding: 20px;
-  color: #fff;
-}
-.modal-body {
-  padding: 20px;
-}
-
-.modal-footer {
-  background: var(--grey);
-  padding: 20px;
-  color: #fff;
-}
-.modal-close-btn-container {
-  position: absolute;
-  right: -11px;
-  color: white;
-  top: -12px;
-  font-size: 25px;
-  cursor: pointer;
-}
-
-.modal-tick-btn-container {
-  position: absolute;
-  right: -30px;
-  color: white;
-  bottom: -5px;
-  font-size: 25px;
-  cursor: pointer;
-}
-
-input.stockNameHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-select.stockCategoryHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-select.stockUnitHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.stockCostPriceHolder,
-input.stockSellingPriceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.stockOpeningStockHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.stockDescriptionHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-input.stockOpeningBalanceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-.form-input-holder-container {
-  margin-bottom: 15px;
-}
-.image-upload-holder {
-  display: flex;
-}
-
 .stock-header {
   display: flex;
   justify-content: space-between;
@@ -368,23 +239,6 @@ tr:nth-child(even) {
   }
 }
 
-/* vue animation */
-.v-enter-active,
-.v-leave-active {
-  /* transition: opacity 0.5s ease; */
-  transition: all 0.5s ease-in-out;
-  /* transition-delay: 0.25s; */
-}
-
-.v-enter-from {
-  transform: translateY(-500px);
-  opacity: 0.001;
-}
-.v-leave-to {
-  transform: translateY(-500px);
-  opacity: 0.001;
-}
-
 .invoiceItemStockName {
   display: flex;
   padding: 0px;
@@ -394,22 +248,7 @@ img.stock_logo_img {
   width: 60px;
   /* margin-top: 15px; */
 }
-input.stockImageHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  display: none;
-  margin-top: 10px;
-}
-.form-stock-left {
-  margin: 15px;
-}
-.form-stock-right {
-  margin: 15px;
-}
+
 .image-upload-icon-holder {
   width: 60px;
   color: var(--primary);
