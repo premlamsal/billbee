@@ -282,6 +282,95 @@ const router = createRouter({
 
 			},
 		},
+
+
+		//return invoices
+
+
+		{
+			path: '/return-invoices',
+			name: 'returnInvoices',
+			component: () => import('../views/Returns/Invoice/ReturnInvoices.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
+			path: '/new-return-invoice',
+			name: 'newInvoiceReturn',
+			component: () => import('../views/Returns/Invoice/NewInvoiceReturn.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
+			path: '/:id/edit-return-invoice',
+			name: 'editInvoiceReturn',
+			component: () => import('../views/Returns/Invoice/EditInvoiceReturn.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
+			path: '/:id/show-return-invoice',
+			name: 'ShowInvoiceReturn',
+			component: () => import('../views/Returns/Invoice/ShowInvoiceReturn.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+
+		//return purchases
+
+
+		{
+			path: '/return-purchases',
+			name: 'returnPurchases',
+			component: () => import('../views/Returns/Purchase/ReturnPurchases.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
+			path: '/new-return-purchase',
+			name: 'newPurchaseReturn',
+			component: () => import('../views/Returns/Purchase/NewPurchaseReturn.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
+			path: '/:id/edit-return-purchase',
+			name: 'editPurchaseReturn',
+			component: () => import('../views/Returns/Purchase/EditPurchaseReturn.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
+			path: '/:id/show-return-purchase',
+			name: 'ShowPurchaseReturn',
+			component: () => import('../views/Returns/Purchase/ShowPurchaseReturn.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
 	],
 })
 
