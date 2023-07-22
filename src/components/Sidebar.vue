@@ -36,6 +36,10 @@
         <span class="material-icons">description</span>
         <span class="text">Purchase</span>
       </router-link>
+      <router-link to="/returns" class="button">
+        <span class="material-icons">keyboard_return</span>
+        <span class="text">Returns</span>
+      </router-link>
       <router-link to="/suppliers" class="button">
         <span class="material-icons">local_shipping</span>
         <span class="text">Suppliers</span>

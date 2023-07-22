@@ -1,10 +1,10 @@
 <template>
   <div class="app">
     <!-- Sidebar -->
-    <Sidebar v-if="storeAuth.authData.isAuthenticated"/>
+    <Sidebar v-if="storeAuth.authData.isAuthenticated" />
 
     <div class="router-view-container">
-      <div class="top-nav-container"  v-if="storeAuth.authData.isAuthenticated">
+      <div class="top-nav-container" v-if="storeAuth.authData.isAuthenticated">
         <div class="top-nav-menu">
           <span class="text">Prem Lamsal</span>
           <button @click="showDropDown()">
@@ -21,17 +21,16 @@
       <router-view />
     </div>
   </div>
-  
 </template>
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 const storeAuth = useAuthStore();
 
 onMounted(() => {
-//   await store.getPermissions();
+  //   await store.getPermissions();
 });
 
 // console.log('store.permissions');
@@ -47,7 +46,7 @@ const showDropDown = () => {
 };
 const router = useRouter();
 const logoutBtn = () => {
-	storeAuth.removeUser();
+  storeAuth.removeUser();
   router.push({ path: "/login" });
   showDropDown();
 };
@@ -57,6 +56,7 @@ import Sidebar from "./components/Sidebar.vue";
 <style lang="scss">
 :root {
   --primary: #4ade80;
+  --danger: #f44336;
   --primary-alt: #22c55e;
   --grey: #64748b;
   --dark: #1e293b;
@@ -127,17 +127,16 @@ button {
 .dropdown-content a:hover {
   background-color: #ddd;
 }
-.mt10{
-	margin-top:10px ;
+.mt10 {
+  margin-top: 10px;
 }
-.mb10{
-	margin-bottom:10px ;
+.mb10 {
+  margin-bottom: 10px;
 }
-.mt20{
-	margin-top:20px ;
-
+.mt20 {
+  margin-top: 20px;
 }
-.mb20{
-	margin-bottom:20px ;
+.mb20 {
+  margin-bottom: 20px;
 }
 </style>

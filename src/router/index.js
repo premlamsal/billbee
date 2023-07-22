@@ -371,6 +371,16 @@ const router = createRouter({
 
 			},
 		},
+		{
+			path: '/returns',
+			name: 'returns',
+			component: () => import('../views/Returns/ReturnHome.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
 	],
 })
 
