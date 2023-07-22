@@ -1,30 +1,30 @@
 <template>
-  <main id="Purchase-page">
-    <h1>New Return Purchase</h1>
-    <p>Welcome to new Return Purchase page</p>
-    <div class="huge-purchase-container">
-      <div class="Purchase-content">
+  <main id="Invoice-page">
+    <h1>New Return Invoice</h1>
+    <p>Welcome to new Return Invoice page</p>
+    <div class="huge-return-purchase-container">
+      <div class="Invoice-content">
         <div class="purchase-top-section">
-          <div class="top-purchase-section">
+          <div class="top-return-purchase-section">
             <div class="purchase-top-section-details-left">
-              <div class="return-purchase-custom-id">
-                <label>Return Purchase No </label>
+              <div class="return-return-purchase-custom-id">
+                <label>Return Invoice No </label>
                 <label style="color: var(--primary)">{{
                   store.this_return_purchase_custom_number
                 }}</label>
               </div>
-              <div class="form-purchase-supplier">
-                <label>Customer </label>
+              <div class="form-return-purchase-supplier">
+                <label>Supplier </label>
                 <input
                   type="text"
                   class="supplierInputHolder"
-                  placeholder="Choose Customer"
+                  placeholder="Choose Supplier"
                   v-model="purchaseInfo.supplier_name"
                   @keyup="supplierSelectInput()"
                 />
 
                 <Transition :duration="550">
-                  <div class="supplier-select" v-if="showCustomerSelect">
+                  <div class="supplier-select" v-if="showSupplierSelect">
                     <!-- {{ queryResults }} -->
                     <div class="selection-list">
                       <ul>
@@ -45,7 +45,7 @@
                   </div>
                 </Transition>
               </div>
-              <div class="form-purchase-notes">
+              <div class="form-return-purchase-notes">
                 <label>Notes </label>
                 <textarea
                   type="text"
@@ -55,8 +55,8 @@
               </div>
             </div>
             <div class="purchase-top-section-details-right">
-              <div class="form-purchase-date">
-                <label>Return Purchase Date</label>
+              <div class="form-return-purchase-date">
+                <label>Return Invoice Date</label>
                 <input
                   type="date"
                   class="purchaseDateHolder"
@@ -71,11 +71,19 @@
                   v-model="purchaseInfo.due_date"
                 />
               </div>
+              <div class="form-return-purchase-reference-holder">
+                <label>Return Purchase Reference ID</label>
+                <input
+                  type="text"
+                  class="purchaseReferenceHolder"
+                  v-model="purchaseInfo.return_purchase_reference_id"
+                />
+              </div>
             </div>
           </div>
         </div>
         <!-- <header class="px-5 py-4 border-b border-gray-100">
-                      <h2 class="font-semibold text-gray-800">Purchases</h2>
+                      <h2 class="font-semibold text-gray-800">Invoices</h2>
                   </header> -->
         <div class="purchaseItemsTableContainer">
           <div
@@ -193,21 +201,21 @@
           <div class="" v-if="isItemHolderUpdating">
             <button
               class="btn-update-to-return-purchase"
-              @click="updateItemToPurchaseBtn()"
+              @click="updateItemToInvoiceBtn()"
             >
               Update item to return-purchase
             </button>
           </div>
           <div class="" v-else>
-            <button class="btn-add-to-purchase" @click="addItemToPurchaseBtn()">
+            <button class="btn-add-to-purchase" @click="addItemToInvoiceBtn()">
               + Add item to return purchase
             </button>
           </div>
         </div>
-        <div class="return-purchase-content-right-side">
+        <div class="return-return-purchase-content-right-side">
           <div v-if="purchaseItems">
             <!-- <header class="px-5 py-4 border-b border-gray-100">
-                      <h2 class="font-semibold text-gray-800">Purchases</h2>
+                      <h2 class="font-semibold text-gray-800">Invoices</h2>
                   </header> -->
             <div class="purchaseItemsTableContainer">
               <div
@@ -271,14 +279,14 @@
                       </td>
                       <td>
                         <button
-                          @click="editPurchaseItem(item.id)"
-                          class="btnEditPurchase"
+                          @click="editInvoiceItem(item.id)"
+                          class="btnEditInvoice"
                         >
                           Edit
                         </button>
                         <button
-                          @click="deletePurchaseItem(item.id)"
-                          class="btnDeletePurchase"
+                          @click="deleteInvoiceItem(item.id)"
+                          class="btnDeleteInvoice"
                         >
                           Remove
                         </button>
@@ -338,10 +346,10 @@
             </div>
             <div class="button-container-down">
               <button
-                class="create-purchase-btn"
-                @click="createReturnPurchase()"
+                class="create-return-purchase-btn"
+                @click="createReturnInvoice()"
               >
-                Create Return Purchase
+                Create Return Invoice
               </button>
             </div>
           </section>
@@ -360,7 +368,7 @@ import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
-  name: "Create New Return Purchase",
+  name: "Create New Return Invoice",
   setup() {
     const router = useRouter();
     const route = useRoute();
@@ -403,7 +411,7 @@ export default {
 
       price: "",
     });
-    const showCustomerSelect = ref(false);
+    const showSupplierSelect = ref(false);
     const showProductSelect = ref(false);
 
     const VITE_MY_APP_BACK_URL_HOME = ref(
@@ -443,13 +451,13 @@ export default {
           console.log(error);
         });
     };
-    const editPurchaseItem = (id) => {
+    const editInvoiceItem = (id) => {
       isItemHolderUpdating.value = true;
       let indexForItem = purchaseItems.findIndex((item) => item.id === id);
       currentEditItemIDIndex.value = indexForItem;
       // console.log(purchaseItems[indexForItem]);
 
-      // console.log(getPurchaseItemFromID);
+      // console.log(getInvoiceItemFromID);
       itemHolder.product_id = purchaseItems[indexForItem].product_id;
       itemHolder.product_name = purchaseItems[indexForItem].product_name;
       itemHolder.quantity = purchaseItems[indexForItem].quantity;
@@ -462,14 +470,14 @@ export default {
       itemHolder.price = purchaseItems[indexForItem].price;
       itemHolder.lineTotal = purchaseItems[indexForItem].lineTotal;
     };
-    const deletePurchaseItem = (id) => {
+    const deleteInvoiceItem = (id) => {
       console.log(purchaseItems);
       // have to change
       // purchaseItems = purchaseItems.filter((item) => item.id !== id);
 
       console.log("please add delete logic...heheheh");
     };
-    const updateItemToPurchaseBtn = () => {
+    const updateItemToInvoiceBtn = () => {
       if (itemHolder.product_name === "") {
         errorItemHolder.product_name = "Enter Item";
       }
@@ -541,7 +549,7 @@ export default {
       itemHolder.price = 0;
       itemHolder.lineTotal = 0;
     };
-    const clearPurchaseInfo = () => {
+    const clearInvoiceInfo = () => {
       purchaseInfo.supplier_id = "";
       purchaseInfo.supplier_name = "";
       purchaseInfo.due_date = "";
@@ -550,7 +558,7 @@ export default {
       purchaseInfo.note = "";
       purchaseInfo.subTotal = "";
     };
-    const addItemToPurchaseBtn = () => {
+    const addItemToInvoiceBtn = () => {
       if (itemHolder.product_name === "") {
         errorItemHolder.product_name = "Enter Item";
       }
@@ -584,7 +592,7 @@ export default {
         clearErrorItemHolder();
       }
     };
-    const addNewPurchaseItem = () => {
+    const addNewInvoiceItem = () => {
       purchaseItems.push({
         id: uid(),
         product_name: "",
@@ -609,7 +617,7 @@ export default {
       if (purchaseInfo.supplier_name === "") {
         // queryResults = [{}];
         queryResults.splice(0);
-        showCustomerSelect.value = false;
+        showSupplierSelect.value = false;
       } else {
         // let formData=new FormData();
         // formData.append('searchQuery',purchaseInfo.supplier)
@@ -628,7 +636,7 @@ export default {
               queryResults.push(response.data.data[i]);
             }
 
-            showCustomerSelect.value = true;
+            showSupplierSelect.value = true;
 
             // console.log(queryResults)
 
@@ -640,7 +648,7 @@ export default {
       }
     };
     const selectOption = (supplier_id, supplier_name) => {
-      showCustomerSelect.value = false;
+      showSupplierSelect.value = false;
       purchaseInfo.supplier_name = supplier_name;
       purchaseInfo.supplier_id = supplier_id;
     };
@@ -704,7 +712,7 @@ export default {
       itemHolder.stock_id = product_stock_id;
       itemHolder.image = product_image;
     };
-    const createReturnPurchase = () => {
+    const createReturnInvoice = () => {
       axios
         .post("/return-purchase/create", {
           info: purchaseInfo,
@@ -724,7 +732,7 @@ export default {
 
           clearErrorItemHolder();
           clearItemHolder();
-          clearPurchaseInfo();
+          clearInvoiceInfo();
           router.push({ path: "/return-purchases" });
         })
         .catch((error) => {
@@ -805,25 +813,25 @@ export default {
       isItemHolderUpdating,
       currentEditItemIDIndex,
       errorItemHolder,
-      editPurchaseItem,
-      deletePurchaseItem,
-      updateItemToPurchaseBtn,
+      editInvoiceItem,
+      deleteInvoiceItem,
+      updateItemToInvoiceBtn,
       clearErrorItemHolder,
       clearItemHolder,
-      addItemToPurchaseBtn,
-      addNewPurchaseItem,
+      addItemToInvoiceBtn,
+      addNewInvoiceItem,
       subTotal,
       taxAmount,
       grandTotal,
       supplierSelectInput,
-      showCustomerSelect,
+      showSupplierSelect,
       selectOption,
       queryResults,
       queryResultsProduct,
       productSelectInput,
       showProductSelect,
       selectOptionProduct,
-      createReturnPurchase,
+      createReturnInvoice,
       getUserStoreData,
       store,
       getUnits,
@@ -884,7 +892,20 @@ input.totalInputHolder {
   width: 100%;
   font-size: 14px;
 }
-.Purchase-content {
+.form-return-purchase-reference-holder {
+  margin-top: 10px;
+}
+
+input.purchaseReferenceHolder {
+  border: 0px;
+  padding: 10px;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 5px;
+}
+.Invoice-content {
   margin-top: 15px;
   background: #fff;
   padding: 26px;
@@ -908,7 +929,7 @@ input.totalInputHolder {
   justify-content: center;
   margin: 20px;
 }
-button.create-purchase-btn {
+button.create-return-purchase-btn {
   background: var(--primary);
   color: white;
   padding: 10px;
@@ -953,13 +974,13 @@ button.btn-new-purchase {
   display: flex;
   align-items: center;
 }
-button.btnEditPurchase {
+button.btnEditInvoice {
   background: #ffc107;
   color: white;
   padding: 5px;
   border-radius: 2px;
 }
-button.btnDeletePurchase {
+button.btnDeleteInvoice {
   background: #f44336;
   color: white;
   padding: 5px;
@@ -989,7 +1010,7 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.top-purchase-section {
+.top-return-purchase-section {
   display: flex;
   justify-content: space-between;
 }
@@ -1011,25 +1032,25 @@ tr:nth-child(even) {
   padding: 0px;
   align-items: center;
 }
-.top-purchase-section label {
+.top-return-purchase-section label {
   margin: 5px;
 }
-.form-purchase-notes {
+.form-return-purchase-notes {
   margin-top: 10px;
 }
-.form-purchase-supplier {
+.form-return-purchase-supplier {
   margin-top: 10px;
 }
 .purchase-custom-id {
   margin-top: 10px;
 }
-.form-purchase-date {
+.form-return-purchase-date {
   margin-top: 10px;
 }
 .form-due-date {
   margin-top: 10px;
 }
-.form-purchase-supplier {
+.form-return-purchase-supplier {
   position: relative;
 }
 .supplier-select {

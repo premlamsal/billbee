@@ -21,7 +21,7 @@
             <tr>
               <th>Return Purchase ID</th>
               <th>Date</th>
-              <th>Customer Name</th>
+              <th>Supplier Name</th>
               <th>Amount</th>
               <th>Actions</th>
             </tr>

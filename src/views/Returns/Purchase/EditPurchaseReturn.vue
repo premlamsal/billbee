@@ -14,16 +14,16 @@
                 }}</label>
               </div>
               <div class="form-purchase-supplier">
-                <label>Customer </label>
+                <label>Supplier </label>
                 <input
                   type="text"
                   class="supplierInputHolder"
-                  placeholder="Choose Customer"
+                  placeholder="Choose Supplier"
                   v-model="purchaseInfo.supplier_name"
                   @keyup="supplierSelectInput()"
                 />
                 <Transition :duration="550">
-                  <div class="supplier-select" v-if="showCustomerSelect">
+                  <div class="supplier-select" v-if="showSupplierSelect">
                     <!-- {{ queryResults }} -->
                     <div class="selection-list">
                       <ul>
@@ -68,6 +68,14 @@
                   type="date"
                   class="purchaseDueDateHolder"
                   v-model="purchaseInfo.due_date"
+                />
+              </div>
+              <div class="form-return-purchase-reference-holder">
+                <label>Return Purchase Reference ID</label>
+                <input
+                  type="text"
+                  class="purchaseReferenceHolder"
+                  v-model="purchaseInfo.return_purchase_reference_id"
                 />
               </div>
             </div>
@@ -373,7 +381,7 @@ export default {
       lineTotal: 0,
     });
     const store = reactive({});
-    const purchase_id_from_url = ref("");
+    const return_purchase_id_from_url = ref("");
     const purchaseItems = reactive([]);
     const purchaseInfo = reactive({
       // subTotal:0,
@@ -397,7 +405,7 @@ export default {
       stock_id: "",
       price: "",
     });
-    const showCustomerSelect = ref(false);
+    const showSupplierSelect = ref(false);
     const showProductSelect = ref(false);
 
     const VITE_MY_APP_BACK_URL_HOME = ref(
@@ -411,7 +419,7 @@ export default {
     onMounted(() => {
       getIdFromUrl();
       getStoreData();
-      getPurchase();
+      getReturnPurchase();
       getUnits();
       purchaseInfo.discount = 0;
     });
@@ -440,24 +448,26 @@ export default {
         });
     };
     const getIdFromUrl = () => {
-      purchase_id_from_url.value = route.params.id;
+      return_purchase_id_from_url.value = route.params.id;
 
       //   let custom_purchase_number = route.params.id;
 
       //   custom_purchase_number = custom_purchase_number.split("-");
 
-      //   purchase_id_from_url.value = custom_purchase_number[1];
+      //   return_purchase_id_from_url.value = custom_purchase_number[1];
 
-      console.log(purchase_id_from_url.value);
+      console.log(return_purchase_id_from_url.value);
     }; //end of getIdFromUrl
 
-    const getPurchase = () => {
+    const getReturnPurchase = () => {
       axios
-        .get("return-purchase/" + purchase_id_from_url.value)
+        .get("return-purchase/" + return_purchase_id_from_url.value)
         .then((response) => {
           purchaseInfo.custom_return_purchase_id =
             response.data.return_purchase.custom_return_purchase_id;
           purchaseInfo.id = response.data.return_purchase.id;
+          purchaseInfo.return_purchase_reference_id =
+            response.data.return_purchase.return_purchase_reference_id;
           purchaseInfo.supplier_id = response.data.return_purchase.supplier_id;
           purchaseInfo.supplier_name =
             response.data.return_purchase.supplier_name;
@@ -498,7 +508,7 @@ export default {
       currentEditItemIDIndex.value = indexForItem;
       // console.log(purchaseItems[indexForItem]);
 
-      // console.log(getPurchaseItemFromID);
+      // console.log(getReturnPurchaseItemFromID);
       itemHolder.product_id = purchaseItems[indexForItem].product_id;
       itemHolder.product_name = purchaseItems[indexForItem].product_name;
       itemHolder.quantity = purchaseItems[indexForItem].quantity;
@@ -653,7 +663,7 @@ export default {
       if (purchaseInfo.supplier_name === "") {
         // queryResults = [{}];
         queryResults.splice(0);
-        showCustomerSelect.value = false;
+        showSupplierSelect.value = false;
       } else {
         // let formData=new FormData();
         // formData.append('searchQuery',purchaseInfo.supplier)
@@ -672,7 +682,7 @@ export default {
               queryResults.push(response.data.data[i]);
             }
 
-            showCustomerSelect.value = true;
+            showSupplierSelect.value = true;
 
             // console.log(queryResults)
 
@@ -684,7 +694,7 @@ export default {
       }
     };
     const selectOption = (supplier_id, supplier_name) => {
-      showCustomerSelect.value = false;
+      showSupplierSelect.value = false;
       purchaseInfo.supplier_name = supplier_name;
       purchaseInfo.supplier_id = supplier_id;
     };
@@ -782,19 +792,20 @@ export default {
       axios
         .get("user-store")
         .then((response) => {
-          store.purchase_id_count = response.data.store.purchase_id_count;
+          store.return_purchase_id_count =
+            response.data.store.return_purchase_id_count;
 
           console.log(response.data);
 
-          // custom_purchase_number = store.purchase_id_count.split("-");
+          // custom_purchase_number = store.return_purchase_id_count.split("-");
 
           // custom_purchase_number[1] = parseInt(custom_purchase_number[1]) + 1;
 
           // store.this_purchase_custom_number = custom_purchase_number.join("-");
 
           // console.log(store.this_purchase_custom_number);
-          //   store.this_purchase_custom_number = store.purchase_id_count;
-          //   store.this_purchase_custom_number = purchase_id_from_url;
+          //   store.this_purchase_custom_number = store.return_purchase_id_count;
+          //   store.this_purchase_custom_number = return_purchase_id_from_url;
 
           toast(response.data.message, {
             showIcon: true,
@@ -843,6 +854,7 @@ export default {
     //here you can return data and methods
     return {
       itemHolder,
+
       purchaseItems,
       purchaseInfo,
       isItemHolderUpdating,
@@ -859,7 +871,7 @@ export default {
       taxAmount,
       grandTotal,
       supplierSelectInput,
-      showCustomerSelect,
+      showSupplierSelect,
       selectOption,
       queryResults,
       queryResultsProduct,
@@ -870,7 +882,7 @@ export default {
       getStoreData,
       store,
       getIdFromUrl,
-      getPurchase,
+      getReturnPurchase,
       getUnits,
       units,
       VITE_MY_APP_BACK_URL_HOME,
@@ -1088,6 +1100,19 @@ tr:nth-child(even) {
   border-bottom-left-radius: 10px;
   overflow: scroll;
   position: absolute;
+}
+.form-return-purchase-reference-holder {
+  margin-top: 10px;
+}
+
+input.purchaseReferenceHolder {
+  border: 0px;
+  padding: 10px;
+  border: 1px solid #4ade809c;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 5px;
 }
 .product-select {
   width: 100%;
