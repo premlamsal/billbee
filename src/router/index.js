@@ -140,6 +140,16 @@ const router = createRouter({
 			// }
 		},
 		{
+			path: '/:id/product-profile',
+			name: 'ProductProfile',
+			component: () => import('../views/Product/ProductProfile.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+		},
+		{
 			path: '/:id/show-product',
 			name: 'ShowProduct',
 			component: () => import('../views/Product/ShowProduct.vue'),

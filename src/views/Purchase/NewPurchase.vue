@@ -131,7 +131,7 @@
                                       queryResultProduct.product.name,
                                       queryResultProduct.product.unit
                                         .short_name,
-                                      queryResultProduct.product.sp,
+                                      queryResultProduct.product.cp,
                                       queryResultProduct.product.unit.id,
                                       queryResultProduct.id,
                                       queryResultProduct.product.image
