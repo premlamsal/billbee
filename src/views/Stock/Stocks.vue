@@ -68,7 +68,7 @@
                 <td>{{ stock.quantity }} {{ stock.unit.short_name }}</td>
 
                 <td>{{ stock.price }}</td>
-                <td>{{ stock.quantity * stock.product.cp }}</td>
+                <td>{{ stock.quantity * stock.price }}</td>
               </tr>
             </template>
           </tbody>
