@@ -49,6 +49,7 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+
 			},
 		},
 		{
@@ -57,6 +58,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+
 
 			},
 		},
@@ -86,6 +88,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+
 
 			},
 		},
@@ -124,6 +127,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+
 
 			},
 			// beforeEnter(to, from, next) {
@@ -215,6 +219,7 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+
 			},
 		},
 		{
@@ -224,6 +229,7 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+
 			},
 		},
 		{
@@ -232,6 +238,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+
 
 			},
 		},

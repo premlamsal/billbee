@@ -18,7 +18,14 @@
         </div>
       </div>
       <!-- Content -->
-      <router-view />
+      <!-- <router-view /> -->
+      <router-view v-slot="{ Component, route }">
+        <transition name="slide-fade">
+          <div :key="route.path">
+            <component :is="Component"></component>
+          </div>
+        </transition>
+      </router-view>
     </div>
   </div>
 </template>
@@ -138,5 +145,21 @@ button {
 }
 .mb20 {
   margin-bottom: 20px;
+}
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 1, 1, 1);
+}
+
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.slide-fade-leave-to {
+  opacity: 1;
+  transform: translateX(20px);
 }
 </style>
