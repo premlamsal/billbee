@@ -49,6 +49,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="deletePurchaseModal(purchase.id)"
                     >delete</span
                   >
                 </td>
@@ -59,6 +60,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
 <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -78,6 +84,39 @@ export default {
 
     //end of onMounted
 
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
+
+    const deletePurchaseModal = (purchase_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = purchase_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deletePurchase(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deletePurchase = (purchase_id) => {
+      axios
+        .delete("purchase/" + purchase_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+          getPurchases();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const newPurchaseBtn = () => {
       router.push({ path: "/new-purchase" });
     };
@@ -110,6 +149,10 @@ export default {
       getPurchases,
       editPurchase,
       showPurchase,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deletePurchaseModal,
     };
   }, //end of setup
 };

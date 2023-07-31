@@ -56,6 +56,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="deleteReturnPurchaseModal(purchase.id)"
                     >delete</span
                   >
                 </td>
@@ -66,6 +67,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
     <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -82,6 +88,40 @@ export default {
     onMounted(() => {
       getReturnPurchases();
     });
+
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
+
+    const deleteReturnPurchaseModal = (return_purchase_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = return_purchase_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteReturnPurchase(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteReturnPurchase = (return_purchase_id) => {
+      axios
+        .delete("return_purchase/" + return_purchase_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+          getReturnPurchases();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
     //end of onMounted
 
@@ -117,6 +157,10 @@ export default {
       getReturnPurchases,
       editPurchaseReturn,
       showReturnPurchase,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteReturnPurchaseModal,
     };
   }, //end of setup
 };

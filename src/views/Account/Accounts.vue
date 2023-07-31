@@ -232,6 +232,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="deleteAccountModal(account.id)"
                     >delete</span
                   >
                 </td>
@@ -242,6 +243,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
     <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -269,6 +275,39 @@ export default {
 
     //end of onMounted
 
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
+
+    const deleteAccountModal = (account_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = account_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteAccount(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteAccount = (account_id) => {
+      axios
+        .delete("account/" + account_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+          getAccounts();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const addAccountBtn = () => {
       clearAccount();
       isModalUpdating.value = false;
@@ -438,6 +477,10 @@ export default {
       modalHeader,
       showAccount,
       errors,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteAccountModal,
     };
   }, //end of setup
 };

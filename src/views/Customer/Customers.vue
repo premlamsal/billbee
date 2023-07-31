@@ -202,6 +202,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="deleteCustomerModal(customer.id)"
                     >delete</span
                   >
                 </td>
@@ -212,6 +213,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
   <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -238,6 +244,39 @@ export default {
 
     //end of onMounted
 
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
+
+    const deleteCustomerModal = (customer_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = unit_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteCustomer(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteCustomer = (unit_id) => {
+      axios
+        .delete("unit/" + unit_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+          getCustomers();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const addCustomerBtn = () => {
       clearCustomer();
       isModalUpdating.value = false;
@@ -396,6 +435,10 @@ export default {
       modalHeader,
       showCustomer,
       errors,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteCustomerModal,
     };
   }, //end of setup
 };

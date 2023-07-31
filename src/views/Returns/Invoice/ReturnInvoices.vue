@@ -52,6 +52,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="deleteReturnInvoiceModal(invoice.id)"
                     >delete</span
                   >
                 </td>
@@ -62,6 +63,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
   <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -81,6 +87,39 @@ export default {
 
     //end of onMounted
 
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
+
+    const deleteReturnInvoiceModal = (return_invoice_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = return_invoice_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteReturnInvoice(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteReturnInvoice = (return_invoice_id) => {
+      axios
+        .delete("return_invoice/" + return_invoice_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+          getReturnInvoices();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const newReturnInvoiceBtn = () => {
       router.push({ path: "/new-return-invoice" });
     };
@@ -113,6 +152,10 @@ export default {
       getReturnInvoices,
       editInvoiceReturn,
       showReturnInvoice,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteReturnInvoiceModal,
     };
   }, //end of setup
 };

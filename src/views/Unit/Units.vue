@@ -123,6 +123,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="deleteUnitModal(unit.id)"
                     >delete</span
                   >
                 </td>
@@ -133,6 +134,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
     <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -158,6 +164,40 @@ export default {
     });
 
     //end of onMounted
+
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
+
+    const deleteUnitModal = (unit_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = unit_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteUnit(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteUnit = (unit_id) => {
+      axios
+        .delete("unit/" + unit_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+          getUnits();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
     const addUnitBtn = () => {
       clearUnit();
@@ -300,6 +340,10 @@ export default {
       editUnitModal,
       modalHeader,
       errors,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteUnitModal,
     };
   }, //end of setup
 };

@@ -116,6 +116,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="deleteCategoryModal(category.id)"
                     >delete</span
                   >
                 </td>
@@ -126,6 +127,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
     <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -150,6 +156,39 @@ export default {
       getCategories();
     });
 
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
+
+    const deleteCategoryModal = (category_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = categories_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteCategory(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteCategory = (categories_id) => {
+      axios
+        .delete("categories/" + categories_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+          getCategorys();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     //end of onMounted
 
     const addCategoryBtn = () => {
@@ -293,6 +332,10 @@ export default {
       editCategoryModal,
       modalHeader,
       errors,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteCategoryModal,
     };
   }, //end of setup
 };

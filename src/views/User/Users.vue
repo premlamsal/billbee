@@ -2,13 +2,6 @@
   <main id="users-page">
     <h1>Users</h1>
 
-    <Prompt
-      :isPrompt="pressedDelete"
-      v-if="pressedDelete"
-      @event-confirm="eventPrompt"
-      @event-cancel="eventPrompt"
-    />
-
     <Transition :duration="550">
       <div class="modal-container" v-if="showUserModal">
         <div class="modal">
@@ -182,7 +175,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
-                    @click="delBtn(user.id)"
+                    @click="deleteUserModal(user.id)"
                     >delete</span
                   >
                 </td>
@@ -193,6 +186,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
 	<script>
 import { useCounterStore } from "@/stores/counter";
@@ -231,51 +229,39 @@ export default {
 
     //propmt start
 
-    //for prompt
-    const pressedDelete = ref(false);
-    const deleteUserId = ref("");
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
 
-    const eventPrompt = (returned_val) => {
-      // console.log(returned_val);
-
-      if (returned_val) {
-        // console.log('HELLO CONFIRM');
-        axios
-          .delete("user/" + deleteUserId.value)
-          .then((response) => {
-            toast(response.data.message, {
-              showIcon: true,
-              type: response.data.status,
-              position: "top-right",
-              transition: "zoom",
-            });
-
-            getUsers();
-          })
-          .catch((error) => {
-            console.log(error);
+    const deleteUserModal = (user_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = user_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteUser(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteUser = (user_id) => {
+      axios
+        .delete("user/" + user_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
           });
-      } else {
-        console.log("HELLO CANCEL");
-        //nothing to do when cancel button is pressed
-      }
-
-      delBtn();
+          getUsers();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
-
-    const delBtn = (user_id) => {
-      // console.log(user_id);
-
-      //save user id to pass to prompt function
-      deleteUserId.value = user_id;
-
-      if (pressedDelete.value) {
-        pressedDelete.value = false;
-      } else {
-        pressedDelete.value = true;
-      }
-    };
-    //prompt ends
 
     //end of onMounted
 
@@ -459,10 +445,11 @@ export default {
       modalHeader,
       getRoles,
       roles,
-      pressedDelete,
-      delBtn,
-      eventPrompt,
       isModalUpdating,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteUserModal,
     };
   }, //end of setup
 };

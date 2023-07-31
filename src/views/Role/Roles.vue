@@ -1,12 +1,6 @@
 <template>
   <main id="roles-page">
     <h1>Roles</h1>
-    <Prompt
-      :isPrompt="pressedDelete"
-      v-if="pressedDelete"
-      @event-confirm="eventPrompt"
-      @event-cancel="eventPrompt"
-    />
 
     <Transition :duration="550">
       <div class="modal-container" v-if="showRoleModal">
@@ -139,7 +133,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
-                    @click="delBtn(role.id)"
+                    @click="deleteRoleModal(role.id)"
                     >delete</span
                   >
                 </td>
@@ -150,6 +144,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
     <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -177,53 +176,39 @@ export default {
 
     //end of onMounted
 
-    //propmt start
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
 
-    //for prompt
-    const pressedDelete = ref(false);
-    const deleteId = ref("");
-
-    const eventPrompt = (returned_val) => {
-      // console.log(returned_val);
-
-      if (returned_val) {
-        // console.log('HELLO CONFIRM');
-        axios
-          .delete("role/" + deleteId.value)
-          .then((response) => {
-            toast(response.data.message, {
-              showIcon: true,
-              type: response.data.status,
-              position: "top-right",
-              transition: "zoom",
-            });
-
-            getRoles();
-          })
-          .catch((error) => {
-            console.log(error);
+    const deleteRoleModal = (role_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = role_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteRole(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteRole = (role_id) => {
+      axios
+        .delete("role/" + role_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
           });
-      } else {
-        console.log("HELLO CANCEL");
-        //nothing to do when cancel button is pressed
-      }
-
-      delBtn();
+          getRoles();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
-
-    const delBtn = (id) => {
-      // console.log(id);
-
-      //save user id to pass to prompt function
-      deleteId.value = id;
-
-      if (pressedDelete.value) {
-        pressedDelete.value = false;
-      } else {
-        pressedDelete.value = true;
-      }
-    };
-    //prompt ends
 
     const addRoleBtn = () => {
       clearRole();
@@ -399,10 +384,11 @@ export default {
       modalHeader,
       permissions,
       getPermissions,
-      pressedDelete,
-      delBtn,
-      eventPrompt,
       errors,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteRoleModal,
     };
   }, //end of setup
 };

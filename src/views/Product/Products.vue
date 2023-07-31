@@ -342,6 +342,7 @@
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
+                    @click="deleteProductModal(product.id)"
                     >delete</span
                   >
                 </td>
@@ -352,6 +353,11 @@
       </div>
     </div>
   </main>
+  <prompt
+    :is-prompt="isActivePrompt"
+    @event-confirm="callbackPrompt"
+    @event-cancel="callbackPromptCancel"
+  ></prompt>
 </template>
 	<script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
@@ -389,6 +395,39 @@ export default {
 
     //end of onMounted
 
+    //start---for prompt
+    const isActivePrompt = ref(false);
+    const delete_id = ref("");
+
+    const deleteProductModal = (product_id) => {
+      isActivePrompt.value = true;
+      delete_id.value = product_id;
+    };
+    const callbackPrompt = () => {
+      isActivePrompt.value = false;
+      console.log(delete_id.value);
+      deleteProduct(delete_id.value);
+    };
+    const callbackPromptCancel = () => {
+      isActivePrompt.value = false;
+      delete_id.value = "";
+    };
+    const deleteProduct = (product_id) => {
+      axios
+        .delete("product/" + product_id)
+        .then((response) => {
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-right",
+            transition: "zoom",
+          });
+          getProducts();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const setAvtarUploadImage = () => {
       // imagePreview.value = "/img/upload_image.png";
     };
@@ -658,6 +697,10 @@ export default {
       showProduct,
       isValidHttpUrl,
       errors,
+      isActivePrompt,
+      callbackPrompt,
+      callbackPromptCancel,
+      deleteProductModal,
     };
   }, //end of setup
 };
