@@ -31,11 +31,20 @@
         </div>
       </div>
     </div>
+    <div class="">
+      <button @click="btnForPrompt()">Call Prompt</button>
+      <prompt
+        :is-prompt="isActivePrompt"
+        @event-confirm="callback"
+        @event-cancel="callbackCancel"
+      ></prompt>
+    </div>
   </main>
 </template>
 <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+// import prompt from "../components/Prompt.vue";
 
 export default {
   setup() {
@@ -51,6 +60,30 @@ export default {
     onMounted(() => {
       getDashInfo();
     });
+
+    //start---for prompt
+    const isActivePrompt = ref(false);
+
+    const btnForPrompt = () => {
+      // console.log("prompt firing up..please wait");
+      isActivePrompt.value = true;
+    };
+    const callback = () => {
+      isActivePrompt.value = false;
+      // console.log("this is callback from child compoent");
+      toast("Successfully Performed Actions", {
+        showIcon: true,
+        type: "success",
+        position: "top-right",
+        transition: "zoom",
+      });
+    };
+    const callbackCancel = () => {
+      isActivePrompt.value = false;
+      // console.log("this is callback from child compoent");
+    };
+
+    // end ---for prompt
     const getDashInfo = () => {
       dash.length = 0;
       axios
@@ -72,6 +105,11 @@ export default {
     return {
       dash,
       VITE_MY_APP_BACK_URL_HOME,
+      prompt,
+      callback,
+      isActivePrompt,
+      btnForPrompt,
+      callbackCancel,
     };
   },
 };

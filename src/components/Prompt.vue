@@ -1,7 +1,11 @@
 <template>
   <Transition name="slide-fade" :duration="550">
-    <div class="prompt-container" v-if="showPrompt">
-      <div class="prompt">
+    <div
+      class="prompt-container"
+      v-if="props.isPrompt"
+      @click="$emit('eventCancel', false)"
+    >
+      <div class="prompt" @click.stop="">
         <div class="prompt-header">
           <h2>Please Confirm before proceed</h2>
         </div>
@@ -13,8 +17,13 @@
           <!-- {{ content }} -->
         </div>
         <div class="prompt-footer">
-          <button class="btnConfirm" @click="$emit('eventConfirm',true)">Confirm?</button>
-          <button class="btnCancel" @click="$emit('eventCancel',false)">Cancel</button>
+          <button class="btnConfirm" @click="$emit('eventConfirm', true)">
+            <span class="material-icons">check</span> Confirm?
+          </button>
+          <button class="btnCancel" @click="$emit('eventCancel', false)">
+            <span class="material-icons">close</span>
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -22,25 +31,55 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 // const props = defineProps(["content"]);
-const props = defineProps(["isPrompt"]);
+const props = defineProps({
+  isPrompt: {
+    type: Boolean,
+  },
+});
 
-const showPrompt= ref(false);
+/* how to use this compoent
 
-showPrompt.value= props.isPrompt
+--------localy-------------
+ import 'Prompt' from 'location for compoents'
 
-const displayPrompt = () => {
-  
-  // if (showPrompt.value) {
-  //   showPrompt.value = false;
-  // } else {
-  //   showPrompt.value = true;
-  // }
+------------globaly---------
 
- showPrompt.value=false;
-};
+//for custom prompt --own-prompt-compoent---registering globally
+import Prompt from './components/Prompt.vue'
+
+app.component('Prompt', Prompt)
+
+------------------------------after that below code is common for both----------
+1. place this code in script 
+
+      //start---for prompt
+      const isActivePrompt = ref(false);
+
+      const btnForPrompt = () => {
+        isActivePrompt.value = true;
+      };
+      const callback = () => {
+        isActivePrompt.value = false;
+      };
+      const callbackCancel = () => {
+        isActivePrompt.value = false;
+      };
+
+3. use this tag in your parent component 
+
+  <button @click="btnForPrompt()">Call Prompt</button>
+
+    <prompt
+        :is-prompt="isActivePrompt"
+        @event-confirm="callback"
+        @event-cancel="callbackCancel"
+      ></prompt>
+
+
+*/
 </script>
 <style scoped>
 .prompt-container {
@@ -72,9 +111,13 @@ button.btnCancel {
   background: white;
   padding: 10px;
   border-radius: 10px;
+  box-shadow: 2px 3px 7px -3px #2f2727;
 }
 .prompt-container {
-  background: #000000d6;
+  /* background: #000000d6; */
+  /* background: mediumspringgreen; */
+  background: #00fa9a30;
+  backdrop-filter: blur(5px);
   padding: 0px;
   position: absolute;
   top: 0px;
