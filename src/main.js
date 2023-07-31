@@ -45,7 +45,7 @@ app.provide('$toast', createToast);
 app.use(createPinia());
 app.use(router);
 
-
+//for custom prompt --own-prompt-compoent---registering globally
 import Prompt from './components/Prompt.vue'
 
 app.component('Prompt', Prompt)
