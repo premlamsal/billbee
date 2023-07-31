@@ -151,15 +151,15 @@ button {
 }
 
 .slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 1, 1, 1);
+  // transition: all 0.2s cubic-bezier(1, 1, 1, 1);
 }
 
 .slide-fade-enter-from {
   opacity: 0;
-  transform: translateX(20px);
+  // transform: translateY(20px);
 }
 .slide-fade-leave-to {
-  opacity: 1;
-  transform: translateX(20px);
+  opacity: 0;
+  // transform: translateY(-90px);
 }
 </style>
