@@ -49,5 +49,8 @@ app.use(router);
 import Prompt from './components/Prompt.vue'
 
 app.component('Prompt', Prompt)
+import Chart from './components/Chart.vue'
+
+app.component('Chart', Chart)
 
 app.mount("#app");

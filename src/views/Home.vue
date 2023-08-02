@@ -31,6 +31,7 @@
         </div>
       </div>
     </div>
+
     <div class="">
       <button @click="btnForPrompt()">Call Prompt</button>
       <prompt
@@ -38,14 +39,14 @@
         @event-confirm="callback"
         @event-cancel="callbackCancel"
       ></prompt>
+
+      <Chart />
     </div>
   </main>
 </template>
 <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-// import prompt from "../components/Prompt.vue";
-
 export default {
   setup() {
     const router = useRouter();
@@ -105,7 +106,6 @@ export default {
     return {
       dash,
       VITE_MY_APP_BACK_URL_HOME,
-      prompt,
       callback,
       isActivePrompt,
       btnForPrompt,
