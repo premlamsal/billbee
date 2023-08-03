@@ -1,8 +1,8 @@
 <template>
   <div class="chart-container">
     <h4>Chart</h4>
-    <div class="chart-box">
-      <div class="chart" style="position: relative; width: 50vw">
+    <div class="chart-out-holder">
+      <div class="chart-box">
         <canvas ref="myChart"></canvas>
       </div>
     </div>
@@ -21,6 +21,14 @@ const chartDataSets = ref([
     label: "# of Sales",
     data: [],
     borderWidth: 1,
+    // backgroundColor: [
+    //   "rgb(255, 84, 64,0.6)",
+    //   "rgba(54, 162, 235, 0.6)",
+    //   "rgba(255, 206, 86, 0.6)",
+    //   "rgba(75, 192, 192, 0.6)",
+    //   "rgba(153, 102, 255, 0.6)",
+    //   "rgba(255, 159, 64, 0.6)",
+    // ],
   },
 ]);
 const chartDataLabels = ref(["2080-09", "2080-09"]);
@@ -30,16 +38,16 @@ const chartData = reactive({
   datasets: chartDataSets,
 });
 
-const chartOptions = ref({
+const chartOptions = reactive({
   responsive: true,
-  maintainAspectRatio: true,
+  maintainAspectRatio: false,
   scales: {
     y: {
       beginAtZero: true,
     },
   },
 });
-const chartType = ref("line");
+const chartType = ref("bar");
 //charts ends
 const getMonthName = (date_month) => {
   return new Intl.DateTimeFormat("en-US", {
@@ -89,8 +97,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.chart {
-  /* width: 100%; */
-  /* height: 300px; */
+.chart-box {
+  position: relative;
+  margin: auto;
+  height: 300px;
+  width: 95%;
 }
 </style>
