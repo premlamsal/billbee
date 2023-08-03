@@ -110,17 +110,17 @@ const monthSelectorChange = () => {
   if (chart) {
     chart.value.destroy();
   }
-  getSalesChartInfo(chartDataBeforeMonth.value);
+  getSalesPurchaseChartInfo(chartDataBeforeMonth.value);
 };
 const chartTypeChange = () => {
   if (chart) {
     chart.value.destroy();
   }
-  getSalesChartInfo(chartDataBeforeMonth.value);
+  getSalesPurchaseChartInfo(chartDataBeforeMonth.value);
 };
-const getSalesChartInfo = (before_month) => {
+const getSalesPurchaseChartInfo = (before_month) => {
   axios
-    .get("sales-chart-info/" + before_month)
+    .get("sales-purchase-chart-info/" + before_month)
     .then((response) => {
       //   console.log(response.data.month);
       //   console.log(response.data.data);
@@ -164,7 +164,7 @@ const makeSalesChart = () => {
 };
 
 onMounted(() => {
-  getSalesChartInfo(chartDataBeforeMonth.value);
+  getSalesPurchaseChartInfo(chartDataBeforeMonth.value);
 });
 </script>
 
