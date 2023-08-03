@@ -52,6 +52,20 @@ const axios = inject("$axios");
 //charts start
 const chartDataSets = ref([
   {
+    label: "# of Purchase",
+    data: [],
+    borderWidth: 1,
+    fill: true,
+    // backgroundColor: [
+    //   "rgb(255, 84, 64,0.6)",
+    //   "rgba(54, 162, 235, 0.6)",
+    //   "rgba(255, 206, 86, 0.6)",
+    //   "rgba(75, 192, 192, 0.6)",
+    //   "rgba(153, 102, 255, 0.6)",
+    //   "rgba(255, 159, 64, 0.6)",
+    // ],
+  },
+  {
     label: "# of Sales",
     data: [],
     borderWidth: 1,
@@ -82,7 +96,7 @@ const chartOptions = reactive({
     },
   },
 });
-const chartType = ref("line");
+const chartType = ref("bar");
 const chartDataBeforeMonth = ref(6);
 //charts ends
 const getMonthName = (date_month) => {
@@ -111,13 +125,19 @@ const getSalesChartInfo = (before_month) => {
       //   console.log(response.data.month);
       //   console.log(response.data.data);
       // chartDataSets.value[0].label = "# of Sales";
+      chartDataLabels.value = [];
+
       for (let i = 0; i < response.data.month.length; i++) {
         // chartDataLabels.value[i] = response.data.month[i];
         chartDataLabels.value[i] = response.data.month[i];
       }
+      chartDataSets.value[0].data = [];
+      chartDataSets.value[1].data = [];
+
       for (let i = 0; i < response.data.month.length; i++) {
         //this will assign to 0th data array for chart and ith items to data itself
-        chartDataSets.value[0].data[i] = response.data.data[i];
+        chartDataSets.value[0].data[i] = response.data.purchase_data[i];
+        chartDataSets.value[1].data[i] = response.data.sales_data[i];
       }
 
       // console.log(chartDataLabels);
