@@ -129,7 +129,7 @@ const getSalesPurchaseChartInfo = (before_month) => {
 
       for (let i = 0; i < response.data.month.length; i++) {
         // chartDataLabels.value[i] = response.data.month[i];
-        chartDataLabels.value[i] = response.data.month[i];
+        chartDataLabels.value[i] = getMonthName(response.data.month[i]);
       }
       chartDataSets.value[0].data = [];
       chartDataSets.value[1].data = [];
