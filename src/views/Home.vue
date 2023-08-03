@@ -33,13 +33,6 @@
     </div>
 
     <div class="">
-      <button @click="btnForPrompt()">Call Prompt</button>
-      <prompt
-        :is-prompt="isActivePrompt"
-        @event-confirm="callback"
-        @event-cancel="callbackCancel"
-      ></prompt>
-
       <Chart />
     </div>
   </main>
@@ -62,29 +55,6 @@ export default {
       getDashInfo();
     });
 
-    //start---for prompt
-    const isActivePrompt = ref(false);
-
-    const btnForPrompt = () => {
-      // console.log("prompt firing up..please wait");
-      isActivePrompt.value = true;
-    };
-    const callback = () => {
-      isActivePrompt.value = false;
-      // console.log("this is callback from child compoent");
-      toast("Successfully Performed Actions", {
-        showIcon: true,
-        type: "success",
-        position: "top-right",
-        transition: "zoom",
-      });
-    };
-    const callbackCancel = () => {
-      isActivePrompt.value = false;
-      // console.log("this is callback from child compoent");
-    };
-
-    // end ---for prompt
     const getDashInfo = () => {
       dash.length = 0;
       axios
@@ -106,10 +76,6 @@ export default {
     return {
       dash,
       VITE_MY_APP_BACK_URL_HOME,
-      callback,
-      isActivePrompt,
-      btnForPrompt,
-      callbackCancel,
     };
   },
 };
@@ -117,6 +83,9 @@ export default {
 <style>
 .dash-content {
   margin-top: 20px;
+  background: #fff;
+  padding: 1em;
+  margin-bottom: 25px;
 }
 .dash-content span.material-icons {
   font-size: 40px;
@@ -131,7 +100,7 @@ export default {
   justify-content: space-around;
   /* align-items: center; */
   /* height: 100vh; */
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
 }
 
 .box {
@@ -144,7 +113,7 @@ export default {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   transition: all 0.3s ease-in-out;
 }
 
