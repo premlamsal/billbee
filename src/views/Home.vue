@@ -104,6 +104,7 @@ export default {
 }
 
 .box {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -162,5 +163,11 @@ export default {
 .income {
   background-color: #ffd200;
   color: #555;
+}
+.material-icons {
+  transition: transform 0.9s ease-in-out;
+}
+.material-icons:hover {
+  transform: rotate(360deg);
 }
 </style>
