@@ -140,30 +140,30 @@ export default {
   padding: 0;
 }
 
-.invoices {
+.purchases {
   background: linear-gradient(45deg, #8bc34a, #cddc39);
   color: white;
 }
 
-.purchases {
+.suppliers {
   /* background-color: #ff7b25; */
   color: white;
   background: linear-gradient(45deg, #4099ff, #73b4ff);
 }
 
-.products {
+.customers {
   /* background-color: #009245; */
   color: white;
   background: linear-gradient(45deg, #2ed8b6, #59e0c5);
 }
 
-.customers {
+.products {
   /* background-color: #d2232a; */
   color: white;
   background: linear-gradient(45deg, #ffb64d, #ffcb80);
 }
 
-.suppliers {
+.invoices {
   /* background-color: #ffd200; */
   color: white;
   background: linear-gradient(45deg, #ff5370, #ff869a);
