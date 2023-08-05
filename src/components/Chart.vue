@@ -14,6 +14,7 @@
         <div class="month-select-holder">
           <label>Report Before: </label>
           <select
+            class="custom-select"
             v-model="chartDataBeforeMonth"
             @change="monthSelectorChange()"
           >
@@ -28,7 +29,11 @@
       <div class="chart-type-select-container">
         <div class="chart-type-select-holder">
           <label>Chart Type: </label>
-          <select v-model="chartType" @change="chartTypeChange()">
+          <select
+            v-model="chartType"
+            @change="chartTypeChange()"
+            class="custom-select"
+          >
             <option disabled>Select chart type</option>
             <option value="bar">Bar</option>
             <option value="line">Line</option>
@@ -196,5 +201,43 @@ onMounted(() => {
 .chart-container-footer {
   display: flex;
   justify-content: space-between;
+}
+/* Style for the custom select */
+.custom-select {
+  appearance: none;
+  outline: none;
+  background-color: #6e726e30;
+  padding: 10px 40px 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Style for the arrow icon */
+.custom-select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-left: 2px solid #333;
+  border-bottom: 2px solid #333;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+/* Style for the arrow icon on hover */
+.custom-select:hover::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+/* Style for the options */
+.custom-select option {
+  background-color: rgb(223, 215, 215);
+  color: #333;
 }
 </style>
