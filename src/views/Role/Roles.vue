@@ -29,7 +29,10 @@
                   type="text"
                   placeholder="Role Name"
                   v-model="role.name"
-                  :class="['roleNameHolder', errors.name ? 'is-invalid' : '']"
+                  :class="[
+                    'form-input-holder',
+                    errors.name ? 'is-invalid' : '',
+                  ]"
                 />
                 <div v-if="errors.name" :class="['errorText']">
                   <div
@@ -49,7 +52,7 @@
                 <select
                   v-model="role.permission_id"
                   :class="[
-                    'rolePermissionHolder',
+                    'form-input-holder',
                     errors.permission_id ? 'is-invalid' : '',
                   ]"
                 >
@@ -447,56 +450,6 @@ export default {
   cursor: pointer;
 }
 
-input.roleNameHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.rolePhoneHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.roleAddressHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.roleDetailsHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-input.roleOpeningBalanceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
 .form-input-holder-container {
   margin-bottom: 15px;
 }

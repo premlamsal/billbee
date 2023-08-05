@@ -16,25 +16,37 @@
     margin: 10px;
 }
 
-input.form-input-holder {
-    border: 0px;
+input.form-input-holder,
+
+select.form-input-holder,
+textarea.form-input-holder {
+    background-color: #9a9da012;
     padding: 10px;
-    border: 1px solid #4ade809c;
+    border: 1px solid #9a9da084;
     border-radius: 10px;
     width: 100%;
     font-size: 14px;
     margin-top: 10px;
+    outline: none;
+    transition: 0.2s ease-in-out;
+
+}
+
+input.form-input-holder,
+select.form-input-holder {
+    padding-top: 17px;
+    padding-bottom: 17px;
+}
+
+input.form-input-holder:focus,
+textarea.form-input-holder :focus {
+    background-color: #fff;
+    border: 1px solid #9a9da084;
+
 }
 
 textarea.form-input-holder {
-    border: 0px;
-    padding: 10px;
-    border: 1px solid #4ade809c;
-    border-radius: 10px;
-    width: 100%;
-    font-size: 14px;
     resize: none;
-    margin-top: 5px;
 }
 
 input.is-invalid,

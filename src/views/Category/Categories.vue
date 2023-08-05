@@ -21,46 +21,51 @@
             <h1>{{ modalHeader }} Category</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-holder-container">
-              <label>Category Name</label>
-              <input
-                type="text"
-                placeholder="Category Name"
-                v-model="category.name"
-                :class="['categoryNameHolder', errors.name ? 'is-invalid' : '']"
-              />
-              <div v-if="errors.name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>Category Name</label>
+                <input
+                  type="text"
+                  placeholder="Category Name"
+                  v-model="category.name"
+                  :class="[
+                    'form-input-holder',
+                    errors.name ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="form-input-holder-container">
-              <label> Details</label>
-              <textarea
-                type="text"
-                v-model="category.description"
-                :class="[
-                  'categoryDetailsHolder',
-                  errors.description ? 'is-invalid' : '',
-                ]"
-              ></textarea>
-              <div v-if="errors.description" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.description"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+              <div class="form-input-holder-container">
+                <label> Details</label>
+                <textarea
+                  type="text"
+                  v-model="category.description"
+                  :class="[
+                    'form-input-holder',
+                    errors.description ? 'is-invalid' : '',
+                  ]"
+                ></textarea>
+                <div v-if="errors.description" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.description"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -394,56 +399,6 @@ export default {
   cursor: pointer;
 }
 
-input.categoryNameHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.categoryPhoneHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.categoryAddressHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.categoryDetailsHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-input.categoryOpeningBalanceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
 .form-input-holder-container {
   margin-bottom: 15px;
 }
@@ -515,8 +470,5 @@ tr:nth-child(even) {
 .v-leave-to {
   transform: translateY(-500px);
   opacity: 0.001;
-}
-.form-input-holder-container {
-  margin: 0px;
 }
 </style>

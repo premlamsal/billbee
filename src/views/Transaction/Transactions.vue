@@ -27,7 +27,7 @@
                 <select
                   v-model="transaction.account_id"
                   :class="[
-                    'transactionAccountHolder',
+                    'form-input-holder',
                     errors.account_id ? 'is-invalid' : '',
                   ]"
                 >
@@ -58,7 +58,7 @@
                   type="text"
                   v-model="transaction.transaction_name"
                   :class="[
-                    'transactionNameHolder',
+                    'form-input-holder',
                     errors.transaction_name ? 'is-invalid' : '',
                   ]"
                 />
@@ -82,7 +82,7 @@
                   type="text"
                   v-model="transaction.amount"
                   :class="[
-                    'transactionAmountHolder',
+                    'form-input-holder',
                     errors.amount ? 'is-invalid' : '',
                   ]"
                 />
@@ -104,7 +104,7 @@
                   type="date"
                   v-model="transaction.date"
                   :class="[
-                    'transactionDateHolder',
+                    'form-input-holder',
                     errors.date ? 'is-invalid' : '',
                   ]"
                 />
@@ -127,7 +127,7 @@
                 <textarea
                   v-model="transaction.notes"
                   :class="[
-                    'transactionNotesHolder',
+                    'form-input-holder',
                     errors.notes ? 'is-invalid' : '',
                   ]"
                 ></textarea>
@@ -154,7 +154,7 @@
                     value="income"
                     v-model="transaction.transaction_type"
                     :class="[
-                      'transactionTypeHolder',
+                      'form-input-holder',
                       errors.transaction_type ? 'is-invalid' : '',
                     ]"
                   />
@@ -165,7 +165,7 @@
                     type="radio"
                     id="expense"
                     value="expense"
-                    class="transactionTypeHolder"
+                    class="form-input-holder"
                     v-model="transaction.transaction_type"
                   />
                   <label for="Expense">Expense</label>
@@ -197,7 +197,7 @@
                 <input
                   type="file"
                   :class="[
-                    'transactionImageHolder',
+                    'form-input-holder',
                     errors.image ? 'is-invalid' : '',
                   ]"
                   v-on:change="fileSelected"
@@ -704,46 +704,6 @@ export default {
   bottom: -5px;
   font-size: 25px;
   cursor: pointer;
-}
-
-input.transactionNameHolder,
-input.transactionDateHolder,
-input.transactionAmountHolder,
-input.transactionAccountHolder,
-input.transactionImageHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-select.transactionAccountHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-input.transactionTypeHolder {
-  border: 0px;
-  padding: 10px;
-  margin-top: 10px;
-  margin-right: 10px;
-}
-
-textarea.transactionNotesHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
 }
 
 .form-input-holder-container {

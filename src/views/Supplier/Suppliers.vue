@@ -29,7 +29,7 @@
                   placeholder="Supplier Name"
                   v-model="supplier.name"
                   :class="[
-                    'supplierNameHolder',
+                    'form-input-holder',
                     errors.name ? 'is-invalid' : '',
                   ]"
                 />
@@ -52,7 +52,7 @@
                   type="text"
                   placeholder="Supplier Address"
                   :class="[
-                    'supplierAddressHolder',
+                    'form-input-holder',
                     errors.address ? 'is-invalid' : '',
                   ]"
                   v-model="supplier.address"
@@ -78,7 +78,7 @@
                   type="text"
                   placeholder="Supplier Phone"
                   :class="[
-                    'supplierPhoneHolder',
+                    'form-input-holder',
                     errors.phone ? 'is-invalid' : '',
                   ]"
                   v-model="supplier.phone"
@@ -102,7 +102,7 @@
                   type="text"
                   placeholder="Supplier Opening Balance"
                   :class="[
-                    'supplierOpeningBalanceHolder',
+                    'form-input-holder',
                     errors.opening_balance ? 'is-invalid' : '',
                   ]"
                   v-model="supplier.opening_balance"
@@ -126,7 +126,7 @@
                 <textarea
                   type="text"
                   :class="[
-                    'supplierDetailsHolder',
+                    'form-input-holder',
                     errors.details ? 'is-invalid' : '',
                   ]"
                   v-model="supplier.details"
@@ -495,56 +495,6 @@ export default {
   cursor: pointer;
 }
 
-input.supplierNameHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.supplierPhoneHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.supplierAddressHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.supplierDetailsHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-input.supplierOpeningBalanceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
 .form-input-holder-container {
   margin-bottom: 15px;
 }

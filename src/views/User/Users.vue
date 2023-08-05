@@ -28,7 +28,7 @@
                 type="text"
                 placeholder="User Name"
                 v-model="user.name"
-                :class="['userNameHolder', errors.name ? 'is-invalid' : '']"
+                :class="['form-input-holder', errors.name ? 'is-invalid' : '']"
               />
               <div v-if="errors.name" :class="['errorText']">
                 <div
@@ -48,7 +48,7 @@
                 type="email"
                 placeholder="User Email"
                 v-model="user.email"
-                :class="['userEmailHolder', errors.email ? 'is-invalid' : '']"
+                :class="['form-input-holder', errors.email ? 'is-invalid' : '']"
               />
               <div v-if="errors.email" :class="['errorText']">
                 <div
@@ -69,7 +69,7 @@
                 placeholder="User Password"
                 v-model="user.password"
                 :class="[
-                  'userPasswordHolder',
+                  'form-input-holder',
                   errors.password ? 'is-invalid' : '',
                 ]"
               />
@@ -91,7 +91,10 @@
 
               <select
                 v-model="user.role_id"
-                :class="['userRoleHolder', errors.role_id ? 'is-invalid' : '']"
+                :class="[
+                  'form-input-holder',
+                  errors.role_id ? 'is-invalid' : '',
+                ]"
               >
                 <template v-for="role in roles" v-bind:key="role.id">
                   <option selected :value="role.id">
@@ -509,75 +512,6 @@ export default {
   cursor: pointer;
 }
 
-input.userNameHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.userPhoneHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.userAddressHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.userEmailHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-input.userPasswordHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.userDetailsHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-input.userOpeningBalanceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
 .form-input-holder-container {
   margin-bottom: 15px;
 }
@@ -666,15 +600,6 @@ tr:nth-child(even) {
   background: var(--dark);
 }
 
-select.userRoleHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
 .errorText {
   transition: all 2s ease-in-out;
   margin-top: 10px;

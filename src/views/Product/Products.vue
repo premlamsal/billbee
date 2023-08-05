@@ -28,7 +28,7 @@
                 <select
                   v-model="product.product_cat_id"
                   :class="[
-                    'productCategoryHolder',
+                    'form-input-holder',
                     errors.product_cat_id ? 'is-invalid' : '',
                   ]"
                 >
@@ -60,7 +60,7 @@
                   type="text"
                   placeholder="Product Name"
                   :class="[
-                    'productNameHolder',
+                    'form-input-holder',
                     errors.name ? 'is-invalid' : '',
                   ]"
                   v-model="product.name"
@@ -85,7 +85,7 @@
                 <select
                   v-model="product.unit_id"
                   :class="[
-                    'productUnitHolder',
+                    'form-input-holder',
                     errors.unit_id ? 'is-invalid' : '',
                   ]"
                 >
@@ -114,7 +114,7 @@
                   type="text"
                   placeholder="Product Opening Stock"
                   :class="[
-                    'productOpeningStockHolder',
+                    'form-input-holder',
                     errors.opening_stock ? 'is-invalid' : '',
                   ]"
                   v-model="product.opening_stock"
@@ -140,10 +140,7 @@
                   type="text"
                   placeholder="Product Cost Price"
                   v-model="product.cp"
-                  :class="[
-                    'productCostPriceHolder',
-                    errors.cp ? 'is-invalid' : '',
-                  ]"
+                  :class="['form-input-holder', errors.cp ? 'is-invalid' : '']"
                 />
                 <div v-if="errors.cp" :class="['errorText']">
                   <div
@@ -164,10 +161,7 @@
                   type="text"
                   placeholder="Product Selling Price"
                   v-model="product.sp"
-                  :class="[
-                    'productSellingPriceHolder',
-                    errors.sp ? 'is-invalid' : '',
-                  ]"
+                  :class="['form-input-holder', errors.sp ? 'is-invalid' : '']"
                 />
                 <div v-if="errors.sp" :class="['errorText']">
                   <div
@@ -188,7 +182,7 @@
                 <textarea
                   type="text"
                   :class="[
-                    'productDescriptionHolder',
+                    'form-input-holder',
                     errors.description ? 'is-invalid' : '',
                   ]"
                   v-model="product.description"
@@ -237,7 +231,7 @@
                   type="file"
                   v-on:change="fileSelected"
                   :class="[
-                    'productImageHolder',
+                    'form-input-holder',
                     errors.image ? 'is-invalid' : '',
                   ]"
                 />
@@ -757,76 +751,6 @@ export default {
   bottom: -5px;
   font-size: 25px;
   cursor: pointer;
-}
-
-input.productNameHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-select.productCategoryHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-select.productUnitHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.productCostPriceHolder,
-input.productSellingPriceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.productOpeningStockHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.productDescriptionHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-input.productOpeningBalanceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
 }
 
 .form-input-holder-container {

@@ -29,7 +29,7 @@
                   placeholder="Unit Short Name"
                   class="unitShortNameHolder"
                   :class="[
-                    'unitShortNameHolder',
+                    'form-input-holder',
                     errors.short_name ? 'is-invalid' : '',
                   ]"
                   v-model="unit.short_name"
@@ -53,7 +53,7 @@
                   type="text"
                   placeholder="Unit Long Name"
                   :class="[
-                    'unitLongNameHolder',
+                    'form-input-holder',
                     errors.long_name ? 'is-invalid' : '',
                   ]"
                   v-model="unit.long_name"
@@ -400,17 +400,6 @@ export default {
   bottom: -5px;
   font-size: 25px;
   cursor: pointer;
-}
-
-input.unitShortNameHolder,
-input.unitLongNameHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
 }
 
 .form-input-holder-container {

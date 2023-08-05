@@ -27,7 +27,7 @@
                 class="paymentAccountHolder"
                 v-model="payment.account_id"
                 :class="[
-                  'paymentAccountHolder',
+                  'form-input-holder',
                   errors.account_id ? 'is-invalid' : '',
                 ]"
               >
@@ -58,7 +58,7 @@
                 type="text"
                 v-model="payment.amount"
                 :class="[
-                  'paymentAmountHolder',
+                  'form-input-holder',
                   errors.amount ? 'is-invalid' : '',
                 ]"
               />
@@ -79,7 +79,7 @@
               <input
                 type="date"
                 v-model="payment.date"
-                :class="['paymentDateHolder', errors.date ? 'is-invalid' : '']"
+                :class="['form-input-holder', errors.date ? 'is-invalid' : '']"
               />
               <div v-if="errors.date" :class="['errorText']">
                 <div
@@ -98,10 +98,7 @@
               <textarea
                 v-model="payment.notes"
                 class="paymentNotesHolder"
-                :class="[
-                  'paymentNotesHolder',
-                  errors.notes ? 'is-invalid' : '',
-                ]"
+                :class="['form-input-holder', errors.notes ? 'is-invalid' : '']"
               ></textarea>
               <div v-if="errors.notes" :class="['errorText']">
                 <div
@@ -122,10 +119,7 @@
               <input
                 type="file"
                 v-on:change="fileSelected"
-                :class="[
-                  'paymentImageHolder',
-                  errors.image ? 'is-invalid' : '',
-                ]"
+                :class="['form-input-holder', errors.image ? 'is-invalid' : '']"
               />
               <div v-if="errors.image" :class="['errorText']">
                 <div
@@ -571,56 +565,6 @@ export default {
   cursor: pointer;
 }
 
-select.paymentAccountHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.paymentDateHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.paymentAmountHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.paymentNotesHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-input.paymentImageHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
 .form-input-payment {
   margin-bottom: 15px;
 }
