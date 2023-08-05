@@ -714,6 +714,7 @@ tr:nth-child(even) {
   text-align: center;
   border-radius: 10px;
   color: yellow;
+  box-shadow: none;
 }
 @keyframes fadeIn {
   0% {

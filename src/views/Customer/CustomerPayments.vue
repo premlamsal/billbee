@@ -158,6 +158,7 @@
         <table class="table" v-if="payments.length != 0">
           <thead>
             <tr>
+              <th>Payment ID</th>
               <th>Date</th>
               <th>Amount</th>
               <th>Image</th>
@@ -166,6 +167,7 @@
           </thead>
           <tbody>
             <tr v-for="payment in payments" v-bind:key="payment.id">
+              <td>{{ payment.custom_customer_payment_id }}</td>
               <td>{{ payment.date }}</td>
               <td>Rs. {{ payment.amount }}</td>
               <td>

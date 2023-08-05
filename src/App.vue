@@ -63,6 +63,7 @@ import Sidebar from "./components/Sidebar.vue";
 <style lang="scss">
 :root {
   --primary: #4ade80;
+  // --primary: linear-gradient(45deg, #8bc34a, #cddc39);
   --danger: #f44336;
   --primary-alt: #22c55e;
   --grey: #64748b;
