@@ -66,6 +66,84 @@
         </table>
       </div>
     </div>
+    <div class="pagination-container">
+      <div class="pagination-box">
+        <div class="pagination-holder">
+          <ul class="pagination">
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.first_link }"
+            >
+              <button
+                @click="getReturnPurchases(pagination.first_link)"
+                class="page-link"
+              >
+                <span class="material-icons">first_page</span>
+                First
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.prev_link }"
+              v-if="pagination.prev_link"
+            >
+              <button
+                @click="getReturnPurchases(pagination.prev_link)"
+                class="page-link"
+              >
+                <span class="material-icons">chevron_left</span>
+
+                Prev
+              </button>
+            </li>
+            <li
+              v-for="n in pagination.last_page"
+              v-bind:key="n"
+              class="page-item"
+              v-bind:class="{ active: pagination.current_page == n }"
+            >
+              <button
+                @click="getReturnPurchases(pagination.path_page + n)"
+                class="page-link"
+              >
+                {{ n }}
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.next_link }"
+              v-if="pagination.next_link"
+            >
+              <button
+                @click="getReturnPurchases(pagination.next_link)"
+                class="page-link"
+              >
+                <span class="material-icons">chevron_right</span>
+
+                Next
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.last_link }"
+            >
+              <button
+                @click="getReturnPurchases(pagination.last_link)"
+                class="page-link"
+              >
+                <span class="material-icons">last_page</span>
+
+                Last
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="pagination-footer">
+          Page: {{ pagination.current_page }}-{{ pagination.last_page }} Total
+          Records: {{ pagination.total_pages }}
+        </div>
+      </div>
+    </div>
   </main>
   <prompt
     :is-prompt="isActivePrompt"
@@ -133,12 +211,17 @@ export default {
       // router.push({ path: '/edit-purchase',query:'hello-from-query' })
       router.push({ path: `${id}/edit-return-purchase/` });
     };
-    const getReturnPurchases = () => {
+    const getReturnPurchases = (page_url) => {
+      page_url = page_url || "return-purchases";
+      return_purchases.length = 0;
       axios
-        .get("return-purchases")
+        .get(page_url)
         .then((response) => {
           for (let i = 0; i < response.data.data.length; i++) {
             return_purchases.push(response.data.data[i]);
+          }
+          if (response.data.data.length != null) {
+            makePagination(response.data.meta, response.data.links);
           }
         })
         .catch((error) => {
@@ -148,6 +231,23 @@ export default {
     const showReturnPurchase = (id) => {
       // router.push({ path: '/edit-purchase',query:'hello-from-query' })
       router.push({ path: `${id}/show-return-purchase/` });
+    };
+    const pagination = ref({});
+
+    const makePagination = (meta, links) => {
+      let pagination_temp = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        from_page: meta.from,
+        to_page: meta.to,
+        total_pages: meta.total,
+        path_page: meta.path + "?page=",
+        first_link: links.first,
+        last_link: links.last,
+        prev_link: links.prev,
+        next_link: links.next,
+      };
+      pagination.value = pagination_temp;
     };
 
     //here you can return data and methods
@@ -161,6 +261,8 @@ export default {
       callbackPrompt,
       callbackPromptCancel,
       deleteReturnPurchaseModal,
+      pagination,
+      makePagination,
     };
   }, //end of setup
 };

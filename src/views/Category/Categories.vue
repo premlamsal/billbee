@@ -131,6 +131,84 @@
         </table>
       </div>
     </div>
+    <div class="pagination-container">
+      <div class="pagination-box">
+        <div class="pagination-holder">
+          <ul class="pagination">
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.first_link }"
+            >
+              <button
+                @click="getCategories(pagination.first_link)"
+                class="page-link"
+              >
+                <span class="material-icons">first_page</span>
+                First
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.prev_link }"
+              v-if="pagination.prev_link"
+            >
+              <button
+                @click="getCategories(pagination.prev_link)"
+                class="page-link"
+              >
+                <span class="material-icons">chevron_left</span>
+
+                Prev
+              </button>
+            </li>
+            <li
+              v-for="n in pagination.last_page"
+              v-bind:key="n"
+              class="page-item"
+              v-bind:class="{ active: pagination.current_page == n }"
+            >
+              <button
+                @click="getCategories(pagination.path_page + n)"
+                class="page-link"
+              >
+                {{ n }}
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.next_link }"
+              v-if="pagination.next_link"
+            >
+              <button
+                @click="getCategories(pagination.next_link)"
+                class="page-link"
+              >
+                <span class="material-icons">chevron_right</span>
+
+                Next
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.last_link }"
+            >
+              <button
+                @click="getCategories(pagination.last_link)"
+                class="page-link"
+              >
+                <span class="material-icons">last_page</span>
+
+                Last
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="pagination-footer">
+          Page: {{ pagination.current_page }}-{{ pagination.last_page }} Total
+          Records: {{ pagination.total_pages }}
+        </div>
+      </div>
+    </div>
   </main>
   <prompt
     :is-prompt="isActivePrompt"
@@ -303,20 +381,24 @@ export default {
       }
     };
 
-    const getCategories = () => {
+    const getCategories = (page_url) => {
       // toast("Category Loaded", {
       //   showIcon: true,
       //   type: "info",
       //   position: "top-center",
       //   transition: "zoom",
       // });
+      page_url = page_url || "categories";
 
       categories.length = 0;
       axios
-        .get("categories")
+        .get(page_url)
         .then((response) => {
           for (let i = 0; i < response.data.data.length; i++) {
             categories.push(response.data.data[i]);
+          }
+          if (response.data.data.length != null) {
+            makePagination(response.data.meta, response.data.links);
           }
         })
         .catch((error) => {
@@ -341,6 +423,8 @@ export default {
       callbackPrompt,
       callbackPromptCancel,
       deleteCategoryModal,
+      pagination,
+      makePagination,
     };
   }, //end of setup
 };

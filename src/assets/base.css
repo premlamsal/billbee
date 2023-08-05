@@ -55,3 +55,67 @@ select.is-invalid {
     border: 1px solid red !important;
     transition: all 2s ease-in-out;
 }
+
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pagination-holder {}
+
+.pagination-holder ul {
+    list-style: none;
+    display: flex;
+}
+
+.pagination-holder ul li button.page-link {
+    padding: 15px;
+    margin: 5px;
+    /* background-color: #eee; */
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    transition: all 0.5s ease-in-out;
+    align-items: center;
+    display: flex;
+}
+
+.pagination-holder ul li button.page-link:hover {
+    background-color: var(--primary);
+    color: white;
+    /* transition: all 0.2s ease-in-out; */
+}
+
+.pagination-holder ul li {}
+
+.pagination-footer {
+    padding: 10px;
+}
+
+.pagination-holder ul li.active {
+    animation: fadeIn 1s;
+    background-color: var(--primary);
+    padding: 5px;
+    text-align: center;
+    border-radius: 10px;
+    color: yellow;
+    box-shadow: none;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.pagination-holder ul li button.page-link.material-icons {
+    font-size: 2rem;
+    color: var(--light);
+    transition: 0.2s ease-in-out;
+}

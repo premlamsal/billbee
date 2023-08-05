@@ -312,7 +312,6 @@ export default {
     const route = useRoute();
     const customers = reactive([]);
     const errors = ref({});
-    const pagination = ref({});
 
     const showCustomerModal = ref(false);
     const axios = inject("$axios");
@@ -508,6 +507,7 @@ export default {
           console.log(error);
         });
     };
+    const pagination = ref({});
 
     const makePagination = (meta, links) => {
       let pagination_temp = {
@@ -545,6 +545,8 @@ export default {
       deleteCustomerModal,
       makePagination,
       pagination,
+      pagination,
+      makePagination,
     };
   }, //end of setup
 };
@@ -674,63 +676,6 @@ tr:nth-child(even) {
 .v-leave-to {
   transform: translateY(-500px);
   opacity: 0.001;
-}
-.pagination-container {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-.pagination-holder {
-}
-.pagination-holder ul {
-  list-style: none;
-  display: flex;
-}
-.pagination-holder ul li button.page-link {
-  padding: 15px;
-  margin: 5px;
-  /* background-color: #eee; */
-  background-color: var(--primary);
-  color: white;
-  text-align: center;
-  border-radius: 10px;
-  transition: all 0.5s ease-in-out;
-  align-items: center;
-  display: flex;
-}
-
-.pagination-holder ul li button.page-link:hover {
-  background-color: var(--primary);
-  color: white;
-  /* transition: all 0.2s ease-in-out; */
-}
-.pagination-holder ul li {
-}
-.pagination-footer {
-  padding: 10px;
-}
-.pagination-holder ul li.active {
-  animation: fadeIn 1s;
-  background-color: var(--primary);
-  padding: 5px;
-  text-align: center;
-  border-radius: 10px;
-  color: yellow;
-  box-shadow: none;
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.pagination-holder ul li button.page-link.material-icons {
-  font-size: 2rem;
-  color: var(--light);
-  transition: 0.2s ease-in-out;
 }
 /* we will explain what these classes do next! */
 .v-enter-active,
