@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <h4>
+    <h4 class="mt-20 mb-20">
       Chart Report of Purchase / Sales Before:
       {{ chartDataBeforeMonth }} month(s)
     </h4>
@@ -184,8 +184,14 @@ onMounted(() => {
   background: #fff;
   padding: 1em;
 }
+.chart-container h4 {
+  text-align: center;
+}
 .mt-20 {
   margin-top: 20px;
+}
+.mb-20 {
+  margin-bottom: 20px;
 }
 .chart-container-footer {
   display: flex;
