@@ -3,7 +3,7 @@
     <h1>Dashboard</h1>
     <p>Welcome to Dashboad</p>
     <div class="dash-content">
-      <div class="dash-box-container">
+      <div class="dash-box-container pt-20 pb-20">
         <div class="box invoices">
           <span class="material-icons">receipt_long</span>
           <h3>Invoices</h3>
@@ -173,5 +173,11 @@ export default {
 }
 .material-icons:hover {
   transform: rotate(360deg);
+}
+.pt-20 {
+  padding-top: 20px;
+}
+.pb-20 {
+  padding-bottom: 20px;
 }
 </style>
