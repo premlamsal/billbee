@@ -4,27 +4,27 @@
     <p>Welcome to Dashboad</p>
     <div class="dash-content">
       <div class="dash-box-container">
-        <div class="box users">
+        <div class="box invoices">
           <span class="material-icons">receipt_long</span>
           <h3>Invoices</h3>
           <p>Rs. {{ dash.invoice }}</p>
         </div>
-        <div class="box invoices">
+        <div class="box purchases">
           <span class="material-icons">description</span>
           <h3>Purchases</h3>
           <p>Rs. {{ dash.purchase }}</p>
         </div>
-        <div class="box orders">
+        <div class="box products">
           <span class="material-icons">shopping_bag</span>
           <h3>Products</h3>
           <p>{{ dash.product }}</p>
         </div>
-        <div class="box expenses">
+        <div class="box customers">
           <span class="material-icons">supervised_user_circle</span>
           <h3>Customers</h3>
           <p>{{ dash.customer }}</p>
         </div>
-        <div class="box income">
+        <div class="box suppliers">
           <span class="material-icons">local_shipping</span>
           <h3>Suppliers</h3>
           <p>{{ dash.supplier }}</p>
@@ -140,29 +140,33 @@ export default {
   padding: 0;
 }
 
-.users {
-  background-color: #00a1e4;
-  color: white;
-}
-
 .invoices {
-  background-color: #ff7b25;
+  background: linear-gradient(45deg, #8bc34a, #cddc39);
   color: white;
 }
 
-.orders {
-  background-color: #009245;
+.purchases {
+  /* background-color: #ff7b25; */
   color: white;
+  background: linear-gradient(45deg, #4099ff, #73b4ff);
 }
 
-.expenses {
-  background-color: #d2232a;
+.products {
+  /* background-color: #009245; */
   color: white;
+  background: linear-gradient(45deg, #2ed8b6, #59e0c5);
 }
 
-.income {
-  background-color: #ffd200;
-  color: #555;
+.customers {
+  /* background-color: #d2232a; */
+  color: white;
+  background: linear-gradient(45deg, #ffb64d, #ffcb80);
+}
+
+.suppliers {
+  /* background-color: #ffd200; */
+  color: white;
+  background: linear-gradient(45deg, #ff5370, #ff869a);
 }
 .material-icons {
   transition: transform 0.9s ease-in-out;
