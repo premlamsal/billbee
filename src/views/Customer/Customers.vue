@@ -28,7 +28,7 @@
                   type="text"
                   placeholder="Customer Name"
                   :class="[
-                    'customerNameHolder',
+                    'form-input-holder',
                     errors.name ? 'is-invalid' : '',
                   ]"
                   v-model="customer.name"
@@ -53,7 +53,7 @@
                   placeholder="Customer Address"
                   v-model="customer.address"
                   :class="[
-                    'customerAddressHolder',
+                    'form-input-holder',
                     errors.address ? 'is-invalid' : '',
                   ]"
                 />
@@ -79,7 +79,7 @@
                   type="text"
                   placeholder="Customer Phone"
                   :class="[
-                    'customerPhoneHolder',
+                    'form-input-holder',
                     errors.phone ? 'is-invalid' : '',
                   ]"
                   v-model="customer.phone"
@@ -104,7 +104,7 @@
                   placeholder="Customer Opening Balance"
                   v-model="customer.opening_balance"
                   :class="[
-                    'customerOpeningBalanceHolder',
+                    'form-input-holder',
                     errors.opening_balance ? 'is-invalid' : '',
                   ]"
                 />
@@ -129,7 +129,7 @@
                   type="text"
                   v-model="customer.details"
                   :class="[
-                    'customerDetailsHolder',
+                    'form-input-holder',
                     errors.details ? 'is-invalid' : '',
                   ]"
                 ></textarea>
@@ -159,57 +159,138 @@
         <span class="material-icons">add_circle</span>
       </button>
     </div>
+
     <div class="customers-content">
-      <div
-        style="
-          overflow-x: auto;
-          margin-top: 20px;
-          border-radius: 10px;
-          box-shadow: black 0px 1px 8px -5px;
-        "
-      >
-        <table>
-          <thead>
-            <tr>
-              <th>Customer ID</th>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Phone</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <template v-for="customer in customers" v-bind:key="customer.id">
-              <tr v-if="customers != null">
-                <td>{{ customer.custom_customer_id }}</td>
-                <td @click="showCustomer(customer.custom_customer_id)">
-                  {{ customer.name }}
-                </td>
-                <td>{{ customer.address }}</td>
-                <td>{{ customer.phone }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editCustomerModal(customer.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteCustomerModal(customer.id)"
-                    >delete</span
-                  >
-                </td>
+      <Transition>
+        <div
+          class="table-container"
+          style="
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: black 0px 1px 8px -5px;
+          "
+          v-if="customers.length != 0"
+        >
+          <table>
+            <thead>
+              <tr>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Actions</th>
               </tr>
-            </template>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <template v-for="customer in customers" v-bind:key="customer.id">
+                <tr v-if="customers != null">
+                  <td>{{ customer.custom_customer_id }}</td>
+                  <td @click="showCustomer(customer.custom_customer_id)">
+                    {{ customer.name }}
+                  </td>
+                  <td>{{ customer.address }}</td>
+                  <td>{{ customer.phone }}</td>
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editCustomerModal(customer.id)"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="deleteCustomerModal(customer.id)"
+                      >delete</span
+                    >
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </Transition>
+    </div>
+    <div class="pagination-container">
+      <div class="pagination-box">
+        <div class="pagination-holder">
+          <ul class="pagination">
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.first_link }"
+            >
+              <button
+                @click="getCustomers(pagination.first_link)"
+                class="page-link"
+              >
+                <span class="material-icons">first_page</span>
+                First
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.prev_link }"
+            >
+              <button
+                @click="getCustomers(pagination.prev_link)"
+                class="page-link"
+              >
+                <span class="material-icons">chevron_left</span>
+
+                Prev
+              </button>
+            </li>
+            <li
+              v-for="n in pagination.last_page"
+              v-bind:key="n"
+              class="page-item"
+              v-bind:class="{ active: pagination.current_page == n }"
+            >
+              <button
+                @click="getCustomers(pagination.path_page + n)"
+                class="page-link"
+              >
+                {{ n }}
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.next_link }"
+            >
+              <button
+                @click="getCustomers(pagination.next_link)"
+                class="page-link"
+              >
+                <span class="material-icons">chevron_right</span>
+
+                Next
+              </button>
+            </li>
+            <li
+              class="page-item"
+              v-bind:class="{ disabled: !pagination.last_link }"
+            >
+              <button
+                @click="getCustomers(pagination.last_link)"
+                class="page-link"
+              >
+                <span class="material-icons">last_page</span>
+
+                Last
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="pagination-footer">
+          Page: {{ pagination.current_page }}-{{ pagination.last_page }} Total
+          Records: {{ pagination.total_pages }}
+        </div>
       </div>
     </div>
   </main>
@@ -229,6 +310,7 @@ export default {
     const route = useRoute();
     const customers = reactive([]);
     const errors = ref({});
+    const pagination = ref({});
 
     const showCustomerModal = ref(false);
     const axios = inject("$axios");
@@ -400,7 +482,7 @@ export default {
       router.push({ path: `${custom_customer_id}/show-customer/` });
     };
 
-    const getCustomers = () => {
+    const getCustomers = (page_url) => {
       // toast("Customer Loaded", {
       //   showIcon: true,
       //   type: "info",
@@ -408,17 +490,37 @@ export default {
       //   transition: "zoom",
       // });
 
+      page_url = page_url || "customers";
       customers.length = 0;
       axios
-        .get("customers")
+        .get(page_url)
         .then((response) => {
           for (let i = 0; i < response.data.data.length; i++) {
             customers.push(response.data.data[i]);
+          }
+          if (response.data.data.length != null) {
+            makePagination(response.data.meta, response.data.links);
           }
         })
         .catch((error) => {
           console.log(error);
         });
+    };
+
+    const makePagination = (meta, links) => {
+      let pagination_temp = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        from_page: meta.from,
+        to_page: meta.to,
+        total_pages: meta.total,
+        path_page: meta.path + "?page=",
+        first_link: links.first,
+        last_link: links.last,
+        prev_link: links.prev,
+        next_link: links.next,
+      };
+      pagination.value = pagination_temp;
     };
 
     //here you can return data and methods
@@ -439,6 +541,8 @@ export default {
       callbackPrompt,
       callbackPromptCancel,
       deleteCustomerModal,
+      makePagination,
+      pagination,
     };
   }, //end of setup
 };
@@ -497,56 +601,6 @@ export default {
   cursor: pointer;
 }
 
-input.customerNameHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.customerPhoneHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input.customerAddressHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-textarea.customerDetailsHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-
-input.customerOpeningBalanceHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
 .form-input-holder-container {
   margin-bottom: 15px;
 }
@@ -618,5 +672,71 @@ tr:nth-child(even) {
 .v-leave-to {
   transform: translateY(-500px);
   opacity: 0.001;
+}
+.pagination-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.pagination-holder {
+}
+.pagination-holder ul {
+  list-style: none;
+  display: flex;
+}
+.pagination-holder ul li button.page-link {
+  padding: 15px;
+  margin: 5px;
+  /* background-color: #eee; */
+  background-color: var(--primary);
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  transition: all 0.5s ease-in-out;
+  align-items: center;
+  display: flex;
+}
+
+.pagination-holder ul li button.page-link:hover {
+  background-color: var(--primary);
+  color: white;
+  /* transition: all 0.2s ease-in-out; */
+}
+.pagination-holder ul li {
+}
+.pagination-footer {
+  padding: 10px;
+}
+.pagination-holder ul li.active {
+  animation: fadeIn 1s;
+  background-color: var(--primary);
+  padding: 5px;
+  text-align: center;
+  border-radius: 10px;
+  color: yellow;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.pagination-holder ul li button.page-link.material-icons {
+  font-size: 2rem;
+  color: var(--light);
+  transition: 0.2s ease-in-out;
+}
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
