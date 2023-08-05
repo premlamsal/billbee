@@ -15,6 +15,7 @@
           border-radius: 10px;
           box-shadow: black 0px 1px 8px -5px;
         "
+        v-if="return_invoices.length != 0"
       >
         <table>
           <thead>

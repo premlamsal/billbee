@@ -660,31 +660,4 @@ tr:nth-child(even) {
     font-size: 12px;
   }
 }
-
-/* vue animation */
-.v-enter-active,
-.v-leave-active {
-  /* transition: opacity 0.5s ease; */
-  transition: all 0.5s ease-in-out;
-  /* transition-delay: 0.25s; */
-}
-
-.v-enter-from {
-  transform: translateY(-500px);
-  opacity: 0.001;
-}
-.v-leave-to {
-  transform: translateY(-500px);
-  opacity: 0.001;
-}
-/* we will explain what these classes do next! */
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.4s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
 </style>
