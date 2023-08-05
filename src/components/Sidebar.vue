@@ -93,7 +93,7 @@ aside {
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
-  transition: 0.2s ease-in-out;
+  transition: 0.8s ease-in-out;
 }
 aside .flex {
   flex: 1 1 0%;
@@ -101,8 +101,9 @@ aside .flex {
 aside .logo {
   margin-bottom: 1rem;
 }
+
 aside .logo img {
-  width: 2rem;
+  width: 3rem;
 }
 aside .menu-toggle-wrap {
   display: flex;
@@ -110,15 +111,15 @@ aside .menu-toggle-wrap {
   margin-bottom: 1rem;
   position: relative;
   top: 0;
-  transition: 0.2s ease-in-out;
+  transition: 0.8s ease-in-out;
 }
 aside .menu-toggle-wrap .menu-toggle {
-  transition: 0.2s ease-in-out;
+  transition: 0.8s ease-in-out;
 }
 aside .menu-toggle-wrap .menu-toggle .material-icons {
   font-size: 2rem;
   color: var(--light);
-  transition: 0.2s ease-out;
+  transition: 0.8s ease-out;
 }
 aside .menu-toggle-wrap .menu-toggle:hover .material-icons {
   color: var(--primary);
@@ -201,5 +202,9 @@ aside.is-expanded .footer {
     position: absolute;
     z-index: 99;
   }
+}
+.logo {
+  display: flex;
+  justify-content: center;
 }
 </style>
