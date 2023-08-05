@@ -543,11 +543,11 @@ export default {
       //   position: "top-center",
       //   transition: "zoom",
       // });
-      page_url = page_url || "supplier/payments/";
+      page_url = page_url || "supplier/payments/" + custom_supplier_id.value;
 
       payments.length = 0;
       axios
-        .get("supplier/payments/" + custom_supplier_id.value)
+        .get(page_url)
         .then((response) => {
           for (let i = 0; i < response.data.data.length; i++) {
             payments.push(response.data.data[i]);

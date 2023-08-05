@@ -211,7 +211,7 @@
               v-bind:class="{ disabled: !pagination.first_link }"
             >
               <button
-                @click="getCustomers(pagination.first_link)"
+                @click="getPayments(pagination.first_link)"
                 class="page-link"
               >
                 <span class="material-icons">first_page</span>
@@ -224,7 +224,7 @@
               v-if="pagination.prev_link"
             >
               <button
-                @click="getCustomers(pagination.prev_link)"
+                @click="getPayments(pagination.prev_link)"
                 class="page-link"
               >
                 <span class="material-icons">chevron_left</span>
@@ -239,7 +239,7 @@
               v-bind:class="{ active: pagination.current_page == n }"
             >
               <button
-                @click="getCustomers(pagination.path_page + n)"
+                @click="getPayments(pagination.path_page + n)"
                 class="page-link"
               >
                 {{ n }}
@@ -251,7 +251,7 @@
               v-if="pagination.next_link"
             >
               <button
-                @click="getCustomers(pagination.next_link)"
+                @click="getPayments(pagination.next_link)"
                 class="page-link"
               >
                 <span class="material-icons">chevron_right</span>
@@ -264,7 +264,7 @@
               v-bind:class="{ disabled: !pagination.last_link }"
             >
               <button
-                @click="getCustomers(pagination.last_link)"
+                @click="getPayments(pagination.last_link)"
                 class="page-link"
               >
                 <span class="material-icons">last_page</span>
@@ -527,11 +527,11 @@ export default {
       //   position: "top-center",
       //   transition: "zoom",
       // });
-      page_url = page_url || "customer/payments/";
+      page_url = page_url || "customer/payments/" + custom_customer_id.value;
 
       payments.length = 0;
       axios
-        .get("customer/payments/" + custom_customer_id.value)
+        .get(page_url)
         .then((response) => {
           for (let i = 0; i < response.data.data.length; i++) {
             payments.push(response.data.data[i]);
