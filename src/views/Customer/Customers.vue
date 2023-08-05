@@ -236,6 +236,7 @@
             <li
               class="page-item"
               v-bind:class="{ disabled: !pagination.prev_link }"
+              v-if="pagination.prev_link"
             >
               <button
                 @click="getCustomers(pagination.prev_link)"
@@ -262,6 +263,7 @@
             <li
               class="page-item"
               v-bind:class="{ disabled: !pagination.next_link }"
+              v-if="pagination.next_link"
             >
               <button
                 @click="getCustomers(pagination.next_link)"
