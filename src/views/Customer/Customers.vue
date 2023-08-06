@@ -156,10 +156,15 @@
     <div class="customer-header mt20">
       <div class="search-cotainer">
         <div class="search-box">
-          <div class="search-box-icon">
+          <div class="search-box-icon" @click="searchCustomer()">
             <span class="material-icons">search</span>
           </div>
-          <input type="text" class="searchInputTable" placeholder="Search.." />
+          <input
+            type="text"
+            class="searchInputTable"
+            placeholder="Search.."
+            v-model="searchQuery"
+          />
         </div>
       </div>
       <div class="button-box">
@@ -313,7 +318,7 @@
   ></prompt>
 </template>
   <script>
-import { computed, reactive, ref, inject, onMounted } from "vue";
+import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -535,6 +540,45 @@ export default {
       pagination.value = pagination_temp;
     };
 
+    const searchQuery = ref("");
+
+    //watching seach query
+    watch(searchQuery, (newX) => {
+      // console.log(`x is ${newX}`);
+      if (newX === "") {
+        getCustomers();
+      }
+    });
+
+    //end of watch
+    const searchCustomer = (page_url) => {
+      if (searchQuery.value != "") {
+        console.log(
+          "hello boss searching now....please wait" + searchQuery.value
+        );
+
+        //hit api to search
+        page_url = page_url || "customers/search/" + searchQuery.value;
+        customers.length = 0;
+        axios
+          .get(page_url)
+          .then((response) => {
+            for (let i = 0; i < response.data.data.length; i++) {
+              customers.push(response.data.data[i]);
+            }
+            if (response.data.data.length != null) {
+              makePagination(response.data.meta, response.data.links);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        //end of api call
+      } else {
+        //no search query
+        console.log("i cannot seach with empy query");
+      }
+    };
     //here you can return data and methods
     return {
       customer,
@@ -556,7 +600,8 @@ export default {
       makePagination,
       pagination,
       pagination,
-      makePagination,
+      searchQuery,
+      searchCustomer,
     };
   }, //end of setup
 };
@@ -681,15 +726,18 @@ input.searchInputTable {
 }
 .search-box {
   display: flex;
+  transition: 0.5s ease-in-out;
+
   border-radius: 10px;
   flex-direction: row-reverse;
-  box-shadow: 1px 1px 4px -2px #000;
+  box-shadow: 1px 1px 2px -1px #000;
 }
 .search-box:hover {
-  box-shadow: 1px 2px 7px -3px #000;
+  /* box-shadow: 1px 2px 7px -3px #000; */
 }
 .search-box-icon {
   padding: 10px;
+
   background: #dddcdc85;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
