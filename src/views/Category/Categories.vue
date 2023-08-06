@@ -406,6 +406,23 @@ export default {
           console.log(error);
         });
     };
+    const pagination = ref({});
+
+    const makePagination = (meta, links) => {
+      let pagination_temp = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        from_page: meta.from,
+        to_page: meta.to,
+        total_pages: meta.total,
+        path_page: meta.path + "?page=",
+        first_link: links.first,
+        last_link: links.last,
+        prev_link: links.prev,
+        next_link: links.next,
+      };
+      pagination.value = pagination_temp;
+    };
 
     //here you can return data and methods
     return {
