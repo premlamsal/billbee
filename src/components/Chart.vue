@@ -59,7 +59,7 @@ const chartDataSets = ref([
   {
     label: "# of Purchase",
     data: [],
-    borderWidth: 1,
+    borderWidth: 4,
     // fill: true,
     backgroundColor: "rgba(139, 195, 74, 0.8)",
 
@@ -75,7 +75,7 @@ const chartDataSets = ref([
   {
     label: "# of Sales",
     data: [],
-    borderWidth: 1,
+    borderWidth: 4,
     // fill: true,
     backgroundColor: "rgba(255, 83, 112, 0.8)",
 

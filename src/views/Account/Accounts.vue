@@ -177,10 +177,25 @@
       </div>
     </Transition>
     <div class="account-header">
-      <button class="btn-new-account" @click="addAccountBtn()">
-        <span class="btn-name"> New Account</span>
-        <span class="material-icons">add_circle</span>
-      </button>
+      <div class="search-container">
+        <div class="search-box">
+          <div class="search-box-icon" @click="searchAccount()">
+            <span class="material-icons">search</span>
+          </div>
+          <input
+            type="text"
+            class="searchInputTable"
+            placeholder="Search.."
+            v-model="searchQuery"
+          />
+        </div>
+      </div>
+      <div class="button-box">
+        <button class="btn-new-account" @click="addAccountBtn()">
+          <span class="btn-name"> New Account</span>
+          <span class="material-icons">add_circle</span>
+        </button>
+      </div>
     </div>
     <div class="accounts-content">
       <div
@@ -329,7 +344,7 @@
   ></prompt>
 </template>
     <script>
-import { computed, reactive, ref, inject, onMounted } from "vue";
+import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -562,6 +577,49 @@ export default {
       pagination.value = pagination_temp;
     };
 
+    const searchQuery = ref("");
+
+    //watching seach query
+    watch(searchQuery, (newX) => {
+      //newX is new value of searchQuery
+      //we are looking for empty searchQuery value. If it is empty we will fetch accounts without
+      //  any query with default pagination
+      // console.log(`x is ${newX}`);
+      if (newX === "") {
+        getAccounts();
+      }
+    });
+
+    //end of watch
+    const searchAccount = (page_url) => {
+      if (searchQuery.value != "") {
+        console.log(
+          "hello boss searching now....please wait" + searchQuery.value
+        );
+
+        //hit api to search
+        page_url = page_url || "accounts/search/" + searchQuery.value;
+        accounts.length = 0;
+        axios
+          .get(page_url)
+          .then((response) => {
+            for (let i = 0; i < response.data.data.length; i++) {
+              accounts.push(response.data.data[i]);
+            }
+            if (response.data.data.length != null) {
+              makePagination(response.data.meta, response.data.links);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        //end of api call
+      } else {
+        //no search query
+        console.log("i cannot seach with empy query");
+      }
+    };
+
     //here you can return data and methods
     return {
       account,
@@ -582,6 +640,8 @@ export default {
       deleteAccountModal,
       pagination,
       makePagination,
+      searchQuery,
+      searchAccount,
     };
   }, //end of setup
 };

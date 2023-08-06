@@ -260,10 +260,25 @@
         <router-link to="/categories"> Categories </router-link>
         <router-link to="/units"> Units </router-link>
       </div>
-      <button class="btn-new-product" @click="addProductBtn()">
-        <span class="btn-name"> New Product</span>
-        <span class="material-icons">add_circle</span>
-      </button>
+      <div class="search-container">
+        <div class="search-box">
+          <div class="search-box-icon" @click="searchProduct()">
+            <span class="material-icons">search</span>
+          </div>
+          <input
+            type="text"
+            class="searchInputTable"
+            placeholder="Search.."
+            v-model="searchQuery"
+          />
+        </div>
+      </div>
+      <div class="button-box">
+        <button class="btn-new-product" @click="addProductBtn()">
+          <span class="btn-name"> New Product</span>
+          <span class="material-icons">add_circle</span>
+        </button>
+      </div>
     </div>
     <div class="products-content">
       <div
@@ -433,7 +448,7 @@
   ></prompt>
 </template>
 	<script>
-import { computed, reactive, ref, inject, onMounted } from "vue";
+import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -767,6 +782,49 @@ export default {
       pagination.value = pagination_temp;
     };
 
+    const searchQuery = ref("");
+
+    //watching seach query
+    watch(searchQuery, (newX) => {
+      //newX is new value of searchQuery
+      //we are looking for empty searchQuery value. If it is empty we will fetch products without
+      //  any query with default pagination
+      // console.log(`x is ${newX}`);
+      if (newX === "") {
+        getProducts();
+      }
+    });
+
+    //end of watch
+    const searchProduct = (page_url) => {
+      if (searchQuery.value != "") {
+        console.log(
+          "hello boss searching now....please wait" + searchQuery.value
+        );
+
+        //hit api to search
+        page_url = page_url || "products/search/" + searchQuery.value;
+        products.length = 0;
+        axios
+          .get(page_url)
+          .then((response) => {
+            for (let i = 0; i < response.data.data.length; i++) {
+              products.push(response.data.data[i]);
+            }
+            if (response.data.data.length != null) {
+              makePagination(response.data.meta, response.data.links);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        //end of api call
+      } else {
+        //no search query
+        console.log("i cannot seach with empy query");
+      }
+    };
+
     //here you can return data and methods
     return {
       product,
@@ -797,6 +855,8 @@ export default {
       deleteProductModal,
       pagination,
       makePagination,
+      searchQuery,
+      searchProduct,
     };
   }, //end of setup
 };
