@@ -2,6 +2,7 @@
 <h2>Simple Accouting Application</h2>
 <p>Developed by Prem Lamsal</p>
 <p>Laravel 10.5.1 and VueJs 3 Compostion API</p>
+<p>PHP v8.2.8</p>
 <p>Multi User Registration</p>
 
 <h5>IMPORTANT NOTE</h5>
