@@ -39,7 +39,6 @@
 <h2>DOCUMENTATION</h2>
 <h5>Installation</h5>
 <ul>
-	<li>composer install</li>
 	<li>npm install</li>
 	<li>Navigate to app</li>
 </ul>
