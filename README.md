@@ -30,9 +30,9 @@
 <h4>Some Screens </h4>
 <h5>Dashboard</h5>
 <img src="https://premlamsal.github.io/projects/billbee/images/demos/one.png">
-<h5>Invoice</h5>
+<h5>Customers</h5>
 <img src="https://premlamsal.github.io/projects/billbee/images/demos/two.png">
-<h5>Purchase</h5>
+<h5>New Invoice</h5>
 <img src="https://premlamsal.github.io/projects/billbee/images/demos/three.png">
 
 <h2>DOCUMENTATION</h2>
