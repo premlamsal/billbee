@@ -80,7 +80,7 @@ export default {
   },
 };
 </script>
-<style>
+<style  scoped>
 .dash-content {
   margin-top: 20px;
   background: #fff;

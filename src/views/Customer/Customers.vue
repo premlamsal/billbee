@@ -153,11 +153,21 @@
         </div>
       </div>
     </Transition>
-    <div class="customer-header">
-      <button class="btn-new-customer" @click="addCustomerBtn()">
-        <span class="btn-name"> New Customer</span>
-        <span class="material-icons">add_circle</span>
-      </button>
+    <div class="customer-header mt20">
+      <div class="search-cotainer">
+        <div class="search-box">
+          <div class="search-box-icon">
+            <span class="material-icons">search</span>
+          </div>
+          <input type="text" class="searchInputTable" placeholder="Search.." />
+        </div>
+      </div>
+      <div class="button-box">
+        <button class="btn-new-customer" @click="addCustomerBtn()">
+          <span class="btn-name"> New Customer</span>
+          <span class="material-icons">add_circle</span>
+        </button>
+      </div>
     </div>
 
     <div class="customers-content">
@@ -611,7 +621,7 @@ export default {
 
 .customer-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .customers-content {
   /* background: white; */
@@ -659,5 +669,30 @@ tr:nth-child(even) {
   table {
     font-size: 12px;
   }
+}
+input.searchInputTable {
+  border: 0px;
+  padding: 15px;
+  line-height: 1;
+  /* width: 70%; */
+  outline: 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.search-box {
+  display: flex;
+  border-radius: 10px;
+  flex-direction: row-reverse;
+  box-shadow: 1px 1px 4px -2px #000;
+}
+.search-box:hover {
+  box-shadow: 1px 2px 7px -3px #000;
+}
+.search-box-icon {
+  padding: 10px;
+  background: #dddcdc85;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
 }
 </style>
