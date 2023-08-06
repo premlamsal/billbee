@@ -544,6 +544,9 @@ export default {
 
     //watching seach query
     watch(searchQuery, (newX) => {
+      //newX is new value of searchQuery
+      //we are looking for empty searchQuery value. If it is empty we will fetch customer without
+      //  any query with default pagination
       // console.log(`x is ${newX}`);
       if (newX === "") {
         getCustomers();
