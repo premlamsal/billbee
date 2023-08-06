@@ -134,7 +134,7 @@
         </table>
       </div>
     </div>
-    <div class="pagination-container">
+    <div class="pagination-container" v-if="units.length != 0">
       <div class="pagination-box">
         <div class="pagination-holder">
           <ul class="pagination">

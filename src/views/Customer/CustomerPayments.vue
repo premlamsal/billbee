@@ -203,7 +203,7 @@
         <p v-else>Add Some Payments</p>
       </div>
     </div>
-    <div class="pagination-container">
+    <div class="pagination-container" v-if="payments.length != 0">
       <div class="pagination-box">
         <div class="pagination-holder">
           <ul class="pagination">
