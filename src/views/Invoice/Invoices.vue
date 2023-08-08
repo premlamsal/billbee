@@ -4,7 +4,7 @@
     <div class="invoice-header">
       <div class="search-container">
         <div class="search-box">
-          <div class="search-box-icon" @click="searchInvocie()">
+          <div class="search-box-icon" @click="searchInvoice()">
             <span class="material-icons">search</span>
           </div>
           <input
