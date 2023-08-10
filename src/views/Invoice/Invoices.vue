@@ -47,7 +47,7 @@
               <tr v-if="invoices != null">
                 <td>{{ invoice.custom_invoice_id }}</td>
                 <td>{{ invoice.invoice_date }}</td>
-                <td>{{ invoice.customer_name }}</td>
+                <td>{{ invoice.customer.name }}</td>
                 <td>Rs. {{ invoice.grand_total }}</td>
                 <td>
                   <span

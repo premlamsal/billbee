@@ -47,7 +47,7 @@
               <tr v-if="purchases != null">
                 <td>{{ purchase.custom_purchase_id }}</td>
                 <td>{{ purchase.purchase_date }}</td>
-                <td>{{ purchase.supplier_name }}</td>
+                <td>{{ purchase.supplier.name }}</td>
                 <td>Rs. {{ purchase.grand_total }}</td>
                 <td>
                   <span
