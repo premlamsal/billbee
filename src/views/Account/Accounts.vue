@@ -176,7 +176,7 @@
         </div>
       </div>
     </Transition>
-    <div class="account-header">
+    <div class="account-header mt20">
       <div class="search-container">
         <div class="search-box">
           <div class="search-box-icon" @click="searchAccount()">
@@ -708,7 +708,7 @@ export default {
 
 .account-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .accounts-content {
   /* background: white; */

@@ -76,7 +76,7 @@
         </div>
       </div>
     </Transition>
-    <div class="category-header">
+    <div class="category-header mt20">
       <div class="search-container">
         <div class="search-box">
           <div class="search-box-icon" @click="searchCategory()">
@@ -453,7 +453,7 @@ export default {
     });
 
     //end of watch
-    const searchCustomer = (page_url) => {
+    const searchCategory = (page_url) => {
       if (searchQuery.value != "") {
         console.log(
           "hello boss searching now....please wait" + searchQuery.value
@@ -567,7 +567,7 @@ export default {
 
 .category-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .categories-content {
   /* background: white; */

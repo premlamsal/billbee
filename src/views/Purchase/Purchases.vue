@@ -1,7 +1,7 @@
 <template>
   <main id="purchases-page">
     <h1>Purchases</h1>
-    <div class="purchase-header">
+    <div class="purchase-header mt20">
       <div class="search-container">
         <div class="search-box">
           <div class="search-box-icon" @click="searchPurchase()">
@@ -324,7 +324,7 @@ export default {
 <style scoped>
 .purchase-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .purchases-content {
   /* background: white; */

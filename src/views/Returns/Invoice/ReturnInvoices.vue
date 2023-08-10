@@ -1,7 +1,7 @@
 <template>
   <main id="invoices-page">
     <h1>Return Invoices</h1>
-    <div class="invoice-header">
+    <div class="invoice-header mt20">
       <div class="search-container">
         <div class="search-box">
           <div class="search-box-icon" @click="searchReturnInvoice()">
@@ -328,7 +328,7 @@ export default {
   <style scoped>
 .invoice-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .invoices-content {
   /* background: white; */

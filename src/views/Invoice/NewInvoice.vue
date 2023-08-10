@@ -932,7 +932,7 @@ input.discount-input {
 }
 .invoice-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 button.btn-new-invoice {
   background: var(--primary);

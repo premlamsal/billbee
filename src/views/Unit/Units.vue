@@ -78,7 +78,7 @@
         </div>
       </div>
     </Transition>
-    <div class="unit-header">
+    <div class="unit-header mt20">
       <div class="search-container">
         <div class="search-box">
           <div class="search-box-icon" @click="searchUnit()">
@@ -561,7 +561,7 @@ export default {
 
 .unit-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .units-content {
   /* background: white; */

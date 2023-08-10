@@ -222,7 +222,7 @@
         </div>
       </div>
     </Transition>
-    <div class="transaction-header">
+    <div class="transaction-header mt20">
       <div class="search-container">
         <div class="search-box">
           <div class="search-box-icon" @click="searchTransaction()">
@@ -874,7 +874,7 @@ export default {
 
 .transaction-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .transactions-content {
   /* background: white; */

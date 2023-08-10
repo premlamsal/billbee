@@ -255,7 +255,7 @@
         </div>
       </div>
     </Transition>
-    <div class="product-header">
+    <div class="product-header mt20">
       <div class="link-button-container">
         <router-link to="/categories"> Categories </router-link>
         <router-link to="/units"> Units </router-link>

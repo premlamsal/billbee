@@ -2,7 +2,7 @@
   <main id="stocks-page">
     <h1>Stocks</h1>
 
-    <div class="stock-header">
+    <div class="stock-header mt20">
       <!-- <div class="link-button-container">
         <router-link to="/categories"> Categories </router-link>
         <router-link to="/units"> Units </router-link>
