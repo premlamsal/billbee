@@ -17,7 +17,10 @@
                 <label>Supplier </label>
                 <input
                   type="text"
-                  class="supplierInputHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.supplier_name ? 'is-invalid' : '',
+                  ]"
                   placeholder="Choose Supplier"
                   v-model="purchaseInfo.supplier_name"
                   @keyup="supplierSelectInput()"
@@ -43,14 +46,39 @@
                     </div>
                   </div>
                 </Transition>
+                <div v-if="errors.supplier_name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.supplier_name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-purchase-notes">
                 <label>Notes </label>
                 <textarea
                   type="text"
-                  class="purchaseNotesHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.note ? 'is-invalid' : '',
+                  ]"
                   v-model="purchaseInfo.note"
                 ></textarea>
+                <div v-if="errors.note" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.note"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="purchase-top-section-details-right">
@@ -58,25 +86,67 @@
                 <label>Purchase Date</label>
                 <input
                   type="date"
-                  class="purchaseDateHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.purchase_date ? 'is-invalid' : '',
+                  ]"
                   v-model="purchaseInfo.purchase_date"
                 />
+                <div v-if="errors.purchase_date" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.purchase_date"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-due-date">
                 <label>Due Date</label>
                 <input
                   type="date"
-                  class="purchaseDueDateHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.due_date ? 'is-invalid' : '',
+                  ]"
                   v-model="purchaseInfo.due_date"
                 />
+                <div v-if="errors.due_date" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.due_date"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-purchase-reference-holder">
                 <label>Purchase Reference ID</label>
                 <input
                   type="text"
-                  class="purchaseReferenceHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.purchase_reference_id ? 'is-invalid' : '',
+                  ]"
                   v-model="purchaseInfo.purchase_reference_id"
                 />
+                <div v-if="errors.purchase_reference_id" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.purchase_reference_id"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -384,6 +454,8 @@ export default {
     });
     const units = reactive([]);
     const store = reactive({});
+    const errors = ref({});
+
     const purchaseItems = reactive([]);
     const purchaseInfo = reactive({
       // subTotal:0,
@@ -703,8 +775,17 @@ export default {
       itemHolder.image = product_image;
     };
     const createPurchase = () => {
+      const purchase_slip = {
+        items: purchaseItems,
+        supplier_id: purchaseInfo.supplier_id,
+        supplier_name: purchaseInfo.supplier_name,
+        due_date: purchaseInfo.due_date,
+        purchase_date: purchaseInfo.purchase_date,
+        note: purchaseInfo.note,
+        discount: purchaseInfo.discount,
+      };
       axios
-        .post("/purchase/create", { info: purchaseInfo, items: purchaseItems })
+        .post("/purchase/create", purchase_slip)
         .then((response) => {
           //response.data.message have success message
 
@@ -723,7 +804,20 @@ export default {
           router.push({ path: "/purchases" });
         })
         .catch((error) => {
-          console.log(error);
+          errors.customer_name = "";
+          errors.due_date = "";
+          errors.invoice_date = "";
+          errors.note = "";
+          errors.message = "";
+          if (error.response.status == 422) {
+            errors.value = error.response.data.errors;
+            toast(error.response.data.message, {
+              showIcon: true,
+              type: "danger",
+              position: "top-center",
+              transition: "zoom",
+            });
+          }
         });
     };
     const getStoreData = () => {
@@ -821,6 +915,7 @@ export default {
       getUnits,
       units,
       VITE_MY_APP_BACK_URL_HOME,
+      errors,
     };
   },
 };

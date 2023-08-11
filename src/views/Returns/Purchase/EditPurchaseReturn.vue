@@ -17,7 +17,10 @@
                 <label>Supplier </label>
                 <input
                   type="text"
-                  class="supplierInputHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.supplier_name ? 'is-invalid' : '',
+                  ]"
                   placeholder="Choose Supplier"
                   v-model="purchaseInfo.supplier_name"
                   @keyup="supplierSelectInput()"
@@ -43,14 +46,39 @@
                     </div>
                   </div>
                 </Transition>
+                <div v-if="errors.supplier_name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.supplier_name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-purchase-notes">
                 <label>Notes </label>
                 <textarea
                   type="text"
-                  class="purchaseNotesHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.note ? 'is-invalid' : '',
+                  ]"
                   v-model="purchaseInfo.note"
                 ></textarea>
+                <div v-if="errors.note" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.note"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="purchase-top-section-details-right">
@@ -58,25 +86,70 @@
                 <label>Return Purchase Date</label>
                 <input
                   type="date"
-                  class="purchaseDateHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.return_purchase_date ? 'is-invalid' : '',
+                  ]"
                   v-model="purchaseInfo.return_purchase_date"
                 />
+                <div v-if="errors.return_purchase_date" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.return_purchase_date"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-due-date">
                 <label>Due Date</label>
                 <input
                   type="date"
-                  class="purchaseDueDateHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.due_date ? 'is-invalid' : '',
+                  ]"
                   v-model="purchaseInfo.due_date"
                 />
+                <div v-if="errors.due_date" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.due_date"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-return-purchase-reference-holder">
                 <label>Return Purchase Reference ID</label>
                 <input
                   type="text"
-                  class="purchaseReferenceHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.return_purchase_reference_id ? 'is-invalid' : '',
+                  ]"
                   v-model="purchaseInfo.return_purchase_reference_id"
                 />
+                <div
+                  v-if="errors.return_purchase_reference_id"
+                  :class="['errorText']"
+                >
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.return_purchase_reference_id"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -388,6 +461,7 @@ export default {
       // discount:0,
     });
     const units = reactive([]);
+    const errors = ref({});
 
     const isItemHolderUpdating = ref(false);
     const currentEditItemIDIndex = ref("");
@@ -759,12 +833,18 @@ export default {
       itemHolder.image = product_image;
     };
     const editPurchase = () => {
+      const purchase_slip = {
+        items: purchaseItems,
+        supplier_id: purchaseInfo.supplier_id,
+        supplier_name: purchaseInfo.supplier_name,
+        due_date: purchaseInfo.due_date,
+        return_purchase_date: purchaseInfo.return_purchase_date,
+        note: purchaseInfo.note,
+        discount: purchaseInfo.discount,
+        id: purchaseInfo.id,
+      };
       axios
-        .post("/return-purchase/edit", {
-          info: purchaseInfo,
-          items: purchaseItems,
-          id: purchaseInfo.id,
-        })
+        .post("/return-purchase/edit", purchase_slip)
         .then((response) => {
           //response.data.message have success message
 
@@ -886,6 +966,7 @@ export default {
       getUnits,
       units,
       VITE_MY_APP_BACK_URL_HOME,
+      errors,
     };
   },
 };

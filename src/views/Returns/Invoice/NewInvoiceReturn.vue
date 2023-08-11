@@ -17,7 +17,10 @@
                 <label>Customer </label>
                 <input
                   type="text"
-                  class="customerInputHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.customer_name ? 'is-invalid' : '',
+                  ]"
                   placeholder="Choose Customer"
                   v-model="invoiceInfo.customer_name"
                   @keyup="customerSelectInput()"
@@ -44,14 +47,39 @@
                     </div>
                   </div>
                 </Transition>
+                <div v-if="errors.customer_name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.customer_name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-invoice-notes">
                 <label>Notes </label>
                 <textarea
                   type="text"
-                  class="invoiceNotesHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.note ? 'is-invalid' : '',
+                  ]"
                   v-model="invoiceInfo.note"
                 ></textarea>
+                <div v-if="errors.note" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.note"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="invoice-top-section-details-right">
@@ -59,17 +87,45 @@
                 <label>Return Invoice Date</label>
                 <input
                   type="date"
-                  class="invoiceDateHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.return_invoice_date ? 'is-invalid' : '',
+                  ]"
                   v-model="invoiceInfo.return_invoice_date"
                 />
+                <div v-if="errors.return_invoice_date" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.return_invoice_date"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div class="form-due-date">
                 <label>Due Date</label>
                 <input
                   type="date"
-                  class="invoiceDueDateHolder"
+                  :class="[
+                    'form-input-holder',
+                    errors.due_date ? 'is-invalid' : '',
+                  ]"
                   v-model="invoiceInfo.due_date"
                 />
+                <div v-if="errors.due_date" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.due_date"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -375,6 +431,8 @@ export default {
       lineTotal: 0,
     });
     const store = reactive({});
+    const errors = ref({});
+
     const invoiceItems = reactive([]);
     const invoiceInfo = reactive({
       // subTotal:0,
@@ -702,11 +760,17 @@ export default {
       itemHolder.image = product_image;
     };
     const createReturnInvoice = () => {
+      const invoice_slip = {
+        items: invoiceItems,
+        customer_id: invoiceInfo.customer_id,
+        customer_name: invoiceInfo.customer_name,
+        due_date: invoiceInfo.due_date,
+        return_invoice_date: invoiceInfo.return_invoice_date,
+        note: invoiceInfo.note,
+        discount: invoiceInfo.discount,
+      };
       axios
-        .post("/return-invoice/create", {
-          info: invoiceInfo,
-          items: invoiceItems,
-        })
+        .post("/return-invoice/create", invoice_slip)
         .then((response) => {
           //response.data.message have success message
 
@@ -725,7 +789,20 @@ export default {
           router.push({ path: "/return-invoices" });
         })
         .catch((error) => {
-          console.log(error);
+          errors.customer_name = "";
+          errors.due_date = "";
+          errors.return_invoice_date = "";
+          errors.note = "";
+          errors.message = "";
+          if (error.response.status == 422) {
+            errors.value = error.response.data.errors;
+            toast(error.response.data.message, {
+              showIcon: true,
+              type: "danger",
+              position: "top-center",
+              transition: "zoom",
+            });
+          }
         });
     };
     const getUserStoreData = () => {
@@ -757,9 +834,7 @@ export default {
             transition: "zoom",
           });
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     };
     //end of methods
 
@@ -826,6 +901,7 @@ export default {
       getUnits,
       units,
       VITE_MY_APP_BACK_URL_HOME,
+      errors,
     };
   },
 };
