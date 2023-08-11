@@ -6,9 +6,12 @@
     <div class="router-view-container">
       <div class="top-nav-container" v-if="storeAuth.authData.isAuthenticated">
         <div class="top-nav-menu">
-          <span class="text">Prem Lamsal</span>
           <button @click="showDropDown()">
-            <span class="material-icons">arrow_drop_down</span>
+            <div style="display: flex; align-items: center">
+              Prem Lamsal
+
+              <span class="material-icons">arrow_drop_down</span>
+            </div>
           </button>
           <div class="dropdown-content" v-if="isDropDown">
             <a href="#" @click="logoutBtn()"
