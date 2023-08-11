@@ -22,95 +22,105 @@
             <h1>{{ modalHeader }} User</h1>
           </div>
           <div class="modal-body">
-            <div class="form-input-holder-container">
-              <label>User Name</label>
-              <input
-                type="text"
-                placeholder="User Name"
-                v-model="user.name"
-                :class="['form-input-holder', errors.name ? 'is-invalid' : '']"
-              />
-              <div v-if="errors.name" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.name"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>User Name</label>
+                <input
+                  type="text"
+                  placeholder="User Name"
+                  v-model="user.name"
+                  :class="[
+                    'form-input-holder',
+                    errors.name ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.name" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.name"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="form-input-holder-container">
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="User Email"
+                  v-model="user.email"
+                  :class="[
+                    'form-input-holder',
+                    errors.email ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.email" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.email"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-input-holder-container">
-              <label>Email</label>
-              <input
-                type="email"
-                placeholder="User Email"
-                v-model="user.email"
-                :class="['form-input-holder', errors.email ? 'is-invalid' : '']"
-              />
-              <div v-if="errors.email" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.email"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+            <div class="inside-two-input-container">
+              <div class="form-input-holder-container">
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="User Password"
+                  v-model="user.password"
+                  :class="[
+                    'form-input-holder',
+                    errors.password ? 'is-invalid' : '',
+                  ]"
+                />
+                <div v-if="errors.password" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.password"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-input-holder-container">
-              <label>Password</label>
-              <input
-                type="password"
-                placeholder="User Password"
-                v-model="user.password"
-                :class="[
-                  'form-input-holder',
-                  errors.password ? 'is-invalid' : '',
-                ]"
-              />
-              <div v-if="errors.password" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.password"
-                  v-bind:key="error.id"
-                >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
-            <div class="form-input-holder-container">
-              <label> Role</label>
+              <div class="form-input-holder-container">
+                <label> Role</label>
 
-              <select
-                v-model="user.role_id"
-                :class="[
-                  'form-input-holder',
-                  errors.role_id ? 'is-invalid' : '',
-                ]"
-              >
-                <template v-for="role in roles" v-bind:key="role.id">
-                  <option selected :value="role.id">
-                    {{ role.name }}
-                  </option>
-                </template>
-              </select>
-              <div v-if="errors.role_id" :class="['errorText']">
-                <div
-                  class="errorText-inner"
-                  v-for="error in errors.role_id"
-                  v-bind:key="error.id"
+                <select
+                  v-model="user.role_id"
+                  :class="[
+                    'form-input-holder',
+                    errors.role_id ? 'is-invalid' : '',
+                  ]"
                 >
-                  <ul>
-                    <li>{{ error }}</li>
-                  </ul>
+                  <template v-for="role in roles" v-bind:key="role.id">
+                    <option selected :value="role.id">
+                      {{ role.name }}
+                    </option>
+                  </template>
+                </select>
+                <div v-if="errors.role_id" :class="['errorText']">
+                  <div
+                    class="errorText-inner"
+                    v-for="error in errors.role_id"
+                    v-bind:key="error.id"
+                  >
+                    <ul>
+                      <li>{{ error }}</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
