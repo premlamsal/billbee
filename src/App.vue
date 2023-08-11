@@ -6,14 +6,14 @@
     <div class="router-view-container">
       <div class="top-nav-container" v-if="storeAuth.authData.isAuthenticated">
         <div class="top-nav-menu">
-          <button @click="showDropDown()">
-            <div style="display: flex; align-items: center">
+          <button>
+            <div style="display: flex; align-items: center; font-size: 18px">
               Prem Lamsal
 
               <span class="material-icons">arrow_drop_down</span>
             </div>
           </button>
-          <div class="dropdown-content" v-if="isDropDown">
+          <div class="dropdown-content">
             <a href="#" @click="logoutBtn()"
               ><span class="material-icons">logout</span> Logout</a
             >
@@ -165,5 +165,11 @@ button {
 .slide-fade-leave-to {
   opacity: 0;
   // transform: translateY(-90px);
+}
+.dropdown-content {
+  display: none;
+}
+.top-nav-menu:hover .dropdown-content {
+  display: block;
 }
 </style>
