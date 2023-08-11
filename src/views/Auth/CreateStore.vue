@@ -40,8 +40,8 @@
           />
           <input
             type="text"
-            placeholder="URL"
-            v-model="store.url"
+            placeholder="Profit Percentage"
+            v-model="store.profit_percentage"
             class="form-input-holder"
           />
         </div>
@@ -62,8 +62,8 @@
         <div class="inside-two-input-container">
           <input
             type="text"
-            placeholder="Profit Percentage"
-            v-model="store.profit_percentage"
+            placeholder="URL"
+            v-model="store.url"
             class="form-input-holder"
           />
         </div>
