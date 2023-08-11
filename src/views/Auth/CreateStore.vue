@@ -162,7 +162,7 @@ body {
 }
 .form-container h2 {
   /* background-color: #4caf50; */
-  color: #4caf50;
+  color: var(--primary);
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -171,7 +171,8 @@ body {
 a {
   display: block;
   margin-top: 20px;
-  color: #4caf50;
+  color: var(--primary);
+
   text-decoration: none;
 }
 .form-input-holder {
