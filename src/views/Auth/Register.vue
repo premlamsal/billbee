@@ -3,15 +3,31 @@
     <div class="register-form">
       <div class="form-container">
         <h2>Register</h2>
-        <input type="text" placeholder="Name" v-model="user.name" />
+        <input
+          type="text"
+          placeholder="Name"
+          v-model="user.name"
+          class="form-input-holder"
+        />
 
-        <input type="email" placeholder="Email" v-model="user.email" />
-        <input type="password" placeholder="Password" v-model="user.password" />
-        <button @click="registerBtn()">Register</button>
+        <input
+          type="email"
+          placeholder="Email"
+          v-model="user.email"
+          class="form-input-holder"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          v-model="user.password"
+          class="form-input-holder"
+        />
+        <button @click="registerBtn()" class="mt20 btn-primary">
+          Register
+        </button>
         <router-link to="/login">I have an account</router-link>
       </div>
     </div>
-    
   </div>
 </template>
   
@@ -29,7 +45,7 @@ export default {
     const route = useRoute();
     const axios = inject("$axios");
     const toast = inject("$toast");
-    const isRegisterSuccess= ref(false);
+    const isRegisterSuccess = ref(false);
 
     //on mounted start
     onMounted(() => {
@@ -52,7 +68,7 @@ export default {
           });
           router.push({ path: "/login" });
           //push to create-store
-          isRegisterSuccess.value=true;
+          isRegisterSuccess.value = true;
         })
         .catch((error) => {
           console.log(error);
@@ -70,19 +86,16 @@ export default {
         });
     };
 
-    return { user, registerBtn,isRegisterSuccess};
+    return { user, registerBtn, isRegisterSuccess };
   },
 };
 </script>
   
   <style scoped>
-body {
-  background-color: #f2f2f2;
-}
 .form-container {
-  background: linear-gradient(to bottom right, #ffffff, #e6e6e6);
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  /* background: linear-gradient(to bottom right, #ffffff, #e6e6e6); */
+  /* border-radius: 10px; */
+  /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5); */
   padding: 20px;
   margin: auto;
   margin-top: 100px;
@@ -93,37 +106,16 @@ body {
   padding-top: 0px;
 }
 .form-container h2 {
-  background-color: #4caf50;
-  color: white;
+  color: var(--primary);
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
 }
-input[type="email"],
-input[type="text"],
-input[type="password"] {
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: none;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  width: 100%;
-}
-input[type="submit"] {
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  width: 100%;
-}
+
 a {
   display: block;
   margin-top: 20px;
-  color: #4caf50;
+  color: var(--primary);
   text-decoration: none;
 }
 </style>

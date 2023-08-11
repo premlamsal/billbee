@@ -2,9 +2,20 @@
   <div class="login-page-container">
     <div class="form-container">
       <h2>Login</h2>
-      <input type="email" placeholder="Email" v-model="user.email" />
-      <input type="password" placeholder="Password" v-model="user.password" />
-      <button @click="loginBtn()">Login</button>
+
+      <input
+        type="email"
+        placeholder="Email"
+        v-model="user.email"
+        class="form-input-holder"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        v-model="user.password"
+        class="form-input-holder"
+      />
+      <button @click="loginBtn()" class="mt20 btn-primary">Login</button>
       <router-link to="/register">I don't have an account</router-link>
     </div>
   </div>
@@ -15,7 +26,6 @@ import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 const store = useAuthStore();
-
 
 export default {
   setup() {
@@ -44,8 +54,7 @@ export default {
 
           //calling store function to set user data
 
-           store.setUser(response.data.data.user,response.data.data.token)
-          
+          store.setUser(response.data.data.user, response.data.data.token);
 
           // router.push({ path: "/" });
 
@@ -66,12 +75,6 @@ export default {
             transition: "zoom",
           });
         })
-          
-          
-
-
-
-
 
         .catch((error) => {
           console.log(error);
@@ -95,13 +98,10 @@ export default {
 </script>
 
 <style scoped>
-body {
-  background-color: #f2f2f2;
-}
 .form-container {
-  background: linear-gradient(to bottom right, #ffffff, #e6e6e6);
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  /* background: linear-gradient(to bottom right, #ffffff, #f4f3f3); */
+  /* border-radius: 10px; */
+  /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5); */
   padding: 20px;
   margin: auto;
   margin-top: 100px;
@@ -112,36 +112,17 @@ body {
   padding-top: 0px;
 }
 .form-container h2 {
-  background-color: #4caf50;
-  color: white;
+  /* background-color: #4caf50; */
+  color: var(--primary);
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
 }
-input[type="email"],
-input[type="password"] {
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: none;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  width: 100%;
-}
-input[type="submit"] {
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  width: 100%;
-}
+
 a {
   display: block;
   margin-top: 20px;
-  color: #4caf50;
+  color: var(--primary);
   text-decoration: none;
 }
 </style>
