@@ -39,7 +39,7 @@ select.form-input-holder {
 }
 
 input.form-input-holder:focus,
-textarea.form-input-holder :focus {
+textarea.form-input-holder:focus {
     background-color: #fff;
     border: 1px solid #9a9da084;
 
