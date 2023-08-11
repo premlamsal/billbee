@@ -789,6 +789,11 @@ export default {
           router.push({ path: "/invoices" });
         })
         .catch((error) => {
+          errors.customer_name = "";
+          errors.due_date = "";
+          errors.invoice_date = "";
+          errors.note = "";
+          errors.message = "";
           if (error.response.status == 422) {
             errors.value = error.response.data.errors;
             toast(error.response.data.message, {
