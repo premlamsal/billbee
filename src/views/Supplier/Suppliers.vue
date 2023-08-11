@@ -151,7 +151,7 @@
         </div>
       </div>
     </Transition>
-    <div class="supplier-header">
+    <div class="supplier-header mt20">
       <div class="search-container">
         <div class="search-box">
           <div class="search-box-icon" @click="searchSupplier()">
@@ -663,7 +663,7 @@ export default {
 
 .supplier-header {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .suppliers-content {
   /* background: white; */
