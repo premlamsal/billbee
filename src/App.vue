@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <!-- Sidebar -->
-    <Sidebar v-if="storeAuth.authData.isAuthenticated" />
+    <Sidebar v-if="storeAuth.authData.isAuthenticated && snippStore.hasStore" />
 
     <div class="router-view-container">
       <div class="top-nav-container" v-if="storeAuth.authData.isAuthenticated">
@@ -35,9 +35,12 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
+import { useSnipperStore } from "@/stores/snipper";
+
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 const storeAuth = useAuthStore();
+const snippStore = useSnipperStore();
 
 onMounted(() => {
   //   await store.getPermissions();

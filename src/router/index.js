@@ -409,6 +409,12 @@ const router = createRouter({
 			},
 		},
 		{
+			path: "/api-server-down",
+			name: 'apiServerDown',
+
+			component: () => import('../views/ErrorPages/apiServerDown.vue'),
+		},
+		{
 			path: "/:notFound",
 			component: () => import('../views/Error.vue'),
 		},

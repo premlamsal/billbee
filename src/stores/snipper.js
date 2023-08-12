@@ -1,5 +1,6 @@
-import { ref, computed, reactive } from "vue";
+import { ref, computed, reactive, inject } from "vue";
 import { defineStore } from "pinia";
+
 
 //axios
 import axios from "axios";
@@ -18,11 +19,12 @@ axios.defaults.baseURL = appUrl;
 
 
 export const useSnipperStore = defineStore("snipper", () => {
+    const toast = inject("$toast");
 
     const permissions = reactive([]);
-    const isLoadedPermissions= ref(false);
-    const stores=reactive([]);//will hold store available to the user
-    const hasStore=ref(false);//will get true if user has store //hit api to get if user has store or not
+    const isLoadedPermissions = ref(false);
+    const stores = reactive([]);//will hold store available to the user
+    const hasStore = ref(false);//will get true if user has store //hit api to get if user has store or not
 
     async function getPermissions() {
         permissions.splice(0);  //clearing array
@@ -36,17 +38,17 @@ export const useSnipperStore = defineStore("snipper", () => {
                         permissions.push(data.permissions[i])
 
                     }
-                    isLoadedPermissions.value=true;//set data loaded success to true
+                    isLoadedPermissions.value = true;//set data loaded success to true
                     console.log('call inside store  permissions')
                 }
             })
-            .catch((error)=>{
+            .catch((error) => {
                 console.log('some error')
             })
 
     }
     async function getStores() {
-        
+
         stores.splice(0);  //clearing array
 
         await axios.get('stores/check/')
@@ -56,17 +58,28 @@ export const useSnipperStore = defineStore("snipper", () => {
                     for (let i = 0; i < data.stores.length; i++) {
                         stores.push(data.stores[i])
                     }
-                    hasStore.value=true;//set data loaded success to true
+                    hasStore.value = true;//set data loaded success to true
                     console.log('call inside store : stores')
                 }
             })
-            .catch((error)=>{
-                // console.log('hello error')
+            .catch((error) => {
+                if (error.code === "ERR_NETWORK") {
+                    stores.length = 0;
+                    hasStore.value = false;
+                    toast("Your API server might be down or not responding!", {
+                        showIcon: true,
+                        type: "warning",
+                        position: "top-center",
+                        transition: "zoom",
+                    });
+                }
+
                 // return "hello";
+
             })
 
     }
-    
 
-    return { permissions, getPermissions,stores, hasStore,getStores };
+
+    return { permissions, getPermissions, stores, hasStore, getStores };
 });
