@@ -49,7 +49,7 @@ export const useSnipperStore = defineStore("snipper", () => {
     }
     async function checkIfAPIServerUp() {
         isAPISeverUP.value = false;
-        await axios.get('stores/check/')
+        await axios.get('check-server-status')
             .then((response) => {
                 isAPISeverUP.value = true
             })
@@ -57,7 +57,7 @@ export const useSnipperStore = defineStore("snipper", () => {
                 if (error.code === "ERR_NETWORK") {
                     isAPISeverUP.value = false;
                 }
-                // console.log('prem daling')
+                console.log('API DOWN')
 
 
             })

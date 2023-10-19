@@ -418,6 +418,7 @@ const router = createRouter({
 			path: "/api-server-down",
 			name: 'apiServerDown',
 			component: () => import('../views/ErrorPages/apiServerDown.vue'),
+
 		},
 		{
 			path: "/:notFound",
@@ -434,70 +435,82 @@ router.beforeEach(async (to, from, next) => {
 	const storeSnipp = useSnipperStore();
 	const storeAuth = useAuthStore();
 
-
 	// console.log(storeSnipp.stores)
 
-	// logged IN
-	if (storeAuth.authData.isAuthenticated) {
+
+	await storeSnipp.checkIfAPIServerUp();
+
+	// console.log(storeSnipp.isAPISeverUP);
+	if (storeSnipp.isAPISeverUP) {
+
+		// logged IN
+		if (storeAuth.authData.isAuthenticated) {
 
 
-		//this block executes when user is authenticated
-		if (to.name == 'login' || to.name == 'register') {
-			next('/');//redirect to home if user is already logged in while navigating to login || register page
-			return;
-		} else {
-			//logged in and also need store to open home
-			if (to.matched.some((record) => record.meta.requiresStore)) {
-				await storeSnipp.getStores();
+			//this block executes when user is authenticated
+			if (to.name == 'login' || to.name == 'register') {
+				next('/');//redirect to home if user is already logged in while navigating to login || register page
+				return;
+			} else {
 
-				if (storeSnipp.hasStore) {
-					//when user is authenciated and navigate to different routes and checking routes permissions
-					await storeSnipp.getPermissions();
+				//logged in and also need store to open home
+				if (to.matched.some((record) => record.meta.requiresStore)) {
+					await storeSnipp.getStores();
+
+					if (storeSnipp.hasStore) {
+						//when user is authenciated and navigate to different routes and checking routes permissions
+						await storeSnipp.getPermissions();
+						next();
+						return;
+					} else {
+						// console.log('here i am')
+						next('/create-store');
+						return;
+					}
+				}
+				else {
+
+					// await storeSnipp.getPermissions();
+
 					next();
-					return;
-				} else {
-					// console.log('here i am')
-					next('/create-store');
+					console.log('hello boss darling');
 					return;
 				}
-			}
-			else {
 
-				// await storeSnipp.getPermissions();
 
-				next();
-				console.log('hello boss darling');
-				return;
+
+
 			}
+
 
 		}
+		else {//not loggedIN
 
+			//this block executes when user is not logged in but check which routes needs authenticated user to navigate
+			if (to.matched.some((record) => record.meta.requiresAuth)) {
+				next("/login");
+				// console.log('now here')
+				return;
+			} else {
+
+				// console.log('now there')
+
+				next();
+				return;
+			}
+		}
 
 	}
-	else {//not loggedIN
-
-		//this block executes when user is not logged in but check which routes needs authenticated user to navigate
-		if (to.matched.some((record) => record.meta.requiresAuth)) {
-			next("/login");
-			// console.log('now here')
+	else {
+		if (to.name == 'apiServerDown') {
+			next();
 			return;
 		} else {
 
-			// console.log('now there')
-
-			next();
+			next('api-server-down');
 			return;
 		}
-
-
-
 	}
-
-
-
-
-
-
 
 
 	///new routes
