@@ -29,6 +29,13 @@
 	<li>UNITS</li>
 </ul>
 <h4>Some Screens </h4>
+<h5>Login</h5>
+
+<img src="https://premlamsal.github.io/projects/billbee/images/demos/login.png">
+
+<h5>Register</h5>
+<img src="https://premlamsal.github.io/projects/billbee/images/demos/register.png">
+
 <h5>Dashboard</h5>
 <img src="https://premlamsal.github.io/projects/billbee/images/demos/one.png">
 <h5>Customers</h5>

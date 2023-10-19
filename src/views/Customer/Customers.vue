@@ -191,14 +191,17 @@
             <thead>
               <tr>
                 <th>Customer ID</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Phone</th>
+                <th @click="sortBy('name')">Name</th>
+                <th @click="sortBy('address')">Address</th>
+                <th @click="sortBy('phone')">Phone</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <template v-for="customer in customers" v-bind:key="customer.id">
+              <template
+                v-for="customer in sortedCustomers"
+                v-bind:key="customer.id"
+              >
                 <tr v-if="customers != null">
                   <td>{{ customer.custom_customer_id }}</td>
                   <td @click="showCustomer(customer.custom_customer_id)">
@@ -327,6 +330,9 @@ export default {
     const route = useRoute();
     const customers = reactive([]);
     const errors = ref({});
+
+    const sortColumn = ref("");
+    const sortOder = ref("");
 
     const showCustomerModal = ref(false);
     const axios = inject("$axios");
@@ -582,6 +588,29 @@ export default {
         console.log("i cannot seach with empy query");
       }
     };
+
+    const sortBy = (column) => {
+      if (column === sortColumn.value) {
+        sortOder.value = sortOder.value === "asc" ? "desc" : "asc";
+      } else {
+        sortColumn.value = column;
+        sortOder.value = "asc";
+      }
+    };
+    const sortedCustomers = computed(() => {
+      if (!sortColumn.value) {
+        return customers;
+      }
+      const compare = (a, b) => {
+        if (sortOder.value === "asc") {
+          return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1;
+        } else {
+          return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1;
+        }
+      };
+      return customers.sort(compare);
+    });
+
     //here you can return data and methods
     return {
       customer,
@@ -605,6 +634,8 @@ export default {
       pagination,
       searchQuery,
       searchCustomer,
+      sortBy,
+      sortedCustomers,
     };
   }, //end of setup
 };
