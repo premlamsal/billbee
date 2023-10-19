@@ -1,5 +1,5 @@
 <template>
-  <!-- customers page -->
+  <!-- customers -->
   <main id="customers-page">
     <h1>Customers</h1>
     <Transition :duration="550">
