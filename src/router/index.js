@@ -442,7 +442,7 @@ router.beforeEach(async (to, from, next) => {
 
 	// console.log(storeSnipp.isAPISeverUP);
 	if (storeSnipp.isAPISeverUP) {
-
+		console.log('orem');
 		// logged IN
 		if (storeAuth.authData.isAuthenticated) {
 
@@ -506,7 +506,6 @@ router.beforeEach(async (to, from, next) => {
 			next();
 			return;
 		} else {
-
 			next('api-server-down');
 			return;
 		}
