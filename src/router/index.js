@@ -6,8 +6,6 @@ import { useSnipperStore } from "@/stores/snipper";
 import { useAuthStore } from "@/stores/auth";
 
 
-
-
 const router = createRouter({
 
 	history: createWebHistory(),
@@ -50,6 +48,14 @@ const router = createRouter({
 				requiresStore: true,
 
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_invoices') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -411,28 +417,27 @@ const router = createRouter({
 		{
 			path: "/api-server-down",
 			name: 'apiServerDown',
-
 			component: () => import('../views/ErrorPages/apiServerDown.vue'),
 		},
 		{
 			path: "/:notFound",
+			name: 'notfound',
 			component: () => import('../views/Error.vue'),
 		},
 	],
 })
 
 
-
 //async call to fetch permissions
 router.beforeEach(async (to, from, next) => {
+
 	const storeSnipp = useSnipperStore();
 	const storeAuth = useAuthStore();
+
+
 	// console.log(storeSnipp.stores)
 
-
-	await storeSnipp.getStores();
-
-	//logged IN
+	// logged IN
 	if (storeAuth.authData.isAuthenticated) {
 
 
@@ -443,6 +448,7 @@ router.beforeEach(async (to, from, next) => {
 		} else {
 			//logged in and also need store to open home
 			if (to.matched.some((record) => record.meta.requiresStore)) {
+				await storeSnipp.getStores();
 
 				if (storeSnipp.hasStore) {
 					//when user is authenciated and navigate to different routes and checking routes permissions
@@ -454,15 +460,22 @@ router.beforeEach(async (to, from, next) => {
 					next('/create-store');
 					return;
 				}
-			} else {
-				await storeSnipp.getPermissions();
+			}
+			else {
+
+				// await storeSnipp.getPermissions();
+
 				next();
+				console.log('hello boss darling');
 				return;
 			}
 
 		}
+
+
 	}
 	else {//not loggedIN
+
 		//this block executes when user is not logged in but check which routes needs authenticated user to navigate
 		if (to.matched.some((record) => record.meta.requiresAuth)) {
 			next("/login");
@@ -477,7 +490,15 @@ router.beforeEach(async (to, from, next) => {
 		}
 
 
+
 	}
+
+
+
+
+
+
+
 
 	///new routes
 

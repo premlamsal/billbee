@@ -1,4 +1,5 @@
 <template>
+  <!-- customers page -->
   <main id="customers-page">
     <h1>Customers</h1>
     <Transition :duration="550">
@@ -167,7 +168,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_customer')">
         <button class="btn-new-customer" @click="addCustomerBtn()">
           <span class="btn-name"> New Customer</span>
           <span class="material-icons">add_circle</span>
@@ -194,7 +195,15 @@
                 <th @click="sortBy('name')">Name</th>
                 <th @click="sortBy('address')">Address</th>
                 <th @click="sortBy('phone')">Phone</th>
-                <th>Actions</th>
+                <template
+                  v-if="
+                    hasPermission('show_customer') ||
+                    hasPermission('edit_customer') ||
+                    hasPermission('delete_customer')
+                  "
+                >
+                  <th>Actions</th>
+                </template>
               </tr>
             </thead>
             <tbody>
@@ -209,25 +218,36 @@
                   </td>
                   <td>{{ customer.address }}</td>
                   <td>{{ customer.phone }}</td>
-                  <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editCustomerModal(customer.id)"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="deleteCustomerModal(customer.id)"
-                      >delete</span
-                    >
-                  </td>
+                  <template
+                    v-if="
+                      hasPermission('show_customer') ||
+                      hasPermission('edit_customer') ||
+                      hasPermission('delete_customer')
+                    "
+                  >
+                    <td>
+                      <span
+                        v-if="hasPermission('show_customer')"
+                        class="material-icons"
+                        style="color: var(--primary); cursor: pointer"
+                        >format_align_justify</span
+                      >
+                      <span
+                        v-if="hasPermission('edit_customer')"
+                        class="material-icons"
+                        style="color: blueviolet; cursor: pointer"
+                        @click="editCustomerModal(customer.id)"
+                        >edit</span
+                      >
+                      <span
+                        v-if="hasPermission('delete_customer')"
+                        class="material-icons"
+                        style="color: orangered; cursor: pointer"
+                        @click="deleteCustomerModal(customer.id)"
+                        >delete</span
+                      >
+                    </td>
+                  </template>
                 </tr>
               </template>
             </tbody>
@@ -323,6 +343,7 @@
   <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useSnipperStore } from "@/stores/snipper";
 
 export default {
   setup() {
@@ -341,6 +362,26 @@ export default {
     const customer = reactive({});
     const modalHeader = ref(""); // Add or Edit Customer
 
+    const storeSnipp = useSnipperStore();
+
+    // await storeSnipp.getPermissions();
+
+    const hasAccess = storeSnipp.permissions;
+
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
     //on mounted start
     onMounted(() => {
       getCustomers();
@@ -636,6 +677,7 @@ export default {
       searchCustomer,
       sortBy,
       sortedCustomers,
+      hasPermission,
     };
   }, //end of setup
 };

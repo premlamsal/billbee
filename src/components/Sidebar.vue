@@ -16,64 +16,106 @@
         <span class="material-icons">home</span>
         <span class="text">Home</span>
       </router-link>
-      <router-link to="/accounts" class="button">
-        <span class="material-icons">account_balance_wallet</span>
-        <span class="text">Accounts</span>
-      </router-link>
-      <router-link to="/customers" class="button">
-        <span class="material-icons">supervised_user_circle</span>
-        <span class="text">Customers</span>
-      </router-link>
+      <template v-if="hasPermission('view_accounts')">
+        <router-link to="/accounts" class="button">
+          <span class="material-icons">account_balance_wallet</span>
+          <span class="text">Accounts</span>
+        </router-link>
+      </template>
+      <template v-if="hasPermission('view_customers')">
+        <router-link to="/customers" class="button">
+          <span class="material-icons">supervised_user_circle</span>
+          <span class="text">Customers</span>
+        </router-link>
+      </template>
 
-      <router-link to="/invoices" class="button">
-        <span class="material-icons">receipt_long</span>
-        <span class="text">Invoice</span>
-      </router-link>
-      <router-link to="/products" class="button">
-        <span class="material-icons">shopping_bag</span>
-        <span class="text">Product</span>
-      </router-link>
-      <router-link to="/purchases" class="button">
-        <span class="material-icons">description</span>
-        <span class="text">Purchase</span>
-      </router-link>
-      <router-link to="/returns" class="button">
-        <span class="material-icons">keyboard_return</span>
-        <span class="text">Returns</span>
-      </router-link>
-      <router-link to="/suppliers" class="button">
-        <span class="material-icons">local_shipping</span>
-        <span class="text">Suppliers</span>
-      </router-link>
-      <router-link to="/stocks" class="button">
-        <span class="material-icons">inventory_2</span>
-        <span class="text">Stocks</span>
-      </router-link>
-      <router-link to="/transactions" class="button">
-        <span class="material-icons">swap_horiz</span>
-        <span class="text">Transactions</span>
-      </router-link>
-
-      <router-link to="/users" class="button">
-        <span class="material-icons">group</span>
-        <span class="text">Users</span>
-      </router-link>
+      <template v-if="hasPermission('view_invoices')">
+        <router-link to="/invoices" class="button">
+          <span class="material-icons">receipt_long</span>
+          <span class="text">Invoice</span>
+        </router-link>
+      </template>
+      <template v-if="hasPermission('view_products')">
+        <router-link to="/products" class="button">
+          <span class="material-icons">shopping_bag</span>
+          <span class="text">Product</span>
+        </router-link>
+      </template>
+      <template v-if="hasPermission('view_purchases')">
+        <router-link to="/purchases" class="button">
+          <span class="material-icons">description</span>
+          <span class="text">Purchase</span>
+        </router-link>
+      </template>
+      <template v-if="hasPermission('view_returns')">
+        <router-link to="/returns" class="button">
+          <span class="material-icons">keyboard_return</span>
+          <span class="text">Returns</span>
+        </router-link>
+      </template>
+      <template v-if="hasPermission('view_suppliers')">
+        <router-link to="/suppliers" class="button">
+          <span class="material-icons">local_shipping</span>
+          <span class="text">Suppliers</span>
+        </router-link>
+      </template>
+      <template v-if="hasPermission('view_stocks')">
+        <router-link to="/stocks" class="button">
+          <span class="material-icons">inventory_2</span>
+          <span class="text">Stocks</span>
+        </router-link>
+      </template>
+      <template v-if="hasPermission('view_transactions')">
+        <router-link to="/transactions" class="button">
+          <span class="material-icons">swap_horiz</span>
+          <span class="text">Transactions</span>
+        </router-link>
+      </template>
+      <template v-if="hasPermission('view_users')">
+        <router-link to="/users" class="button">
+          <span class="material-icons">group</span>
+          <span class="text">Users</span>
+        </router-link>
+      </template>
     </div>
 
     <div class="flex"></div>
-
-    <div class="menu">
-      <router-link to="/settings" class="button">
-        <span class="material-icons">settings</span>
-        <span class="text">Settings</span>
-      </router-link>
-    </div>
+    <template v-if="hasPermission('view_settings')">
+      <div class="menu">
+        <router-link to="/settings" class="button">
+          <span class="material-icons">settings</span>
+          <span class="text">Settings</span>
+        </router-link>
+      </div>
+    </template>
   </aside>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import logoURL from "../assets/logo.png";
+
+import { useSnipperStore } from "@/stores/snipper";
+const storeSnipp = useSnipperStore();
+
+await storeSnipp.getPermissions();
+
+const hasAccess = storeSnipp.permissions;
+
+// console.log("hello from soft");
+
+// console.log(hasAccess);
+
+const hasPermission = (action) => {
+  // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+  //   return true;
+  // } else {
+  //   return false;
+  // }
+  return hasAccess.includes(action) || hasAccess.includes("all") ? true : false;
+};
+
+// console.log(hasPermission("view_invoices"));
 
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
 

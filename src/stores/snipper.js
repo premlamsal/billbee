@@ -20,7 +20,7 @@ axios.defaults.baseURL = appUrl;
 
 export const useSnipperStore = defineStore("snipper", () => {
     const toast = inject("$toast");
-
+    const isAPISeverUP = ref(true);
     const permissions = reactive([]);
     const isLoadedPermissions = ref(false);
     const stores = reactive([]);//will hold store available to the user
@@ -46,6 +46,21 @@ export const useSnipperStore = defineStore("snipper", () => {
                 console.log('some error')
             })
 
+    }
+    async function checkIfAPIServerUp() {
+        isAPISeverUP.value = false;
+        await axios.get('stores/check/')
+            .then((response) => {
+                isAPISeverUP.value = true
+            })
+            .catch((error) => {
+                if (error.code === "ERR_NETWORK") {
+                    isAPISeverUP.value = false;
+                }
+                // console.log('prem daling')
+
+
+            })
     }
     async function getStores() {
 
@@ -81,5 +96,5 @@ export const useSnipperStore = defineStore("snipper", () => {
     }
 
 
-    return { permissions, getPermissions, stores, hasStore, getStores };
+    return { permissions, getPermissions, stores, hasStore, getStores, isAPISeverUP, checkIfAPIServerUp };
 });

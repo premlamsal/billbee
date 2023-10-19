@@ -110,8 +110,8 @@ export default {
   padding: 2em;
 }
 .product-content-container {
-      /* background: #f2f2f2; */
-    /* padding: 1em; */
+  /* background: #f2f2f2; */
+  /* padding: 1em; */
 }
 .product-details {
   margin-top: 10px;

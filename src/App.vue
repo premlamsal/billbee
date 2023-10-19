@@ -1,14 +1,17 @@
 <template>
   <div class="app">
-    <!-- Sidebar -->
-    <Sidebar v-if="storeAuth.authData.isAuthenticated && snippStore.hasStore" />
-
+    <Suspense>
+      <!-- Sidebar -->
+      <Sidebar
+        v-if="storeAuth.authData.isAuthenticated && snippStore.hasStore"
+      />
+    </Suspense>
     <div class="router-view-container">
       <div class="top-nav-container" v-if="storeAuth.authData.isAuthenticated">
         <div class="top-nav-menu">
           <button>
             <div style="display: flex; align-items: center; font-size: 18px">
-              Prem Lamsal
+              {{ storeAuth.authData.user.name }}
 
               <span class="material-icons">arrow_drop_down</span>
             </div>
@@ -44,6 +47,8 @@ const snippStore = useSnipperStore();
 
 onMounted(() => {
   //   await store.getPermissions();
+
+  console.log("first app vue");
 });
 
 // console.log('store.permissions');

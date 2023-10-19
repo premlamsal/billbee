@@ -190,7 +190,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_account')">
         <button class="btn-new-account" @click="addAccountBtn()">
           <span class="btn-name"> New Account</span>
           <span class="material-icons">add_circle</span>
@@ -346,7 +346,7 @@
     <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -362,6 +362,26 @@ export default {
     const account = reactive({});
     const modalHeader = ref(""); // Add or Edit Account
 
+    const storeSnipp = useSnipperStore();
+
+    // await storeSnipp.getPermissions();
+
+    const hasAccess = storeSnipp.permissions;
+
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
     //on mounted start
     onMounted(() => {
       getAccounts();
@@ -642,6 +662,7 @@ export default {
       makePagination,
       searchQuery,
       searchAccount,
+      hasPermission,
     };
   }, //end of setup
 };

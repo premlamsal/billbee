@@ -23,7 +23,6 @@
             </tr>
           </thead>
           <tbody>
-
             <tr v-for="transaction in transactions" v-bind:key="transaction.id">
               <td scope="row">
                 {{ transaction.date }}
@@ -136,7 +135,7 @@ export default {
 
     const getIdFromUrl = () => {
       custom_account_id.value = route.params.id;
-    //   console.log(route.params.id)
+      //   console.log(route.params.id)
     }; //end of getIdFromUrl
 
     const getAccountTransactions = () => {
@@ -145,7 +144,7 @@ export default {
         .then((response) => {
           for (let i = 0; i < response.data.transactions.length; i++) {
             transactions.push(response.data.transactions[i]);
-            console.log(transactions)
+            console.log(transactions);
           }
         })
         .catch((error) => {

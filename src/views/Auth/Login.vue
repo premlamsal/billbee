@@ -125,7 +125,7 @@ export default {
                 position: "top-center",
                 transition: "zoom",
               });
-              router.push({ path: "api-server-down" });
+              // router.push({ path: "api-server-down" });
             }
           });
       }

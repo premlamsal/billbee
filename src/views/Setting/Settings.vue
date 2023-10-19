@@ -26,7 +26,9 @@
           </div>
         </div>
         <div class="store-settings-btn-block mt10">
-          <button class="btn-save-store" @click="updateStoreBtn()">Update Store</button>
+          <button class="btn-save-store" @click="updateStoreBtn()">
+            Update Store
+          </button>
         </div>
       </div>
     </div>
@@ -43,7 +45,7 @@ export default {
     const axios = inject("$axios");
     const toast = inject("$toast");
     const stores = reactive([]);
-    const selectedStore = ref(0);//0 will render default option of select i.e "Select an option" (only on mounted) and changed after default store is loaded from database
+    const selectedStore = ref(0); //0 will render default option of select i.e "Select an option" (only on mounted) and changed after default store is loaded from database
 
     //on mounted start
     onMounted(() => {
@@ -57,15 +59,15 @@ export default {
           // console.log(response.data.stores);
           // stores=response.data.stores;
           let data = response.data;
-		  const defaultStore=data.default_store;
+          const defaultStore = data.default_store;
           if (data.stores) {
             for (let i = 0; i < data.stores.length; i++) {
               stores.push(data.stores[i]);
             }
           }
-		  //will assign default store to select store to render UI
-		  selectedStore.value=parseInt(defaultStore)
-		//   console.log(selectedStore.value)
+          //will assign default store to select store to render UI
+          selectedStore.value = parseInt(defaultStore);
+          //   console.log(selectedStore.value)
         })
         .catch((error) => {
           console.log(error);
@@ -73,9 +75,9 @@ export default {
     };
 
     const updateStoreBtn = () => {
-		let formdata= new FormData();
-		formdata.append("_METHOD","POST");
-		formdata.append("selected_store",selectedStore.value);
+      let formdata = new FormData();
+      formdata.append("_METHOD", "POST");
+      formdata.append("selected_store", selectedStore.value);
 
       axios
         .post("save-store", formdata)
@@ -103,7 +105,6 @@ export default {
               transition: "zoom",
             });
           }
-
         });
     };
     return { updateStoreBtn, getStores, stores, selectedStore };
