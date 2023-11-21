@@ -1,5 +1,5 @@
 <template>
-  <div class="status-box-container">
+  <div class="status-box-container" v-if="enabled">
     <div class="status-box">
       <div class="svg-container">
         <div class="svg-box">
@@ -268,6 +268,27 @@
     </div>
   </div>
 </template>
+<script>
+import { onMounted, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useSnipperStore } from "@/stores/snipper";
+export default {
+  setup() {
+    const router = useRouter();
+    const snippStore = useSnipperStore();
+    const enabled = ref(false);
+
+    onMounted(() => {
+      if (snippStore.isAPISeverUP) {
+        router.push({ path: "/" });
+      } else {
+        enabled.value = true;
+      }
+    });
+    return { enabled };
+  },
+};
+</script>
 <style scoped>
 .status-box-container {
   margin: 0;

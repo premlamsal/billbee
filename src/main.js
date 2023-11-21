@@ -53,4 +53,6 @@ import Chart from './components/Chart.vue'
 
 app.component('Chart', Chart)
 
+
+
 app.mount("#app");

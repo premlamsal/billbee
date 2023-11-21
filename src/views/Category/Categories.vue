@@ -90,7 +90,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_category')">
         <button class="btn-new-category" @click="addCategoryBtn()">
           <span class="btn-name"> New Category</span>
           <span class="material-icons">add_circle</span>
@@ -113,7 +113,15 @@
               <th>Category ID</th>
               <th>Name</th>
               <th>Description</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_category') ||
+                  hasPermission('edit_category') ||
+                  hasPermission('delete_category')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -122,25 +130,36 @@
                 <td>{{ category.custom_category_id }}</td>
                 <td>{{ category.name }}</td>
                 <td>{{ category.description }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editCategoryModal(category.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteCategoryModal(category.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_category') ||
+                    hasPermission('edit_category') ||
+                    hasPermission('delete_category')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      v-if="hasPermission('show_category')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editCategoryModal(category.id)"
+                      v-if="hasPermission('show_category')"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="deleteCategoryModal(category.id)"
+                      v-if="hasPermission('show_category')"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
@@ -235,7 +254,7 @@
     <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -249,7 +268,23 @@ export default {
     const isModalUpdating = ref(false);
     const category = reactive({});
     const modalHeader = ref(""); // Add or Edit Category
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
 
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
     //on mounted start
     onMounted(() => {
       getCategories();
@@ -503,6 +538,7 @@ export default {
       makePagination,
       searchQuery,
       searchCategory,
+      hasPermission,
     };
   }, //end of setup
 };

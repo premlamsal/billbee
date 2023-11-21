@@ -150,7 +150,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_user')">
         <button class="btn-new-user" @click="addUserBtn()">
           <span class="btn-name"> New User</span>
           <span class="material-icons">add_circle</span>
@@ -176,7 +176,15 @@
 
               <th>Last Login</th>
 
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_user') ||
+                  hasPermission('edit_user') ||
+                  hasPermission('delete_user')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -188,25 +196,36 @@
                 <td v-else>Please attach Role</td>
 
                 <td>{{ user.last_login }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editUserModal(user.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteUserModal(user.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_user') ||
+                    hasPermission('edit_user') ||
+                    hasPermission('delete_user')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      v-if="hasPermission('show_user')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      v-if="hasPermission('show_user')"
+                      @click="editUserModal(user.id)"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      v-if="hasPermission('show_user')"
+                      @click="deleteUserModal(user.id)"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
@@ -294,7 +313,7 @@ import { useCounterStore } from "@/stores/counter";
 
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -312,7 +331,23 @@ export default {
 
     // access the `store` variable anywhere in the component ✨
     const store = useCounterStore();
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
 
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
     //on mounted start
     onMounted(() => {
       getUsers();
@@ -615,6 +650,7 @@ export default {
       makePagination,
       searchUser,
       searchQuery,
+      hasPermission,
     };
   }, //end of setup
 };

@@ -165,7 +165,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_supplier')">
         <button class="btn-new-supplier" @click="addSupplierBtn()">
           <span class="btn-name"> New Supplier</span>
           <span class="material-icons">add_circle</span>
@@ -189,7 +189,15 @@
               <th>Name</th>
               <th>Address</th>
               <th>Phone</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_supplier') ||
+                  hasPermission('edit_supplier') ||
+                  hasPermission('delete_supplier')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -201,25 +209,36 @@
                 </td>
                 <td>{{ supplier.address }}</td>
                 <td>{{ supplier.phone }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editSupplierModal(supplier.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteSupplierModal(supplier.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_supplier') ||
+                    hasPermission('edit_supplier') ||
+                    hasPermission('delete_supplier')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      v-if="hasPermission('show_supplier')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editSupplierModal(supplier.id)"
+                      v-if="hasPermission('show_supplier')"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="deleteSupplierModal(supplier.id)"
+                      v-if="hasPermission('show_supplier')"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
@@ -314,7 +333,7 @@
   <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -328,7 +347,23 @@ export default {
     const isModalUpdating = ref(false);
     const supplier = reactive({});
     const modalHeader = ref(""); // Add or Edit Supplier
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
 
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
     //on mounted start
     onMounted(() => {
       getSuppliers();
@@ -599,6 +634,7 @@ export default {
       makePagination,
       searchQuery,
       searchSupplier,
+      hasPermission,
     };
   }, //end of setup
 };

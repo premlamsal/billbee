@@ -92,7 +92,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_unit')">
         <button class="btn-new-unit" @click="addUnitBtn()">
           <span class="btn-name"> New Unit</span>
           <span class="material-icons">add_circle</span>
@@ -115,7 +115,15 @@
               <th>Unit ID</th>
               <th>Short Name</th>
               <th>Long Name</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_category') ||
+                  hasPermission('edit_category') ||
+                  hasPermission('delete_category')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -124,25 +132,36 @@
                 <td>{{ unit.custom_unit_id }}</td>
                 <td>{{ unit.short_name }}</td>
                 <td>{{ unit.long_name }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editUnitModal(unit.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteUnitModal(unit.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_unit') ||
+                    hasPermission('edit_unit') ||
+                    hasPermission('delete_unit')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      v-if="hasPermission('show_category')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editUnitModal(unit.id)"
+                      v-if="hasPermission('show_category')"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="deleteUnitModal(unit.id)"
+                      v-if="hasPermission('show_category')"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
@@ -228,7 +247,7 @@
     <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -242,6 +261,23 @@ export default {
     const isModalUpdating = ref(false);
     const unit = reactive({});
     const modalHeader = ref(""); // Add or Edit Unit
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
+
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
 
     //on mounted start
     onMounted(() => {
@@ -497,6 +533,7 @@ export default {
       makePagination,
       searchQuery,
       searchUnit,
+      hasPermission,
     };
   }, //end of setup
 };

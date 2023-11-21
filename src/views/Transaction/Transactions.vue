@@ -236,7 +236,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_transaction')">
         <button class="btn-new-transaction" @click="addTransactionBtn()">
           <span class="btn-name"> New Transaction</span>
           <span class="material-icons">add_circle</span>
@@ -263,7 +263,15 @@
               <th>Notes</th>
               <th>Account</th>
               <th>Image</th>
-              <th>Action</th>
+              <template
+                v-if="
+                  hasPermission('show_transaction') ||
+                  hasPermission('edit_transaction') ||
+                  hasPermission('delete_transaction')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -287,25 +295,36 @@
                     height="40"
                   />
                 </td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editTransactionModal(transaction.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteTransactionModal(transaction.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_transaction') ||
+                    hasPermission('edit_transaction') ||
+                    hasPermission('delete_transaction')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      v-if="hasPermission('show_transaction')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editTransactionModal(transaction.id)"
+                      v-if="hasPermission('show_transaction')"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="deleteTransactionModal(transaction.id)"
+                      v-if="hasPermission('show_transaction')"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
@@ -400,7 +419,7 @@
     <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -435,7 +454,23 @@ export default {
     const isModalUpdating = ref(false);
     const transactions = reactive([]);
     const modalHeader = ref(""); // Add or Edit Transaction
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
 
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
     //on mounted start
     onMounted(() => {
       getTransactions();
@@ -810,6 +845,7 @@ export default {
       makePagination,
       searchQuery,
       searchTransaction,
+      hasPermission,
     };
   }, //end of setup
 };

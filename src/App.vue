@@ -7,22 +7,27 @@
       />
     </Suspense>
     <div class="router-view-container">
-      <div class="top-nav-container" v-if="storeAuth.authData.isAuthenticated">
-        <div class="top-nav-menu">
-          <button>
-            <div style="display: flex; align-items: center; font-size: 18px">
-              {{ storeAuth.authData.user.name }}
+      <template v-if="snippStore.isAPISeverUP">
+        <div
+          class="top-nav-container"
+          v-if="storeAuth.authData.isAuthenticated"
+        >
+          <div class="top-nav-menu">
+            <button>
+              <div style="display: flex; align-items: center; font-size: 18px">
+                {{ storeAuth.authData.user.name }}
 
-              <span class="material-icons">arrow_drop_down</span>
+                <span class="material-icons">arrow_drop_down</span>
+              </div>
+            </button>
+            <div class="dropdown-content">
+              <a href="#" @click="logoutBtn()"
+                ><span class="material-icons">logout</span> Logout</a
+              >
             </div>
-          </button>
-          <div class="dropdown-content">
-            <a href="#" @click="logoutBtn()"
-              ><span class="material-icons">logout</span> Logout</a
-            >
           </div>
         </div>
-      </div>
+      </template>
       <!-- Content -->
       <!-- <router-view /> -->
       <router-view v-slot="{ Component, route }">
@@ -40,14 +45,16 @@
 import { useAuthStore } from "@/stores/auth";
 import { useSnipperStore } from "@/stores/snipper";
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeMount } from "vue";
 import { useRouter, useRoute } from "vue-router";
 const storeAuth = useAuthStore();
 const snippStore = useSnipperStore();
 
-onMounted(() => {
+onMounted(async () => {
   //   await store.getPermissions();
-
+  // await snippStore.checkIfAPIServerUp();
+  // await snippStore.getStores();
+  await snippStore.getPermissions();
   console.log("first app vue");
 });
 

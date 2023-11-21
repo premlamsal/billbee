@@ -273,7 +273,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_product')">
         <button class="btn-new-product" @click="addProductBtn()">
           <span class="btn-name"> New Product</span>
           <span class="material-icons">add_circle</span>
@@ -298,7 +298,15 @@
               <th>Category</th>
               <th>Unit</th>
               <th>Price</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_product') ||
+                  hasPermission('edit_product') ||
+                  hasPermission('delete_product')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -336,26 +344,37 @@
                 <td>{{ product.category.name }}</td>
                 <td>{{ product.unit.short_name }}</td>
                 <td>{{ product.sp }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    @click="showProduct(product.custom_product_id)"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editProductModal(product.custom_product_id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteProductModal(product.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_product') ||
+                    hasPermission('edit_product') ||
+                    hasPermission('delete_product')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      @click="showProduct(product.custom_product_id)"
+                      v-if="hasPermission('show_product')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editProductModal(product.custom_product_id)"
+                      v-if="hasPermission('show_product')"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      v-if="hasPermission('show_product')"
+                      @click="deleteProductModal(product.id)"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
@@ -450,7 +469,7 @@
 	<script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -472,6 +491,23 @@ export default {
     const VITE_MY_APP_BACK_URL_HOME = ref(
       import.meta.env.VITE_MY_APP_BACK_URL_HOME
     );
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
+
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
 
     //on mounted start
     onMounted(() => {
@@ -857,6 +893,7 @@ export default {
       makePagination,
       searchQuery,
       searchProduct,
+      hasPermission,
     };
   }, //end of setup
 };

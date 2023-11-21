@@ -163,13 +163,30 @@
 <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
     const purchases = reactive([]);
     const axios = inject("$axios");
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
+
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
 
     //on mounted start
     onMounted(() => {
@@ -316,6 +333,7 @@ export default {
       makePagination,
       searchPurchase,
       searchQuery,
+      hasPermission,
     };
   }, //end of setup
 };

@@ -87,7 +87,7 @@
     </Transition>
     <div class="role-header">
       <div class="link-button-container">
-        <router-link to="/users"> Users </router-link>
+        <router-link to="/roles"> Users </router-link>
 
         <router-link to="/permissions"> Permissions </router-link>
       </div>
@@ -104,7 +104,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_role')">
         <button class="btn-new-role" @click="addRoleBtn()">
           <span class="btn-name"> New Role</span>
           <span class="material-icons">add_circle</span>
@@ -126,7 +126,15 @@
             <tr>
               <th>Name</th>
               <th>Permission Name</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_role') ||
+                  hasPermission('edit_role') ||
+                  hasPermission('delete_role')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -137,25 +145,35 @@
                   {{ role.permissions[0].name }}
                 </td>
                 <td v-else>Please attach permissions</td>
-                <td>
-                  <!-- <span
+                <template
+                  v-if="
+                    hasPermission('show_role') ||
+                    hasPermission('edit_role') ||
+                    hasPermission('delete_role')
+                  "
+                >
+                  <td>
+                    <!-- <span
                       class="material-icons"
                       style="color: var(--primary); cursor: pointer"
                       >format_align_justify</span
                     > -->
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editRoleModal(role.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteRoleModal(role.id)"
-                    >delete</span
-                  >
-                </td>
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      v-if="hasPermission('show_role')"
+                      @click="editRoleModal(role.id)"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      v-if="hasPermission('show_role')"
+                      @click="deleteRoleModal(role.id)"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
@@ -241,7 +259,7 @@
     <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -255,7 +273,23 @@ export default {
     const permissions = reactive([]);
     const role = reactive({});
     const modalHeader = ref(""); // Add or Edit Role
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
 
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
     //on mounted start
     onMounted(() => {
       getRoles();
@@ -545,6 +579,7 @@ export default {
       makePagination,
       searchQuery,
       searchRole,
+      hasPermission,
     };
   }, //end of setup
 };

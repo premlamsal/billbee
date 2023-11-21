@@ -435,135 +435,60 @@ router.beforeEach(async (to, from, next) => {
 	const storeSnipp = useSnipperStore();
 	const storeAuth = useAuthStore();
 
-	// console.log(storeSnipp.stores)
+	if (storeAuth.authData.isAuthenticated) {
 
 
-	await storeSnipp.checkIfAPIServerUp();
-
-	// console.log(storeSnipp.isAPISeverUP);
-	if (storeSnipp.isAPISeverUP) {
-		console.log('orem');
-		// logged IN
-		if (storeAuth.authData.isAuthenticated) {
-
-
-			//this block executes when user is authenticated
-			if (to.name == 'login' || to.name == 'register') {
-				next('/');//redirect to home if user is already logged in while navigating to login || register page
-				return;
-			} else {
-
-				//logged in and also need store to open home
-				if (to.matched.some((record) => record.meta.requiresStore)) {
-					await storeSnipp.getStores();
-
-					if (storeSnipp.hasStore) {
-						//when user is authenciated and navigate to different routes and checking routes permissions
-						await storeSnipp.getPermissions();
-						next();
-						return;
-					} else {
-						// console.log('here i am')
-						next('/create-store');
-						return;
-					}
-				}
-				else {
-
-					// await storeSnipp.getPermissions();
-
-					next();
-					console.log('hello boss darling');
-					return;
-				}
-
-
-
-
-			}
-
-
-		}
-		else {//not loggedIN
-
-			//this block executes when user is not logged in but check which routes needs authenticated user to navigate
-			if (to.matched.some((record) => record.meta.requiresAuth)) {
-				next("/login");
-				// console.log('now here')
-				return;
-			} else {
-
-				// console.log('now there')
-
-				next();
-				return;
-			}
-		}
-
-	}
-	else {
-		if (to.name == 'apiServerDown') {
-			next();
+		//this block executes when user is authenticated
+		if (to.name == 'login' || to.name == 'register') {
+			next('/');//redirect to home if user is already logged in while navigating to login || register page
 			return;
 		} else {
-			next('api-server-down');
+
+			//logged in and also need store to open home
+			if (to.matched.some((record) => record.meta.requiresStore)) {
+				await storeSnipp.getStores();
+				if (storeSnipp.hasStore) {
+					//when user is authenciated and navigate to different routes and checking routes permissions
+					next();
+					return;
+				} else {
+					// console.log('here i am')
+					next('/create-store');
+					return;
+				}
+			}
+			else {
+
+				// await storeSnipp.getPermissions();
+
+				next();
+				console.log('hello boss darling');
+				return;
+			}
+
+
+
+
+		}
+
+
+	}
+	else {//not loggedIN
+
+		//this block executes when user is not logged in but check which routes needs authenticated user to navigate
+		if (to.matched.some((record) => record.meta.requiresAuth)) {
+			next("/login");
+			// console.log('now here')
+			return;
+		} else {
+
+			// console.log('now there')
+
+			next();
 			return;
 		}
 	}
 
-
-	///new routes
-
-	// if (to.matched.some((record) => record.meta.requiresAuth)) {
-
-
-	// 	if (storeAuth.authData.isAuthenticated) {
-	// 		//if user already authenticated redirect to home or / i.e root url
-
-	// 		//also we need to check that either loggedin user have store assigned or not if not redirect them to create-store page
-	// 		await storeSnipp.getStores();
-	// 		if (storeSnipp.hasStore) {
-	// 			//user has store now redirect to homepage or check permssions for each page url that user have or not
-
-	// 			await storeSnipp.getPermissions();
-
-	// 			let hasAccess = storeSnipp.permissions
-
-	// 			if (hasAccess.includes('view_products') || hasAccess.includes('all')) {
-	// 				//now permisison is check redirect to going route by user
-	// 				next();
-	// 				return;
-	// 			} else {
-	// 				//user dont have permision to access the page check so redirect to opps page
-	// 				next("/oops");
-	// 				return;
-	// 			}
-
-
-	// 		}
-	// 		 else {
-	// 			//user dont have store now redirect to create-store page
-	// 			next("/create-store");
-
-	// 			return;
-	// 		}
-
-
-
-	// 	} else {
-	// 		//if not authenticated redirect to login page
-
-	// 		next("/login");
-
-	// 		return;
-
-	// 	}
-
-	// } else {
-	// 	//routes will redirect to their redirected page if not login required
-	// 	next();
-	// 	return;
-	// }
 
 
 })

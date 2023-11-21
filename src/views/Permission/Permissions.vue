@@ -552,7 +552,11 @@
 
         <router-link to="/roles"> Roles </router-link>
       </div>
-      <button class="btn-new-permission" @click="addPermissionBtn()">
+      <button
+        class="btn-new-permission"
+        @click="addPermissionBtn()"
+        v-if="hasPermission('add_category')"
+      >
         <span class="btn-name"> New Permission</span>
         <span class="material-icons">add_circle</span>
       </button>
@@ -572,7 +576,15 @@
             <tr>
               <th>Permission Name</th>
               <th>Permission Actions</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_permission') ||
+                  hasPermission('edit_permission') ||
+                  hasPermission('delete_permission')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -583,25 +595,35 @@
               <tr v-if="permissions != null">
                 <td>{{ permission.name }}</td>
                 <td>{{ permission.actions }}</td>
-                <td>
-                  <!-- <span
+                <template
+                  v-if="
+                    hasPermission('show_permission') ||
+                    hasPermission('edit_permission') ||
+                    hasPermission('delete_permission')
+                  "
+                >
+                  <td>
+                    <!-- <span
                       class="material-icons"
                       style="color: var(--primary); cursor: pointer"
                       >format_align_justify</span
                     > -->
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editPermissionModal(permission.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="delBtn(permission.id)"
-                    >delete</span
-                  >
-                </td>
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editPermissionModal(permission.id)"
+                      v-if="hasPermission('show_category')"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="delBtn(permission.id)"
+                      v-if="hasPermission('show_category')"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
@@ -691,7 +713,7 @@
     <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
     const router = useRouter();
@@ -704,6 +726,23 @@ export default {
     const isModalUpdating = ref(false);
     const permission = reactive({});
     const modalHeader = ref(""); // Add or Edit Permission
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
+
+    // console.log("hello from soft");
+
+    // console.log(hasAccess);
+
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
 
     //on mounted start
     onMounted(() => {
@@ -924,12 +963,12 @@ export default {
       editPermissionModal,
       modalHeader,
       checkedPermissions,
-
       pressedDelete,
       delBtn,
       eventPrompt,
       pagination,
       makePagination,
+      hasPermission,
     };
   }, //end of setup
 };

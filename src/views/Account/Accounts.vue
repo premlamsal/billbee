@@ -216,7 +216,15 @@
               <th>Acc. Holder</th>
               <th>Bank</th>
               <th>Bank Acc. Number</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_account') ||
+                  hasPermission('edit_account') ||
+                  hasPermission('delete_account')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -233,25 +241,36 @@
                 <td>{{ account.holder_name }}</td>
                 <td>{{ account.bank_name }}</td>
                 <td>{{ account.bank_acc_num }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editAccountModal(account.id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteAccountModal(account.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_account') ||
+                    hasPermission('edit_account') ||
+                    hasPermission('delete_account')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      v-if="hasPermission('show_account')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      v-if="hasPermission('show_account')"
+                      @click="editAccountModal(account.id)"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      v-if="hasPermission('show_account')"
+                      @click="deleteAccountModal(account.id)"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
