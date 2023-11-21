@@ -37,17 +37,53 @@
                 v-model="permission.name"
               />
             </div>
-            <div class="permission-checkbox-container">
+            <div
+              class="permission-checkbox-container"
+              style="margin-bottom: 10px"
+            >
               <div>
                 <span>View</span>
                 <div class="form-group">
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="view_customers"
+                    value="view_account"
                     v-model="checkedPermissions"
                   />
-                  <label class="form-check-label" for="view_customers">
+                  <label class="form-check-label" for="view_account">
+                    Account
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="view_transaction"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="view_transaction">
+                    Transaction
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="view_user"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="view_user"> User </label>
+                </div>
+
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="view_customer"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="view_customer">
                     Customer
                   </label>
                 </div>
@@ -55,10 +91,10 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="view_suppliers"
+                    value="view_supplier"
                     v-model="checkedPermissions"
                   />
-                  <label class="form-check-label" for="view_suppliers">
+                  <label class="form-check-label" for="view_supplier">
                     Supplier
                   </label>
                 </div>
@@ -66,10 +102,10 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="view_invoices"
+                    value="view_invoice"
                     v-model="checkedPermissions"
                   />
-                  <label class="form-check-label" for="view_invoices">
+                  <label class="form-check-label" for="view_invoice">
                     Invoice
                   </label>
                 </div>
@@ -77,10 +113,10 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="view_purchases"
+                    value="view_purchase"
                     v-model="checkedPermissions"
                   />
-                  <label class="form-check-label" for="view_purchases">
+                  <label class="form-check-label" for="view_purchase">
                     Purchase
                   </label>
                 </div>
@@ -88,10 +124,10 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="view_products"
+                    value="view_product"
                     v-model="checkedPermissions"
                   />
-                  <label class="form-check-label" for="view_products">
+                  <label class="form-check-label" for="view_product">
                     Product
                   </label>
                 </div>
@@ -99,10 +135,10 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="view_categories"
+                    value="view_category"
                     v-model="checkedPermissions"
                   />
-                  <label class="form-check-label" for="view_categories">
+                  <label class="form-check-label" for="view_category">
                     Category
                   </label>
                 </div>
@@ -113,13 +149,42 @@
                     value="view_units"
                     v-model="checkedPermissions"
                   />
-                  <label class="form-check-label" for="view_units">
-                    Unit
-                  </label>
+                  <label class="form-check-label" for="view_unit"> Unit </label>
                 </div>
               </div>
               <div>
                 <span>Add</span>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="add_account"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="add_account">
+                    Account
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="add_transaction"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="add_transaction">
+                    Transaction
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="add_user"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="add_user"> User </label>
+                </div>
                 <div class="form-group">
                   <input
                     class="form-check-input"
@@ -202,6 +267,37 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="edit_account"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="edit_account">
+                    Account
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="edit_transaction"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="edit_transaction">
+                    Transaction
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="edit_user"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="edit_user"> User </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="edit_customer"
                     v-model="checkedPermissions"
                   />
@@ -276,6 +372,39 @@
               </div>
               <div class="col-md-2">
                 <span>Delete</span>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="delete_account"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="delete_account">
+                    Account
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="delete_transaction"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="delete_transaction">
+                    Transaction
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="delete_user"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="delete_user">
+                    Delete
+                  </label>
+                </div>
                 <div class="form-group">
                   <input
                     class="form-check-input"
@@ -360,6 +489,37 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="show_account"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="show_account">
+                    Account
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="show_transaction"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="show_transaction">
+                    Transaction
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="show_user"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="show_user"> User </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="show_customer"
                     v-model="checkedPermissions"
                   />
@@ -434,6 +594,39 @@
               </div>
               <div class="col-md-2">
                 <span>Search</span>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="search_account"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="search_account">
+                    Account
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="search_transaction"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="search_transaction">
+                    Transaction
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="search_user"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="search_user">
+                    User
+                  </label>
+                </div>
                 <div class="form-group">
                   <input
                     class="form-check-input"
@@ -526,7 +719,11 @@
             </div>
             <div class="row">
               <div class="col-md-4">
-                <div class="alert alert-success" role="alert">
+                <div
+                  class="alert alert-success"
+                  role="alert"
+                  style="margin-top: 10px"
+                >
                   You can allow permissions like: Show, Search and View for the
                   better experience. So, read full documentation before adding
                   permission to user.

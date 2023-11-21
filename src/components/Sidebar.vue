@@ -16,62 +16,62 @@
         <span class="material-icons">home</span>
         <span class="text">Home</span>
       </router-link>
-      <template v-if="hasPermission('view_accounts')">
+      <template v-if="hasPermission('view_account')">
         <router-link to="/accounts" class="button">
           <span class="material-icons">account_balance_wallet</span>
           <span class="text">Accounts</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_customers')">
+      <template v-if="hasPermission('view_customer')">
         <router-link to="/customers" class="button">
           <span class="material-icons">supervised_user_circle</span>
           <span class="text">Customers</span>
         </router-link>
       </template>
 
-      <template v-if="hasPermission('view_invoices')">
+      <template v-if="hasPermission('view_invoice')">
         <router-link to="/invoices" class="button">
           <span class="material-icons">receipt_long</span>
           <span class="text">Invoice</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_products')">
+      <template v-if="hasPermission('view_product')">
         <router-link to="/products" class="button">
           <span class="material-icons">shopping_bag</span>
           <span class="text">Product</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_purchases')">
+      <template v-if="hasPermission('view_purchase')">
         <router-link to="/purchases" class="button">
           <span class="material-icons">description</span>
           <span class="text">Purchase</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_returns')">
+      <template v-if="hasPermission('view_return')">
         <router-link to="/returns" class="button">
           <span class="material-icons">keyboard_return</span>
           <span class="text">Returns</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_suppliers')">
+      <template v-if="hasPermission('view_supplier')">
         <router-link to="/suppliers" class="button">
           <span class="material-icons">local_shipping</span>
           <span class="text">Suppliers</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_stocks')">
+      <template v-if="hasPermission('view_stock')">
         <router-link to="/stocks" class="button">
           <span class="material-icons">inventory_2</span>
           <span class="text">Stocks</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_transactions')">
+      <template v-if="hasPermission('view_transaction')">
         <router-link to="/transactions" class="button">
           <span class="material-icons">swap_horiz</span>
           <span class="text">Transactions</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_users')">
+      <template v-if="hasPermission('view_user')">
         <router-link to="/users" class="button">
           <span class="material-icons">group</span>
           <span class="text">Users</span>
@@ -80,7 +80,7 @@
     </div>
 
     <div class="flex"></div>
-    <template v-if="hasPermission('view_settings')">
+    <template v-if="hasPermission('view_setting')">
       <div class="menu">
         <router-link to="/settings" class="button">
           <span class="material-icons">settings</span>

@@ -39,7 +39,15 @@
               <th>Date</th>
               <th>Supplier Name</th>
               <th>Amount</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_return_purchase') ||
+                  hasPermission('edit_return_purchase') ||
+                  hasPermission('delete_return_purchase')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -52,30 +60,41 @@
                 <td>{{ purchase.return_purchase_date }}</td>
                 <td>{{ purchase.supplier_name }}</td>
                 <td>Rs. {{ purchase.grand_total }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    @click="
-                      showReturnPurchase(purchase.custom_return_purchase_id)
-                    "
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="
-                      editPurchaseReturn(purchase.custom_return_purchase_id)
-                    "
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteReturnPurchaseModal(purchase.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_return_purchase') ||
+                    hasPermission('edit_return_purchase') ||
+                    hasPermission('delete_return_purchase')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      v-if="hasPermission('show_return_purchase')"
+                      @click="
+                        showReturnPurchase(purchase.custom_return_purchase_id)
+                      "
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      v-if="hasPermission('edit_return_purchase')"
+                      @click="
+                        editPurchaseReturn(purchase.custom_return_purchase_id)
+                      "
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      v-if="hasPermission('delete_return_purchase')"
+                      @click="deleteReturnPurchaseModal(purchase.id)"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>

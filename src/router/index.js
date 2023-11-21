@@ -51,7 +51,7 @@ const router = createRouter({
 			},
 			beforeEnter(to, from, next) {
 				let hasAccess = useSnipperStore().permissions;
-				if (hasAccess.includes('view_invoices') || hasAccess.includes('all')) {
+				if (hasAccess.includes('view_invoice') || hasAccess.includes('all')) {
 					next()
 				} else {
 					next('notfound')

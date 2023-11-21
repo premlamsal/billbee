@@ -39,7 +39,14 @@
               <th>Date</th>
               <th>Customer Name</th>
               <th>Amount</th>
-              <th>Actions</th>
+              <template
+                  v-if="
+                    hasPermission('show_invoice') ||
+                    hasPermission('edit_invoice') ||
+                    hasPermission('delete_invoice')
+                  "
+                >
+                <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -49,26 +56,40 @@
                 <td>{{ invoice.invoice_date }}</td>
                 <td>{{ invoice.customer.name }}</td>
                 <td>Rs. {{ invoice.grand_total }}</td>
+                <template
+                  v-if="
+                    hasPermission('show_invoice') ||
+                    hasPermission('edit_invoice') ||
+                    hasPermission('delete_invoice')
+                  "
+                >
                 <td>
                   <span
                     class="material-icons"
                     style="color: var(--primary); cursor: pointer"
                     @click="showInvoice(invoice.custom_invoice_id)"
+                    v-if="hasPermission('show_invoice')"
+
                     >format_align_justify</span
                   >
                   <span
                     class="material-icons"
                     style="color: blueviolet; cursor: pointer"
                     @click="editInvoice(invoice.custom_invoice_id)"
+                    v-if="hasPermission('show_invoice')"
+
                     >edit</span
                   >
                   <span
                     class="material-icons"
                     style="color: orangered; cursor: pointer"
                     @click="deleteInvoiceModal(invoice.id)"
+                    v-if="hasPermission('show_invoice')"
+
                     >delete</span
                   >
                 </td>
+                </template>
               </tr>
             </template>
           </tbody>

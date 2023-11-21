@@ -39,7 +39,15 @@
               <th>Date</th>
               <th>Supplier Name</th>
               <th>Amount</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_purchase') ||
+                  hasPermission('edit_purchase') ||
+                  hasPermission('delete_purchase')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -49,26 +57,37 @@
                 <td>{{ purchase.purchase_date }}</td>
                 <td>{{ purchase.supplier.name }}</td>
                 <td>Rs. {{ purchase.grand_total }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    @click="showPurchase(purchase.custom_purchase_id)"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editPurchase(purchase.custom_purchase_id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deletePurchaseModal(purchase.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_purchase') ||
+                    hasPermission('edit_purchase') ||
+                    hasPermission('delete_purchase')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      @click="showPurchase(purchase.custom_purchase_id)"
+                      v-if="hasPermission('show_purchase')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editPurchase(purchase.custom_purchase_id)"
+                      v-if="hasPermission('edit_purchase')"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="deletePurchaseModal(purchase.id)"
+                      v-if="hasPermission('delete_purchase')"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>

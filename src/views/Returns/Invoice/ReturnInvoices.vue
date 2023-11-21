@@ -39,7 +39,15 @@
               <th>Date</th>
               <th>Customer Name</th>
               <th>Amount</th>
-              <th>Actions</th>
+              <template
+                v-if="
+                  hasPermission('show_return_invoice') ||
+                  hasPermission('edit_return_invoice') ||
+                  hasPermission('delete_return_invoice')
+                "
+              >
+                <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -52,26 +60,41 @@
                 <td>{{ invoice.return_invoice_date }}</td>
                 <td>{{ invoice.customer_name }}</td>
                 <td>Rs. {{ invoice.grand_total }}</td>
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    @click="showReturnInvoice(invoice.custom_return_invoice_id)"
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editInvoiceReturn(invoice.custom_return_invoice_id)"
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteReturnInvoiceModal(invoice.id)"
-                    >delete</span
-                  >
-                </td>
+                <template
+                  v-if="
+                    hasPermission('show_return_invoice') ||
+                    hasPermission('edit_return_invoice') ||
+                    hasPermission('delete_return_invoice')
+                  "
+                >
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      v-if="hasPermission('show_return_invoice')"
+                      @click="
+                        showReturnInvoice(invoice.custom_return_invoice_id)
+                      "
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      v-if="hasPermission('edit_return_invoice')"
+                      @click="
+                        editInvoiceReturn(invoice.custom_return_invoice_id)
+                      "
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      v-if="hasPermission('delete_return_invoice')"
+                      style="color: orangered; cursor: pointer"
+                      @click="deleteReturnInvoiceModal(invoice.id)"
+                      >delete</span
+                    >
+                  </td>
+                </template>
               </tr>
             </template>
           </tbody>
