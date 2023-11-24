@@ -47,7 +47,12 @@
           <span class="text">Purchase</span>
         </router-link>
       </template>
-      <template v-if="hasPermission('view_return')">
+      <template
+        v-if="
+          hasPermission('view_return_invoice') ||
+          hasPermission('view_return_invoice')
+        "
+      >
         <router-link to="/returns" class="button">
           <span class="material-icons">keyboard_return</span>
           <span class="text">Returns</span>

@@ -3,14 +3,22 @@
     <h1>Returns Home</h1>
     <div class="return-card-container">
       <div class="return-cards-holder">
-        <div class="return-card" @click="goToReturnInvoices()">
+        <div
+          class="return-card"
+          @click="goToReturnInvoices()"
+          v-if="hasPermission('view_return_invoice')"
+        >
           <div class="return-invoice">
             <span class="material-icons">receipt_long</span>
             <h3>Return Invoices</h3>
             <p>Click Here to See Return Invoices</p>
           </div>
         </div>
-        <div class="return-card" @click="goToReturnPurchases()">
+        <div
+          class="return-card"
+          @click="goToReturnPurchases()"
+          v-if="hasPermission('view_return_purchase')"
+        >
           <span class="material-icons">description</span>
           <div class="return-purchase">
             <h3>Return Purchase</h3>
@@ -23,11 +31,24 @@
 </template>
 <script>
 import { useRouter, useRoute } from "vue-router";
+import { useSnipperStore } from "@/stores/snipper";
 
 export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
+    const storeSnipp = useSnipperStore();
+    const hasAccess = storeSnipp.permissions;
+    const hasPermission = (action) => {
+      // if (hasAccess.includes(action) || hasAccess.includes("all")) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return hasAccess.includes(action) || hasAccess.includes("all")
+        ? true
+        : false;
+    };
 
     const goToReturnPurchases = () => {
       router.push({ path: "/return-purchases" });
@@ -35,7 +56,7 @@ export default {
     const goToReturnInvoices = () => {
       router.push({ path: "/return-invoices" });
     };
-    return { goToReturnPurchases, goToReturnInvoices };
+    return { goToReturnPurchases, goToReturnInvoices, hasPermission };
   },
 };
 </script>
