@@ -15,7 +15,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_purchase')">
         <button class="btn-new-purchase" @click="newPurchaseBtn()">
           <span class="btn-name"> New Purchase</span>
           <span class="material-icons">add_circle</span>

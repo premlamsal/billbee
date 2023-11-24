@@ -67,7 +67,7 @@
                   </label>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -75,7 +75,7 @@
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="view_user"> User </label>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <input
@@ -222,7 +222,7 @@
                     Transaction
                   </label>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -230,7 +230,7 @@
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="add_user"> User </label>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <input
                     class="form-check-input"
@@ -375,7 +375,7 @@
                     Transaction
                   </label>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -383,7 +383,7 @@
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="edit_user"> User </label>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <input
                     class="form-check-input"

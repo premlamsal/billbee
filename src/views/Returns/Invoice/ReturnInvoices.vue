@@ -15,7 +15,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_return_invoice')">
         <button class="btn-new-return-invoice" @click="newReturnInvoiceBtn()">
           <span class="btn-name"> New Return Invoice</span>
           <span class="material-icons">add_circle</span>

@@ -15,7 +15,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_invoice')">
         <button class="btn-new-invoice" @click="newInvoiceBtn()">
           <span class="btn-name"> New Invoice</span>
           <span class="material-icons">add_circle</span>
@@ -40,13 +40,14 @@
               <th>Customer Name</th>
               <th>Amount</th>
               <template
-                  v-if="
-                    hasPermission('show_invoice') ||
-                    hasPermission('edit_invoice') ||
-                    hasPermission('delete_invoice')
-                  "
-                >
+                v-if="
+                  hasPermission('show_invoice') ||
+                  hasPermission('edit_invoice') ||
+                  hasPermission('delete_invoice')
+                "
+              >
                 <th>Actions</th>
+              </template>
             </tr>
           </thead>
           <tbody>
@@ -63,32 +64,29 @@
                     hasPermission('delete_invoice')
                   "
                 >
-                <td>
-                  <span
-                    class="material-icons"
-                    style="color: var(--primary); cursor: pointer"
-                    @click="showInvoice(invoice.custom_invoice_id)"
-                    v-if="hasPermission('show_invoice')"
-
-                    >format_align_justify</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: blueviolet; cursor: pointer"
-                    @click="editInvoice(invoice.custom_invoice_id)"
-                    v-if="hasPermission('show_invoice')"
-
-                    >edit</span
-                  >
-                  <span
-                    class="material-icons"
-                    style="color: orangered; cursor: pointer"
-                    @click="deleteInvoiceModal(invoice.id)"
-                    v-if="hasPermission('show_invoice')"
-
-                    >delete</span
-                  >
-                </td>
+                  <td>
+                    <span
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      @click="showInvoice(invoice.custom_invoice_id)"
+                      v-if="hasPermission('show_invoice')"
+                      >format_align_justify</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editInvoice(invoice.custom_invoice_id)"
+                      v-if="hasPermission('edit_invoice')"
+                      >edit</span
+                    >
+                    <span
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="deleteInvoiceModal(invoice.id)"
+                      v-if="hasPermission('delete_invoice')"
+                      >delete</span
+                    >
+                  </td>
                 </template>
               </tr>
             </template>

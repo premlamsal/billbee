@@ -15,7 +15,7 @@
           />
         </div>
       </div>
-      <div class="button-box">
+      <div class="button-box" v-if="hasPermission('add_return_purchase')">
         <button class="btn-new-return-purchase" @click="newReturnPurchaseBtn()">
           <span class="btn-name"> New Return Purchase</span>
           <span class="material-icons">add_circle</span>
