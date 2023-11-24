@@ -54,6 +54,7 @@
                     Account
                   </label>
                 </div>
+
                 <div class="form-group">
                   <input
                     class="form-check-input"
@@ -91,6 +92,17 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="view_customer_payment"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="view_customer_payment">
+                    Customer Payment
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="view_supplier"
                     v-model="checkedPermissions"
                   />
@@ -98,6 +110,18 @@
                     Supplier
                   </label>
                 </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="view_supplier_payment"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="view_supplier_payment">
+                    Supplier Payment
+                  </label>
+                </div>
+
                 <div class="form-group">
                   <input
                     class="form-check-input"
@@ -113,11 +137,33 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="view_return_invoice"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="view_return_invoice">
+                    Return Invoice
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="view_purchase"
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="view_purchase">
                     Purchase
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="view_return_purchase"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="view_return_purchase">
+                    Return Purchase
                   </label>
                 </div>
                 <div class="form-group">
@@ -200,11 +246,33 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="add_customer_payment"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="add_customer_payment">
+                    Customer Payment
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="add_supplier"
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="add_supplier">
                     Supplier
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="add_supplier_payment"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="add_supplier_payment">
+                    Supplier Payment
                   </label>
                 </div>
                 <div class="form-group">
@@ -222,11 +290,33 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="add_return_invoice"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="add_return_invoice">
+                    Return Invoice
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="add_purchase"
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="add_purchase">
                     Purchase
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="add_return_purchase"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="add_return_purchase">
+                    Return Purchase
                   </label>
                 </div>
                 <div class="form-group">
@@ -309,11 +399,33 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="edit_customer_payment"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="edit_customer_payment">
+                    Customer Payment
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="edit_supplier"
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="edit_supplier">
                     Supplier
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="edit_supplier_payment"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="edit_supplier_payment">
+                    Supplier Payment
                   </label>
                 </div>
                 <div class="form-group">
@@ -331,11 +443,33 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="edit_return_invoice"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="edit_return_invoice">
+                    Return Invoice
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="edit_purchase"
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="edit_purchase">
                     Purchase
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="edit_return_purchase"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="edit_return_purchase">
+                    Return Purchase
                   </label>
                 </div>
                 <div class="form-group">
@@ -420,11 +554,33 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="delete_customer_payment"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="delete_customer_payment">
+                    Customer Payment
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="delete_supplier"
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="delete_supplier">
                     Supplier
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="delete_supplier_payment"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="delete_supplier_payment">
+                    Supplier Payemnt
                   </label>
                 </div>
                 <div class="form-group">
@@ -442,11 +598,33 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    value="delete_return_invoice"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="delete_return_invoice">
+                    Return Invoice
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
                     value="delete_purchase"
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="delete_purchase">
                     Purchase
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="delete_return_purchase"
+                    v-model="checkedPermissions"
+                  />
+                  <label class="form-check-label" for="delete_return_purchase">
+                    Return Purchase
                   </label>
                 </div>
                 <div class="form-group">
@@ -483,7 +661,7 @@
                   </label>
                 </div>
               </div>
-              <div class="col-md-2">
+              <!-- <div class="col-md-2">
                 <span>Show</span>
                 <div class="form-group">
                   <input
@@ -704,7 +882,7 @@
                     Unit
                   </label>
                 </div>
-              </div>
+              </div> -->
             </div>
             <!-- end of one row -->
             <div class="row">
