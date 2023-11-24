@@ -192,7 +192,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="view_units"
+                    value="view_unit"
                     v-model="checkedPermissions"
                   />
                   <label class="form-check-label" for="view_unit"> Unit </label>
