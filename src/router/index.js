@@ -67,6 +67,14 @@ const router = createRouter({
 
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('add_invoice') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/:id/edit-invoice',
@@ -76,6 +84,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('edit_invoice') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -87,6 +103,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_invoice') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/purchases',
@@ -97,6 +121,14 @@ const router = createRouter({
 
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_purchase') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/new-purchase',
@@ -105,6 +137,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('add_purchase') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -116,6 +156,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('edit_purchase') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/:id/show-purchase',
@@ -126,6 +174,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_purchase') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/products',
@@ -135,6 +191,14 @@ const router = createRouter({
 				requiresStore: true,
 
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_product') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 			// beforeEnter(to, from, next) {
 
@@ -158,6 +222,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_product') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/:id/show-product',
@@ -167,6 +239,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_product') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -178,6 +258,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_customer_payment') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/:id/show-customer',
@@ -188,6 +276,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_customer') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/customers',
@@ -196,6 +292,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_customer') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -207,6 +311,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_supplier_payment') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/:id/show-supplier',
@@ -216,6 +328,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_supplier') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -227,6 +347,14 @@ const router = createRouter({
 
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_supplier') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/users',
@@ -236,6 +364,14 @@ const router = createRouter({
 				requiresStore: true,
 
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_user') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -247,6 +383,14 @@ const router = createRouter({
 
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_role') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/permissions',
@@ -254,6 +398,14 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_permission') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -263,6 +415,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_category') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/units',
@@ -270,6 +430,14 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_unit') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -279,6 +447,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_account') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/:id/show-account',
@@ -287,6 +463,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_account') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/transactions',
@@ -294,6 +478,14 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_transaction') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -304,6 +496,7 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+
 		},
 
 
@@ -319,6 +512,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_return_invoice') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/new-return-invoice',
@@ -328,6 +529,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('add_return_invoice') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -339,6 +548,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('edit_return_invoice') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/:id/show-return-invoice',
@@ -348,6 +565,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_return_invoice') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 
@@ -363,6 +588,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_return_purchase') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/new-return-purchase',
@@ -372,6 +605,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('add_return_purchase') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -383,6 +624,14 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('edit_return_purchase') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
+			},
 		},
 		{
 			path: '/:id/show-return-purchase',
@@ -392,6 +641,14 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+			},
+			beforeEnter(to, from, next) {
+				let hasAccess = useSnipperStore().permissions;
+				if (hasAccess.includes('view_return_purchase') || hasAccess.includes('all')) {
+					next()
+				} else {
+					next('notfound')
+				}
 			},
 		},
 		{
@@ -403,6 +660,7 @@ const router = createRouter({
 				requiresStore: true,
 
 			},
+
 		},
 		{
 			path: '/stocks',
