@@ -50,12 +50,14 @@ const router = createRouter({
 
 			},
 			beforeEnter(to, from, next) {
+
 				let hasAccess = useSnipperStore().permissions;
 				if (hasAccess.includes('view_invoice') || hasAccess.includes('all')) {
 					next()
-				} else {
-					next('notfound')
 				}
+				// else {
+				// 	next('notfound')
+				// }
 			},
 		},
 		{
@@ -111,6 +113,25 @@ const router = createRouter({
 					next('notfound')
 				}
 			},
+		},
+
+		{
+			path: '/:id/print-invoice',
+			name: 'PrintInvoice',
+			component: () => import('../views/Invoice/PrintInvoice.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+			// beforeEnter(to, from, next) {
+			// 	let hasAccess = useSnipperStore().permissions;
+			// 	if (hasAccess.includes('view_invoice') || hasAccess.includes('all')) {
+			// 		next()
+			// 	} else {
+			// 		next('notfound')
+			// 	}
+			// },
 		},
 		{
 			path: '/purchases',
