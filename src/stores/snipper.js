@@ -47,6 +47,12 @@ export const useSnipperStore = defineStore("snipper", () => {
             })
 
     }
+    async function checkPermission(permission_name) {
+        if (permissions.includes(permission_name) || permissions.includes('all')) {
+            return true;
+        }
+        return false;
+    }
     async function checkIfAPIServerUp() {
         isAPISeverUP.value = false;
         await axios.get('check-server-status')
@@ -98,5 +104,5 @@ export const useSnipperStore = defineStore("snipper", () => {
     }
 
 
-    return { permissions, getPermissions, stores, hasStore, getStores, isAPISeverUP, checkIfAPIServerUp };
+    return { permissions, getPermissions, checkPermission, stores, hasStore, getStores, isAPISeverUP, checkIfAPIServerUp };
 });
