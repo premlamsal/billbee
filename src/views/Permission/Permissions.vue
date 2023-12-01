@@ -969,7 +969,19 @@
             >
               <tr v-if="permissions != null">
                 <td>{{ permission.name }}</td>
-                <td>{{ permission.actions }}</td>
+                <td>
+                  <div class="permission-action">
+                    <template
+                      v-for="action in permission.actions.split(',')"
+                      v-bind:key="action.id"
+                    >
+                      <div class="action-single">
+                        {{ removeUnderscore(action) }}
+                      </div>
+                    </template>
+                  </div>
+                  <!-- <p>{{ permission.actions }}</p> -->
+                </td>
                 <template
                   v-if="
                     hasPermission('show_permission') ||
@@ -1159,7 +1171,12 @@ export default {
 
       delBtn();
     };
+    const removeUnderscore = (temp_val) => {
+      // to replace single underscore use  : temp_val.replace("_", " ")
+      // to replace two underscore use : temp_val.replace("_", " ").replace("_", " ")
 
+      return temp_val.replace("_", " ").replace("_", " ");
+    };
     const delBtn = (id) => {
       // console.log(id);
 
@@ -1215,6 +1232,7 @@ export default {
         showPermissionModal.value = true;
       }
     };
+
     const clearPermission = () => {
       permission.name = "";
       checkedPermissions.value = [];
@@ -1344,6 +1362,7 @@ export default {
       pagination,
       makePagination,
       hasPermission,
+      removeUnderscore,
     };
   }, //end of setup
 };
@@ -1539,5 +1558,17 @@ tr:nth-child(even) {
 }
 .link-button-container a:hover {
   background: var(--dark);
+}
+.permissions-content {
+  /* width: 40%; */
+}
+.action-single {
+  width: fit-content;
+  /* background: var(--primary); */
+  background: #f2f2f2;
+  color: black;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
 }
 </style>
