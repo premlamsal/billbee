@@ -35,14 +35,40 @@
           type="email"
           placeholder="Email"
           v-model="user.email"
-          class="form-input-holder"
+          :class="['form-input-holder', customErrors.email ? 'is-invalid' : '']"
         />
+        <div v-if="customErrors.email" :class="['errorText']">
+          <div
+            class="errorText-inner"
+            v-for="error in customErrors.email"
+            v-bind:key="error.id"
+          >
+            <ul>
+              <li>{{ error }}</li>
+            </ul>
+          </div>
+        </div>
+
         <input
           type="password"
           placeholder="Password"
           v-model="user.password"
-          class="form-input-holder"
+          :class="[
+            'form-input-holder',
+            customErrors.password ? 'is-invalid' : '',
+          ]"
         />
+        <div v-if="customErrors.password" :class="['errorText']">
+          <div
+            class="errorText-inner"
+            v-for="error in customErrors.password"
+            v-bind:key="error.id"
+          >
+            <ul>
+              <li>{{ error }}</li>
+            </ul>
+          </div>
+        </div>
         <button @click="loginBtn()" class="mt20 btn-primary">Login</button>
         <router-link to="/register">I don't have an account</router-link>
       </div>
@@ -62,6 +88,7 @@ export default {
       email: "",
       password: "",
     });
+    const customErrors = ref({});
     const router = useRouter();
     const route = useRoute();
     const axios = inject("$axios");
@@ -116,6 +143,19 @@ export default {
                   transition: "zoom",
                 });
               }
+              if (error.response.status == 422) {
+                customErrors.value = error.response.data.errors;
+                console.log(customErrors.value.email);
+                // console.log(error.response.data.errors);
+                // console.log(error.response.data.message);
+
+                toast(error.response.data.message, {
+                  showIcon: true,
+                  type: "danger",
+                  position: "top-center",
+                  transition: "zoom",
+                });
+              }
             }
 
             if (error.code === "ERR_NETWORK") {
@@ -131,7 +171,7 @@ export default {
       }
     };
 
-    return { user, loginBtn };
+    return { user, loginBtn, customErrors };
   },
 };
 </script>
@@ -171,5 +211,8 @@ a {
 }
 .login-icon {
   width: 200px;
+}
+.errorText {
+  display: flex;
 }
 </style>
