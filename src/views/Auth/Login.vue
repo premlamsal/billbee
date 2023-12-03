@@ -100,6 +100,7 @@ export default {
     });
     const loginBtn = () => {
       if (user.email && user.password) {
+        customErrors.value = {};
         axios
           .post("user-login", user)
           .then((response) => {
