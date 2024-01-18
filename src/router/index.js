@@ -215,6 +215,25 @@ const router = createRouter({
 			},
 		},
 		{
+			path: '/:id/print-purchase',
+			name: 'PrintPurchase',
+			component: () => import('../views/Purchase/PrintPurchase.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+
+			},
+			beforeEnter(to, from, next) {
+
+				if (useSnipperStore().checkPermission('view_purchase')) {
+					next()
+				}
+				else {
+					next('notfound')
+				}
+			},
+		},
+		{
 			path: '/products',
 			component: () => import('../views/Product/Products.vue'),
 			meta: {

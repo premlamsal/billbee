@@ -395,7 +395,7 @@ export default {
 
     const deleteCustomerModal = (customer_id) => {
       isActivePrompt.value = true;
-      delete_id.value = unit_id;
+      delete_id.value = customer_id;
     };
     const callbackPrompt = () => {
       isActivePrompt.value = false;
@@ -406,9 +406,9 @@ export default {
       isActivePrompt.value = false;
       delete_id.value = "";
     };
-    const deleteCustomer = (unit_id) => {
+    const deleteCustomer = (customer_id) => {
       axios
-        .delete("unit/" + unit_id)
+        .delete("customer/" + customer_id)
         .then((response) => {
           toast(response.data.message, {
             showIcon: true,
