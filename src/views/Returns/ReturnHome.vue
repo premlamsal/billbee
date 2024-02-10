@@ -68,19 +68,19 @@ export default {
 }
 .return-card {
   padding: 3em;
-  background: var(--danger);
+  background: var(--dark);
   margin: 2em;
   border-radius: 10px;
   color: white;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
   text-align: center;
   box-shadow: 1px 2px 8px -6px #000;
 }
 .return-card:hover {
   box-shadow: 2px 4px 12px -6px #000;
-  transform: translateY(-5px);
-  background: #c9362c;
+  transform: translateY(-9px);
+  background: var(--primary);
 }
 .return-card span.material-icons {
   font-size: 5rem;
