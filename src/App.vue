@@ -166,7 +166,7 @@ button {
   margin-bottom: 20px;
 }
 .slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.4s ease-out;
 }
 
 .slide-fade-leave-active {
@@ -175,11 +175,11 @@ button {
 
 .slide-fade-enter-from {
   opacity: 0;
-  // transform: translateY(20px);
+  transform: translateY(20px);
 }
 .slide-fade-leave-to {
   opacity: 0;
-  // transform: translateY(-90px);
+  transform: translateY(-90px);
 }
 .dropdown-content {
   display: none;

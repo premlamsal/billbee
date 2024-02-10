@@ -701,59 +701,9 @@ export default {
 </script>
     
     <style scoped>
-/* for modal */
-.modal-container {
-  background: #000000d6;
-  padding: 0px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  display: flex;
-  min-height: 100%;
-  justify-content: center;
-  align-items: center;
-}
 .image-upload-icon-holder {
   width: 60px;
   color: var(--primary);
-}
-.modal {
-  background: #fff;
-  /* padding: 15px; */
-  position: relative;
-}
-.modal-header {
-  background: var(--primary);
-
-  padding: 20px;
-  color: #fff;
-}
-.modal-body {
-  padding: 20px;
-}
-
-.modal-footer {
-  background: var(--grey);
-  padding: 20px;
-  color: #fff;
-}
-.modal-close-btn-container {
-  position: absolute;
-  right: -11px;
-  color: white;
-  top: -12px;
-  font-size: 25px;
-  cursor: pointer;
-}
-
-.modal-tick-btn-container {
-  position: absolute;
-  right: -30px;
-  color: white;
-  bottom: -5px;
-  font-size: 25px;
-  cursor: pointer;
 }
 
 .form-input-payment {
@@ -761,8 +711,9 @@ export default {
 }
 
 .payment-header {
+  margin-top: 20px;
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 .payments-content {
   /* background: white; */
