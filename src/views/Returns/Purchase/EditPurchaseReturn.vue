@@ -674,6 +674,8 @@ export default {
     const clearPurchaseInfo = () => {
       purchaseInfo.supplier_id = "";
       purchaseInfo.supplier_name = "";
+      purchaseInfo.return_purchase_reference_id = "";
+
       purchaseInfo.due_date = "";
       purchaseInfo.return_purchase_date = "";
       purchaseInfo.supplier_name = "";
@@ -836,6 +838,7 @@ export default {
       const purchase_slip = {
         items: purchaseItems,
         supplier_id: purchaseInfo.supplier_id,
+        return_purchase_reference_id: purchaseInfo.return_purchase_reference_id,
         supplier_name: purchaseInfo.supplier_name,
         due_date: purchaseInfo.due_date,
         return_purchase_date: purchaseInfo.return_purchase_date,

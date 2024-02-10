@@ -1,14 +1,14 @@
 <template>
-  <main id="Invoice-page">
-    <h1>New Return Invoice</h1>
-    <p>Welcome to new Return Invoice page</p>
+  <main id="Purchase-page">
+    <h1>New Return Purchase</h1>
+    <p>Welcome to new Return Purchase page</p>
     <div class="huge-return-purchase-container">
-      <div class="Invoice-content">
+      <div class="Purchase-content">
         <div class="purchase-top-section">
           <div class="top-return-purchase-section">
             <div class="purchase-top-section-details-left">
               <div class="return-return-purchase-custom-id">
-                <label>Return Invoice No </label>
+                <label>Return Purchase No </label>
                 <label style="color: var(--primary)">{{
                   store.this_return_purchase_custom_number
                 }}</label>
@@ -84,7 +84,7 @@
             </div>
             <div class="purchase-top-section-details-right">
               <div class="form-return-purchase-date">
-                <label>Return Invoice Date</label>
+                <label>Return Purchase Date</label>
                 <input
                   type="date"
                   :class="[
@@ -156,7 +156,7 @@
           </div>
         </div>
         <!-- <header class="px-5 py-4 border-b border-gray-100">
-                      <h2 class="font-semibold text-gray-800">Invoices</h2>
+                      <h2 class="font-semibold text-gray-800">Purchases</h2>
                   </header> -->
         <div class="purchaseItemsTableContainer">
           <div
@@ -274,13 +274,13 @@
           <div class="" v-if="isItemHolderUpdating">
             <button
               class="btn-update-to-return-purchase"
-              @click="updateItemToInvoiceBtn()"
+              @click="updateItemToPurchaseBtn()"
             >
               Update item to return-purchase
             </button>
           </div>
           <div class="" v-else>
-            <button class="btn-add-to-purchase" @click="addItemToInvoiceBtn()">
+            <button class="btn-add-to-purchase" @click="addItemToPurchaseBtn()">
               + Add item to return purchase
             </button>
           </div>
@@ -288,7 +288,7 @@
         <div class="return-return-purchase-content-right-side">
           <div v-if="purchaseItems">
             <!-- <header class="px-5 py-4 border-b border-gray-100">
-                      <h2 class="font-semibold text-gray-800">Invoices</h2>
+                      <h2 class="font-semibold text-gray-800">Purchases</h2>
                   </header> -->
             <div class="purchaseItemsTableContainer">
               <div
@@ -352,14 +352,14 @@
                       </td>
                       <td>
                         <button
-                          @click="editInvoiceItem(item.id)"
-                          class="btnEditInvoice"
+                          @click="editPurchaseItem(item.id)"
+                          class="btnEditPurchase"
                         >
                           Edit
                         </button>
                         <button
-                          @click="deleteInvoiceItem(item.id)"
-                          class="btnDeleteInvoice"
+                          @click="deletePurchaseItem(item.id)"
+                          class="btnDeletePurchase"
                         >
                           Remove
                         </button>
@@ -420,9 +420,9 @@
             <div class="button-container-down">
               <button
                 class="create-return-purchase-btn"
-                @click="createReturnInvoice()"
+                @click="createReturnPurchase()"
               >
-                Create Return Invoice
+                Create Return Purchase
               </button>
             </div>
           </section>
@@ -441,7 +441,7 @@ import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
-  name: "Create New Return Invoice",
+  name: "Create New Return Purchase",
   setup() {
     const router = useRouter();
     const route = useRoute();
@@ -526,13 +526,13 @@ export default {
           console.log(error);
         });
     };
-    const editInvoiceItem = (id) => {
+    const editPurchaseItem = (id) => {
       isItemHolderUpdating.value = true;
       let indexForItem = purchaseItems.findIndex((item) => item.id === id);
       currentEditItemIDIndex.value = indexForItem;
       // console.log(purchaseItems[indexForItem]);
 
-      // console.log(getInvoiceItemFromID);
+      // console.log(getPurchaseItemFromID);
       itemHolder.product_id = purchaseItems[indexForItem].product_id;
       itemHolder.product_name = purchaseItems[indexForItem].product_name;
       itemHolder.quantity = purchaseItems[indexForItem].quantity;
@@ -545,14 +545,14 @@ export default {
       itemHolder.price = purchaseItems[indexForItem].price;
       itemHolder.lineTotal = purchaseItems[indexForItem].lineTotal;
     };
-    const deleteInvoiceItem = (id) => {
+    const deletePurchaseItem = (id) => {
       console.log(purchaseItems);
       // have to change
       // purchaseItems = purchaseItems.filter((item) => item.id !== id);
 
       console.log("please add delete logic...heheheh");
     };
-    const updateItemToInvoiceBtn = () => {
+    const updateItemToPurchaseBtn = () => {
       if (itemHolder.product_name === "") {
         errorItemHolder.product_name = "Enter Item";
       }
@@ -624,16 +624,17 @@ export default {
       itemHolder.price = 0;
       itemHolder.lineTotal = 0;
     };
-    const clearInvoiceInfo = () => {
+    const clearPurchaseInfo = () => {
       purchaseInfo.supplier_id = "";
       purchaseInfo.supplier_name = "";
+      purchaseInfo.return_purchase_reference_id = "";
       purchaseInfo.due_date = "";
       purchaseInfo.return_purchase_date = "";
       purchaseInfo.supplier_name = "";
       purchaseInfo.note = "";
       purchaseInfo.subTotal = "";
     };
-    const addItemToInvoiceBtn = () => {
+    const addItemToPurchaseBtn = () => {
       if (itemHolder.product_name === "") {
         errorItemHolder.product_name = "Enter Item";
       }
@@ -667,7 +668,7 @@ export default {
         clearErrorItemHolder();
       }
     };
-    const addNewInvoiceItem = () => {
+    const addNewPurchaseItem = () => {
       purchaseItems.push({
         id: uid(),
         product_name: "",
@@ -787,10 +788,11 @@ export default {
       itemHolder.stock_id = product_stock_id;
       itemHolder.image = product_image;
     };
-    const createReturnInvoice = () => {
+    const createReturnPurchase = () => {
       const purchase_slip = {
         items: purchaseItems,
         supplier_id: purchaseInfo.supplier_id,
+        return_purchase_reference_id: purchaseInfo.return_purchase_reference_id,
         supplier_name: purchaseInfo.supplier_name,
         due_date: purchaseInfo.due_date,
         return_purchase_date: purchaseInfo.return_purchase_date,
@@ -814,7 +816,7 @@ export default {
 
           clearErrorItemHolder();
           clearItemHolder();
-          clearInvoiceInfo();
+          clearPurchaseInfo();
           router.push({ path: "/return-purchases" });
         })
         .catch((error) => {
@@ -908,13 +910,13 @@ export default {
       isItemHolderUpdating,
       currentEditItemIDIndex,
       errorItemHolder,
-      editInvoiceItem,
-      deleteInvoiceItem,
-      updateItemToInvoiceBtn,
+      editPurchaseItem,
+      deletePurchaseItem,
+      updateItemToPurchaseBtn,
       clearErrorItemHolder,
       clearItemHolder,
-      addItemToInvoiceBtn,
-      addNewInvoiceItem,
+      addItemToPurchaseBtn,
+      addNewPurchaseItem,
       subTotal,
       taxAmount,
       grandTotal,
@@ -926,7 +928,7 @@ export default {
       productSelectInput,
       showProductSelect,
       selectOptionProduct,
-      createReturnInvoice,
+      createReturnPurchase,
       getUserStoreData,
       store,
       getUnits,
@@ -1001,7 +1003,7 @@ input.purchaseReferenceHolder {
   font-size: 14px;
   margin-top: 5px;
 }
-.Invoice-content {
+.Purchase-content {
   margin-top: 15px;
   background: #fff;
   padding: 26px;
@@ -1070,13 +1072,13 @@ button.btn-new-purchase {
   display: flex;
   align-items: center;
 }
-button.btnEditInvoice {
+button.btnEditPurchase {
   background: #ffc107;
   color: white;
   padding: 5px;
   border-radius: 2px;
 }
-button.btnDeleteInvoice {
+button.btnDeletePurchase {
   background: #f44336;
   color: white;
   padding: 5px;
