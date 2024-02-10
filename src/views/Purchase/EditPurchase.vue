@@ -665,6 +665,8 @@ export default {
     const clearPurchaseInfo = () => {
       purchaseInfo.supplier_id = "";
       purchaseInfo.supplier_name = "";
+      purchaseInfo.purchase_reference_id = "";
+
       purchaseInfo.due_date = "";
       purchaseInfo.purchase_date = "";
       purchaseInfo.supplier_name = "";
@@ -827,6 +829,7 @@ export default {
         items: purchaseItems,
         supplier_id: purchaseInfo.supplier_id,
         supplier_name: purchaseInfo.supplier_name,
+        purchase_reference_id: purchaseInfo.purchase_reference_id,
         due_date: purchaseInfo.due_date,
         purchase_date: purchaseInfo.purchase_date,
         note: purchaseInfo.note,
