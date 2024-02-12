@@ -237,7 +237,7 @@ export default {
     };
     const deleteReturnPurchase = (return_purchase_id) => {
       axios
-        .delete("return_purchase/" + return_purchase_id)
+        .delete("return-purchase/" + return_purchase_id)
         .then((response) => {
           toast(response.data.message, {
             showIcon: true,

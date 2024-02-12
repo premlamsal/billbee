@@ -5,7 +5,9 @@
       {{ supplier.name }} || Supplier ID : {{ supplier.custom_supplier_id }}
     </h3>
     <div class="account-header">
-      <button @click="goToSupplierPayments()">Payments</button>
+      <button @click="goToSupplierPayments()" class="btn-custom-primary">
+        Payments
+      </button>
     </div>
     <div class="accounts-content">
       <div

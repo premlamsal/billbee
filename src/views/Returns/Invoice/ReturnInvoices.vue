@@ -239,7 +239,7 @@ export default {
     };
     const deleteReturnInvoice = (return_invoice_id) => {
       axios
-        .delete("return_invoice/" + return_invoice_id)
+        .delete("return-invoice/" + return_invoice_id)
         .then((response) => {
           toast(response.data.message, {
             showIcon: true,

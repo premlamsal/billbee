@@ -227,3 +227,12 @@ button.btn-primary {
     font-size: 25px;
     cursor: pointer;
 }
+
+.btn-custom-primary {
+    background: var(--primary);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}

@@ -5,7 +5,9 @@
       {{ customer.name }} || Customer ID : {{ customer.custom_customer_id }}
     </h3>
     <div class="account-header">
-      <button @click="goToCustomerPayments()">Payments</button>
+      <button @click="goToCustomerPayments()" class="btn-custom-primary">
+        Payments
+      </button>
     </div>
     <div class="accounts-content">
       <div
