@@ -357,8 +357,15 @@ export default {
       // console.log(store.count);
       store.increment();
       // console.log(store.count);
+
+      updateTitle();
     });
 
+    const pageTitle = ref("Users" + " | " + import.meta.env.VITE_MY_APP_NAME);
+
+    const updateTitle = () => {
+      document.title = pageTitle.value;
+    };
     //propmt start
 
     //start---for prompt

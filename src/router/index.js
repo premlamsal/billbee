@@ -16,6 +16,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Home' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 
@@ -23,6 +24,10 @@ const router = createRouter({
 		{
 			path: '/login',
 			name: 'login',
+			meta: {
+				title: 'Login' + " | " + import.meta.env.VITE_MY_APP_NAME,
+
+			},
 			component: () => import('../views/Auth/Login.vue'),
 
 
@@ -30,6 +35,10 @@ const router = createRouter({
 		{
 			path: '/register',
 			name: 'register',
+			meta: {
+				title: 'Register' + " | " + import.meta.env.VITE_MY_APP_NAME,
+
+			},
 			component: () => import('../views/Auth/Register.vue')
 		},
 		{
@@ -37,6 +46,7 @@ const router = createRouter({
 			component: () => import('../views/Auth/CreateStore.vue'),
 			meta: {
 				requiresAuth: true,
+				title: 'Create Store' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 		},
@@ -46,6 +56,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Invoices' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 
 			},
@@ -67,6 +78,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'New Invoice' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 
 			},
@@ -87,6 +99,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Edit Invoice' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -106,6 +119,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Invoice' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -127,6 +141,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Print Invoice' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -146,6 +161,7 @@ const router = createRouter({
 				requiresAuth: true,
 				requiresStore: true,
 
+				title: 'Purchases' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -164,6 +180,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'New Purchase' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -183,6 +200,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Edit Purchase' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -202,6 +220,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Show Purchase' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -221,6 +240,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Print Purchase' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -239,6 +259,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Products' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 
 			},
@@ -271,6 +292,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Produt Profile' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -290,6 +312,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Product' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -308,6 +331,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Customer Payments' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -328,7 +352,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
-
+				title: 'Customer' + " | " + import.meta.env.VITE_MY_APP_NAME,
 			},
 			beforeEnter(to, from, next) {
 				if (useSnipperStore().checkPermission('view_customer')) {
@@ -346,6 +370,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Customers' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -365,6 +390,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Supplier Payments' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -385,6 +411,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Supplier' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -404,7 +431,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
-
+				title: 'Suppliers' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -422,6 +449,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Users' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 
 			},
@@ -440,6 +468,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Roles' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 
 			},
@@ -458,6 +487,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Permissions' + " | " + import.meta.env.VITE_MY_APP_NAME,
 			},
 			beforeEnter(to, from, next) {
 				if (useSnipperStore().checkPermission('view_permission')) {
@@ -474,6 +504,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Categories' + " | " + import.meta.env.VITE_MY_APP_NAME,
 			},
 			beforeEnter(to, from, next) {
 				if (useSnipperStore().checkPermission('view_category')) {
@@ -490,6 +521,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Units' + " | " + import.meta.env.VITE_MY_APP_NAME,
 			},
 			beforeEnter(to, from, next) {
 				if (useSnipperStore().checkPermission('view_unit')) {
@@ -506,6 +538,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Accounts' + " | " + import.meta.env.VITE_MY_APP_NAME,
 			},
 			beforeEnter(to, from, next) {
 				if (useSnipperStore().checkPermission('view_account')) {
@@ -522,6 +555,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Account' + " | " + import.meta.env.VITE_MY_APP_NAME,
 			},
 			beforeEnter(to, from, next) {
 				if (useSnipperStore().checkPermission('view_account')) {
@@ -538,6 +572,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Transactions' + " | " + import.meta.env.VITE_MY_APP_NAME,
 			},
 			beforeEnter(to, from, next) {
 				if (useSnipperStore().checkPermission('view_transaction')) {
@@ -554,6 +589,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Settings' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -579,6 +615,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Return Invoices' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -598,6 +635,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'New Return Invoice' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -617,6 +655,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Edit Return Invoice' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -638,6 +677,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Return Invoice' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -662,6 +702,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Return Purchases' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -682,6 +723,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'New Return Purchase' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -702,6 +744,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Edit Return Purchase' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -722,6 +765,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Return Purchase' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 			beforeEnter(to, from, next) {
@@ -742,6 +786,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Returns' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 
@@ -753,6 +798,7 @@ const router = createRouter({
 			meta: {
 				requiresAuth: true,
 				requiresStore: true,
+				title: 'Stocks' + " | " + import.meta.env.VITE_MY_APP_NAME,
 
 			},
 		},
@@ -766,6 +812,10 @@ const router = createRouter({
 			path: "/:notFound",
 			name: 'notfound',
 			component: () => import('../views/Error.vue'),
+			meta: {
+
+				title: 'Not Found' + " | " + import.meta.env.VITE_MY_APP_NAME,
+			},
 		},
 	],
 })
@@ -804,7 +854,6 @@ router.beforeEach(async (to, from, next) => {
 				// await storeSnipp.getPermissions();
 
 				next();
-				console.log('hello boss darling');
 				return;
 			}
 
@@ -833,6 +882,26 @@ router.beforeEach(async (to, from, next) => {
 
 
 
+})
+
+router.beforeEach((to, from, next) => {
+	// Get the page title from the route meta data that we have defined
+	// See further down below for how we setup this data
+	const title = to.meta.title
+
+	//Take the title from the parameters
+	const titleFromParams = to.params.pageTitle;
+	// If the route has a title, set it as the page title of the document/page
+	if (title) {
+		document.title = title
+	}
+	// If we have a title from the params, extend the title with the title
+	// from our params
+	if (titleFromParams) {
+		document.title = `${titleFromParams} - ${document.title}`;
+	}
+	// Continue resolving the route
+	next()
 })
 
 

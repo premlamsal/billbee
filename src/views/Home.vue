@@ -53,7 +53,14 @@ export default {
 
     onMounted(() => {
       getDashInfo();
+      // updateTitle();
     });
+
+    // const pageTitle = ref("Home" + " | " + import.meta.env.VITE_MY_APP_NAME);
+
+    // const updateTitle = () => {
+    //   document.title = pageTitle.value;
+    // };
 
     const getDashInfo = () => {
       dash.length = 0;
