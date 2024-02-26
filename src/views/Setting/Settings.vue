@@ -12,19 +12,33 @@
         <h2>Store</h2>
 
         <div class="store-settings-inner-block">
-          <label>Select Default Store</label>
+          <div>
+            <label>Select Default Store</label>
 
-          <div class="select-store-block mt10">
-            <div class="select-wrapper">
-              <select class="custom-select" v-model="selectedStore">
-                <option value="0" selected disabled>Select an option</option>
-                <template v-for="store in stores" v-bind:key="store.id">
-                  <option :value="store.id">{{ store.name }}</option>
-                </template>
-              </select>
+            <div class="select-store-block mt10">
+              <div class="select-wrapper">
+                <select class="custom-select" v-model="selectedStore">
+                  <option value="0" selected disabled>Select an option</option>
+                  <template v-for="store in stores" v-bind:key="store.id">
+                    <option :value="store.id">{{ store.name }}</option>
+                  </template>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 10px">
+            <label>Store Name</label>
+            <div class="form-input-holder-box">
+              <input
+                type="text"
+                class="form-input-holder"
+                v-model="store.name"
+              />
             </div>
           </div>
         </div>
+
         <div class="store-settings-btn-block mt10">
           <button class="btn-save-store" @click="updateStoreBtn()">
             Update Store
@@ -45,11 +59,25 @@ export default {
     const axios = inject("$axios");
     const toast = inject("$toast");
     const stores = reactive([]);
+    const store = reactive({
+      name: "",
+      address: "",
+      phone: "",
+      details: "",
+      mobile: "",
+      email: "",
+      url: "",
+      tax_number: "",
+      tax_percentage: "",
+      profit_percentage: "",
+      store_logo: "",
+    });
     const selectedStore = ref(0); //0 will render default option of select i.e "Select an option" (only on mounted) and changed after default store is loaded from database
 
     //on mounted start
     onMounted(() => {
       getStores();
+      getStoreData();
       //   router.push({ path: "/new-invoice" });
     });
     const getStores = () => {
@@ -74,6 +102,36 @@ export default {
         });
     };
 
+    const getStoreData = () => {
+      axios
+        .get("user-store")
+        .then((response) => {
+          // console.log(response.data.store.name);
+
+          store.name = response.data.store.name;
+          // store.address = response.data.store.address;
+          // store.phone = response.data.store.phone;
+          // store.details = response.data.store.details;
+          // store.mobile = response.data.store.mobile;
+          // store.email = response.data.store.email;
+          // store.url = response.data.store.url;
+          // store.tax_number = response.data.store.tax_number;
+          // store.tax_percentage = response.data.store.tax_percentage;
+          // store.profit_percentage = response.data.store.profit_percentage;
+          // store.store_logo = response.data.store.store_logo;
+
+          toast(response.data.message, {
+            showIcon: true,
+            type: response.data.status,
+            position: "top-center",
+            transition: "zoom",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     const updateStoreBtn = () => {
       let formdata = new FormData();
       formdata.append("_METHOD", "POST");
@@ -85,7 +143,7 @@ export default {
           console.log(response.data);
 
           console.log(response.data.message);
-
+          getStoreData();
           toast(response.data.message, {
             showIcon: true,
             type: response.data.status,
@@ -107,7 +165,7 @@ export default {
           }
         });
     };
-    return { updateStoreBtn, getStores, stores, selectedStore };
+    return { updateStoreBtn, getStores, stores, selectedStore, store };
   },
 };
 </script>
@@ -183,5 +241,7 @@ button.btn-save-store {
 }
 .mb20 {
   margin-bottom: 20px;
+}
+.form-input-holder-box {
 }
 </style>
