@@ -296,7 +296,7 @@ export default {
 
     const deleteCategoryModal = (category_id) => {
       isActivePrompt.value = true;
-      delete_id.value = categories_id;
+      delete_id.value = category_id;
     };
     const callbackPrompt = () => {
       isActivePrompt.value = false;
@@ -309,7 +309,7 @@ export default {
     };
     const deleteCategory = (categories_id) => {
       axios
-        .delete("categories/" + categories_id)
+        .delete("category/" + categories_id)
         .then((response) => {
           toast(response.data.message, {
             showIcon: true,
@@ -317,7 +317,7 @@ export default {
             position: "top-right",
             transition: "zoom",
           });
-          getCategorys();
+          getCategories();
         })
         .catch((error) => {
           console.log(error);
