@@ -116,8 +116,11 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  height: 200px;
+  /* width: 200px; */
+  flex: 1;
+  /* height: 200px; */
+  padding: 3em;
+  margin: 0.5em;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
