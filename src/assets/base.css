@@ -9,6 +9,7 @@
 .inside-two-input-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .form-input-holder-container {
@@ -235,4 +236,19 @@ button.btn-primary {
     border-radius: 5px;
     display: flex;
     align-items: center;
+}
+
+.image-upload-icon-holder {
+    width: 60px;
+    color: var(--primary);
+}
+
+@media only screen and (max-width: 768px) {
+    .inside-two-input-container {
+        flex-direction: column;
+    }
+
+    .modal {
+        width: 100%;
+    }
 }
