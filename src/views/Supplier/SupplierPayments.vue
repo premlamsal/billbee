@@ -468,10 +468,13 @@ export default {
     };
     const clearPayment = () => {
       payment.account = "";
+      payment.account_id = "";
+      payment.old_account_id = "";
       payment.amount = "";
       payment.notes = "";
-      payment.data = "";
+      payment.date = "";
       payment.image = "";
+      imagePreview.value = "";
       errors.value = "";
     };
     const addPayment = () => {
