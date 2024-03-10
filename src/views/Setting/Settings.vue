@@ -12,9 +12,8 @@
         <h2>Store</h2>
 
         <div class="store-settings-inner-block">
-          <div>
+          <div style="margin-top: 10px" class="inner-form-box">
             <label>Select Default Store</label>
-
             <div class="select-store-block mt10">
               <div class="select-wrapper">
                 <select class="custom-select" v-model="selectedStore">
@@ -27,21 +26,163 @@
             </div>
           </div>
 
-          <div style="margin-top: 10px">
-            <label>Store Name</label>
-            <div class="form-input-holder-box">
-              <input
-                type="text"
-                class="form-input-holder"
-                v-model="store.name"
-              />
+          <div class="border-line-bottom"></div>
+          <h2>Store Information</h2>
+          <div class="inside-from1">
+            <div class="inside-two-input-container">
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label> Name</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.name"
+                  />
+                </div>
+              </div>
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label> Email</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.email"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="inside-two-input-container">
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label> Phone</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.phone"
+                  />
+                </div>
+              </div>
+
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label>Mobile</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.mobile"
+                  />
+                </div>
+              </div>
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label> Profit %</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.profit_percentage"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="inside-two-input-container">
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label>Website</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.url"
+                  />
+                </div>
+              </div>
+
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label> Tax Number</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.tax_number"
+                  />
+                </div>
+              </div>
+
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label> Tax %</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.tax_percentage"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="inside-two-input-container">
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label> Address</label>
+                <div class="form-input-holder-box">
+                  <input
+                    type="text"
+                    class="form-input-holder"
+                    v-model="store.address"
+                  />
+                </div>
+              </div>
+              <div style="margin-top: 10px" class="inner-form-box">
+                <label> Detail</label>
+                <div class="form-input-holder-box">
+                  <textarea
+                    type="text"
+                    class="form-input-holder"
+                    spellcheck="false"
+                    v-model="store.detail"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 10px" class="inner-form-box-image">
+              <label> Store Logo</label>
+
+              <div class="store-image-display-box">
+                <div class="image-upload-holder2">
+                  <div>
+                    <img v-bind:src="imagePreview" class="product_logo_img" />
+                  </div>
+
+                  <div>
+                    <input
+                      id="file-input"
+                      type="file"
+                      accept="image/*"
+                      v-on:change="fileSelected"
+                      :class="[
+                        'form-input-holder2',
+                        errors.image ? 'is-invalid' : '',
+                      ]"
+                    />
+                    <div v-if="errors.image" :class="['errorText']">
+                      <div
+                        class="errorText-inner"
+                        v-for="error in errors.image"
+                        v-bind:key="error.id"
+                      >
+                        <ul>
+                          <li>{{ error }}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="store-settings-btn-block mt10">
           <button class="btn-save-store" @click="updateStoreBtn()">
-            Update Store
+            Update
           </button>
         </div>
       </div>
@@ -51,7 +192,7 @@
 <script>
 import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import logoURL from "../../assets/alogo.png";
 export default {
   setup() {
     const router = useRouter();
@@ -59,11 +200,13 @@ export default {
     const axios = inject("$axios");
     const toast = inject("$toast");
     const stores = reactive([]);
+    const errors = ref({});
+    const image = ref("");
     const store = reactive({
       name: "",
       address: "",
       phone: "",
-      details: "",
+      detail: "",
       mobile: "",
       email: "",
       url: "",
@@ -73,6 +216,7 @@ export default {
       store_logo: "",
     });
     const selectedStore = ref(0); //0 will render default option of select i.e "Select an option" (only on mounted) and changed after default store is loaded from database
+    const imagePreview = ref(""); //for displaying image while uploading
 
     //on mounted start
     onMounted(() => {
@@ -102,6 +246,25 @@ export default {
         });
     };
 
+    const fileSelected = (e) => {
+      image.value = e.target.files[0];
+
+      let reader = new FileReader();
+
+      reader.addEventListener(
+        "load",
+        function () {
+          imagePreview.value = reader.result;
+        }.bind(),
+        false
+      );
+
+      if (image.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(image.value.name)) {
+          reader.readAsDataURL(image.value);
+        }
+      }
+    };
     const getStoreData = () => {
       axios
         .get("user-store")
@@ -109,16 +272,21 @@ export default {
           // console.log(response.data.store.name);
 
           store.name = response.data.store.name;
-          // store.address = response.data.store.address;
-          // store.phone = response.data.store.phone;
-          // store.details = response.data.store.details;
-          // store.mobile = response.data.store.mobile;
-          // store.email = response.data.store.email;
-          // store.url = response.data.store.url;
-          // store.tax_number = response.data.store.tax_number;
-          // store.tax_percentage = response.data.store.tax_percentage;
-          // store.profit_percentage = response.data.store.profit_percentage;
-          // store.store_logo = response.data.store.store_logo;
+          store.address = response.data.store.address;
+          store.phone = response.data.store.phone;
+          store.detail = response.data.store.details;
+          store.mobile = response.data.store.mobile;
+          store.email = response.data.store.email;
+          store.url = response.data.store.url;
+          store.tax_number = response.data.store.tax_number;
+          store.tax_percentage = response.data.store.tax_percentage;
+          store.profit_percentage = response.data.store.profit_percentage;
+          store.store_logo = response.data.store.store_logo;
+          if (store.store_logo === null) {
+            store.store_logo = logoURL;
+            imagePreview.value = logoURL;
+          }
+          // console.log("store logo is " + store.store_logo);
 
           toast(response.data.message, {
             showIcon: true,
@@ -165,7 +333,17 @@ export default {
           }
         });
     };
-    return { updateStoreBtn, getStores, stores, selectedStore, store };
+    return {
+      updateStoreBtn,
+      getStores,
+      stores,
+      selectedStore,
+      store,
+      errors,
+      imagePreview,
+      fileSelected,
+      image,
+    };
   },
 };
 </script>
@@ -181,7 +359,7 @@ export default {
 /* Style for the select wrapper */
 .select-wrapper {
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 /* Style for the custom select */
@@ -195,6 +373,7 @@ export default {
   font-size: 16px;
   color: #333;
   cursor: pointer;
+  width: auto;
 }
 button.btn-save-store {
   background: var(--primary);
@@ -243,5 +422,43 @@ button.btn-save-store {
   margin-bottom: 20px;
 }
 .form-input-holder-box {
+  width: auto;
+}
+.inner-form-box {
+  width: 100%;
+  margin: 5px;
+}
+.image-upload-holder {
+  display: flex;
+}
+img.product_logo_img {
+  width: 60px;
+  /* margin-top: 15px; */
+}
+.image-upload-icon-holder {
+  width: 60px;
+  color: var(--primary);
+}
+/* 
+input[type="file"]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: var(--primary);
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: var(--primary);
+} */
+
+.inside-from1 {
+  background: white;
+  padding: 1em;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 </style>
