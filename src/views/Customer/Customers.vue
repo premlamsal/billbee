@@ -175,26 +175,47 @@
         </button>
       </div>
     </div>
-
     <div class="customers-content">
-      <Transition>
-        <div
-          class="table-container"
-          style="
-            overflow-x: auto;
-            margin-top: 20px;
-            border-radius: 10px;
-            box-shadow: black 0px 1px 8px -5px;
-          "
-          v-if="customers.length != 0"
-        >
-          <table>
-            <thead>
-              <tr>
-                <th>Customer ID</th>
-                <th @click="sortBy('name')">Name</th>
-                <th @click="sortBy('address')">Address</th>
-                <th @click="sortBy('phone')">Phone</th>
+      <div
+        class="table-container"
+        style="
+          overflow-x: auto;
+          margin-top: 20px;
+          border-radius: 10px;
+          box-shadow: black 0px 1px 8px -5px;
+        "
+        v-if="customers.length != 0"
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>Customer ID</th>
+              <th @click="sortBy('name')">Name</th>
+              <th @click="sortBy('address')">Address</th>
+              <th @click="sortBy('phone')">Phone</th>
+              <template
+                v-if="
+                  hasPermission('show_customer') ||
+                  hasPermission('edit_customer') ||
+                  hasPermission('delete_customer')
+                "
+              >
+                <th>Actions</th>
+              </template>
+            </tr>
+          </thead>
+          <tbody>
+            <template
+              v-for="customer in sortedCustomers"
+              v-bind:key="customer.id"
+            >
+              <tr v-if="customers != null">
+                <td>{{ customer.custom_customer_id }}</td>
+                <td @click="showCustomer(customer.custom_customer_id)">
+                  {{ customer.name }}
+                </td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.phone }}</td>
                 <template
                   v-if="
                     hasPermission('show_customer') ||
@@ -202,60 +223,37 @@
                     hasPermission('delete_customer')
                   "
                 >
-                  <th>Actions</th>
+                  <td>
+                    <span
+                      v-if="hasPermission('show_customer')"
+                      class="material-icons"
+                      style="color: var(--primary); cursor: pointer"
+                      @click="showCustomer(customer.custom_customer_id)"
+                      >format_align_justify</span
+                    >
+                    <span
+                      v-if="hasPermission('edit_customer')"
+                      class="material-icons"
+                      style="color: blueviolet; cursor: pointer"
+                      @click="editCustomerModal(customer.id)"
+                      >edit</span
+                    >
+                    <span
+                      v-if="hasPermission('delete_customer')"
+                      class="material-icons"
+                      style="color: orangered; cursor: pointer"
+                      @click="deleteCustomerModal(customer.id)"
+                      >delete</span
+                    >
+                  </td>
                 </template>
               </tr>
-            </thead>
-            <tbody>
-              <template
-                v-for="customer in sortedCustomers"
-                v-bind:key="customer.id"
-              >
-                <tr v-if="customers != null">
-                  <td>{{ customer.custom_customer_id }}</td>
-                  <td @click="showCustomer(customer.custom_customer_id)">
-                    {{ customer.name }}
-                  </td>
-                  <td>{{ customer.address }}</td>
-                  <td>{{ customer.phone }}</td>
-                  <template
-                    v-if="
-                      hasPermission('show_customer') ||
-                      hasPermission('edit_customer') ||
-                      hasPermission('delete_customer')
-                    "
-                  >
-                    <td>
-                      <span
-                        v-if="hasPermission('show_customer')"
-                        class="material-icons"
-                        style="color: var(--primary); cursor: pointer"
-                        @click="showCustomer(customer.custom_customer_id)"
-                        >format_align_justify</span
-                      >
-                      <span
-                        v-if="hasPermission('edit_customer')"
-                        class="material-icons"
-                        style="color: blueviolet; cursor: pointer"
-                        @click="editCustomerModal(customer.id)"
-                        >edit</span
-                      >
-                      <span
-                        v-if="hasPermission('delete_customer')"
-                        class="material-icons"
-                        style="color: orangered; cursor: pointer"
-                        @click="deleteCustomerModal(customer.id)"
-                        >delete</span
-                      >
-                    </td>
-                  </template>
-                </tr>
-              </template>
-            </tbody>
-          </table>
-        </div>
-      </Transition>
+            </template>
+          </tbody>
+        </table>
+      </div>
     </div>
+
     <div class="pagination-container" v-if="customers.length != 0">
       <div class="pagination-box">
         <div class="pagination-holder">
@@ -739,5 +737,22 @@ tr:nth-child(even) {
   table {
     font-size: 12px;
   }
+}
+
+/* vue animation */
+.v-enter-active,
+.v-leave-active {
+  /* transition: opacity 0.5s ease; */
+  transition: all 0.5s ease-in-out;
+  /* transition-delay: 0.25s; */
+}
+
+.v-enter-from {
+  transform: translateY(-500px);
+  opacity: 0.001;
+}
+.v-leave-to {
+  transform: translateY(-500px);
+  opacity: 0.001;
 }
 </style>
