@@ -458,6 +458,7 @@ export default {
         });
     };
     const displayPaymentModal = () => {
+      console.log("hello payment");
       clearPayment();
       if (showPaymentModal.value) {
         showPaymentModal.value = false;
@@ -467,10 +468,13 @@ export default {
     };
     const clearPayment = () => {
       payment.account = "";
+      payment.account_id = "";
+      payment.old_account_id = "";
       payment.amount = "";
       payment.notes = "";
-      payment.data = "";
+      payment.date = "";
       payment.image = "";
+      imagePreview.value = "";
       errors.value = "";
     };
     const addPayment = () => {
