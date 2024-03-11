@@ -33,7 +33,7 @@
               <input
                 type="text"
                 placeholder="Permission Name"
-                class="permissionNameHolder"
+                class="form-input-holder"
                 v-model="permission.name"
               />
             </div>
@@ -885,7 +885,7 @@
               </div> -->
             </div>
             <!-- end of one row -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-12">
                 <div class="d-block">
                   <div class="form-group">
@@ -894,7 +894,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="row">
               <div class="col-md-4">
                 <div
