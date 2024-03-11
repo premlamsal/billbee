@@ -159,7 +159,7 @@
                       <input
                         type="text"
                         placeholder="Enter item name"
-                        class="nameInputHolder"
+                        class="form-input-holder"
                         v-model="itemHolder.product_name"
                         @keyup="productSelectInput()"
                       />
@@ -205,13 +205,13 @@
                   <td style="width: 15%">
                     <input
                       type="text"
-                      class="quantityInputHolder"
+                      class="form-input-holder"
                       v-model="itemHolder.quantity"
                     />
                   </td>
                   <td>
                     <select
-                      class="unitInputHolder"
+                      class="form-input-holder"
                       v-model="itemHolder.unit_id"
                       disabled
                     >
@@ -226,14 +226,14 @@
                   <td>
                     <input
                       type="text"
-                      class="priceInputHolder"
+                      class="form-input-holder"
                       v-model="itemHolder.price"
                     />
                   </td>
                   <td>
                     <input
                       type="text"
-                      class="totalInputHolder"
+                      class="form-input-holder"
                       disabled
                       v-bind:value="itemHolder.quantity * itemHolder.price"
                     />
@@ -368,7 +368,7 @@
                         type="text"
                         placeholder="discount"
                         v-model="invoiceInfo.discount"
-                        class="discount-input"
+                        class="form-input-holder"
                       />
                     </td>
                   </tr>
