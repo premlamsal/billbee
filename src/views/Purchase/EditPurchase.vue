@@ -198,15 +198,25 @@
                                 <li
                                   @click="
                                     selectOptionProduct(
+                                      queryResultProduct.product.id,
+                                      queryResultProduct.product.name,
+                                      queryResultProduct.product.unit
+                                        .short_name,
+                                      queryResultProduct.product.cp,
+                                      queryResultProduct.product.unit.id,
                                       queryResultProduct.id,
-                                      queryResultProduct.name,
-                                      queryResultProduct.unit.short_name,
-                                      queryResultProduct.sp,
-                                      queryResultProduct.unit.id
+                                      queryResultProduct.product.image
                                     )
                                   "
                                 >
-                                  {{ queryResultProduct.name }}
+                                  {{ queryResultProduct.product.name }} --
+                                  {{ queryResultProduct.quantity }}
+                                  {{
+                                    queryResultProduct.product.unit.short_name
+                                  }}
+                                  -- Rs. {{ queryResultProduct.price }}
+
+                                  <!-- {{ queryResultProduct.name }} -->
                                 </li>
                               </template>
                             </ul>
@@ -304,10 +314,12 @@
                           <div>
                             <img
                               style="border-radius: 50%"
-                              :src="VITE_MY_APP_BACK_URL_HOME + item.image"
+                              :src="
+                                VITE_MY_APP_BACK_URL_HOME + item.product.image
+                              "
                               width="40"
                               height="40"
-                              v-if="item.image"
+                              v-if="item.product.image"
                               :alt="item.product_name"
                             />
                           </div>
@@ -381,7 +393,7 @@
                         type="text"
                         placeholder="discount"
                         v-model="purchaseInfo.discount"
-                        class="discount-input"
+                        class="form-input-holder"
                       />
                     </td>
                   </tr>
@@ -616,8 +628,8 @@ export default {
         purchaseItems[index].quantity = itemHolder.quantity;
         purchaseItems[index].unit = itemHolder.unit;
         purchaseItems[index].unit_id = itemHolder.unit_id;
-        invoiceItems[index].stock_id = itemHolder.stock_id;
-        invoiceItems[index].image = itemHolder.image;
+        purchaseItems[index].stock_id = itemHolder.stock_id;
+        purchaseItems[index].image = itemHolder.image;
         purchaseItems[index].price = itemHolder.price;
         purchaseItems[index].lineTotal = itemHolder.price * itemHolder.quantity;
 
@@ -858,7 +870,7 @@ export default {
         .catch((error) => {
           errors.customer_name = "";
           errors.due_date = "";
-          errors.invoice_date = "";
+          errors.purchase_date = "";
           errors.note = "";
           errors.message = "";
           if (error.response.status == 422) {

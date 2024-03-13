@@ -296,6 +296,8 @@
                               "
                               width="40"
                               height="40"
+                              v-if="item.product.image"
+                              :alt="item.product_name"
                             />
                           </div>
                           <div style="margin-left: 10%">
@@ -368,7 +370,7 @@
                         type="text"
                         placeholder="discount"
                         v-model="invoiceInfo.discount"
-                        class="discount-input"
+                        class="form-input-holder"
                       />
                     </td>
                   </tr>

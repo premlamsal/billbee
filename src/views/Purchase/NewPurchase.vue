@@ -390,7 +390,7 @@
                         type="text"
                         placeholder="discount"
                         v-model="purchaseInfo.discount"
-                        class="discount-input"
+                        class="form-input-holder"
                       />
                     </td>
                   </tr>
