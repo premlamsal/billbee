@@ -2,9 +2,15 @@
   <main id="purchase-print-page">
     <div class="huge-purchase-print-container">
       <div class="purchase-print-head">
-        <h1>Print Purchase # {{ info.custom_purchase_id }}</h1>
-
-        <button v-print="'#printMe'">Print the entire page</button>
+        <!-- <h1>Print Purchase # {{ info.custom_purchase_id }}</h1> -->
+        <div class="print-btn-box">
+          <button
+            v-print="'#printMe'"
+            style="display: flex; justify-content: center; align-items: center"
+          >
+            <img :src="printicon" alt="print-icon" class="print-icon" /> Print
+          </button>
+        </div>
       </div>
       <div class="purchase-print-documnet-block">
         <div id="printMe">
@@ -132,6 +138,7 @@ import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 import print from "vue3-print-nb";
+import printicon from "../../assets/print.png";
 
 export default {
   directives: { print },
@@ -351,7 +358,7 @@ export default {
 
     return {
       store,
-
+      printicon,
       items,
       info,
       editPurchase,
@@ -380,7 +387,7 @@ export default {
 }
 
 .huge-purchase-print-container {
-  background: #fff;
+  /* background: #fff; */
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
 }
@@ -410,6 +417,10 @@ export default {
 .purchase-body,
 .purchase-footer {
   margin-bottom: 20px;
+}
+.print-icon {
+  width: 40px;
+  height: 40px;
 }
 
 .company-title {

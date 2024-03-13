@@ -2,9 +2,15 @@
   <main id="invoice-print-page">
     <div class="huge-invoice-print-container">
       <div class="invoice-print-head">
-        <h1>Print Invoice # {{ info.custom_invoice_id }}</h1>
-
-        <button v-print="'#printMe'">Print the entire page</button>
+        <!-- <h1>Print Invoice # {{ info.custom_invoice_id }}</h1> -->
+        <div class="print-btn-box">
+          <button
+            v-print="'#printMe'"
+            style="display: flex; justify-content: center; align-items: center"
+          >
+            <img :src="printicon" alt="print-icon" class="print-icon" /> Print
+          </button>
+        </div>
       </div>
       <div class="invoice-print-documnet-block">
         <div id="printMe">
@@ -132,6 +138,7 @@ import { computed, reactive, ref, inject, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 import print from "vue3-print-nb";
+import printicon from "../../assets/print.png";
 
 export default {
   directives: { print },
@@ -351,7 +358,7 @@ export default {
 
     return {
       store,
-
+      printicon,
       items,
       info,
       editInvoice,
@@ -380,7 +387,7 @@ export default {
 }
 
 .huge-invoice-print-container {
-  background: #fff;
+  /* background: #fff; */
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
 }
@@ -396,6 +403,10 @@ export default {
   padding-top: 20px;
   border-radius: 10px 10px 0px 0px;
   padding-bottom: 7px;
+}
+.print-icon {
+  width: 40px;
+  height: 40px;
 }
 .invoice {
   width: 800px;

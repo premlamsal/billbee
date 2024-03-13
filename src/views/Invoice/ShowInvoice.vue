@@ -1,6 +1,8 @@
 <template>
   <main id="Invoice-page">
-    <button @click="exportToPDF()">Print</button>
+    <button @click="exportToPDF()">
+      <span class="material-icons">print</span>
+    </button>
 
     <div class="huge-invoice-container">
       <div class="invoice-head">
@@ -178,9 +180,10 @@
         </div>
       </div>
     </div>
-    <div class="bottom-button-sections">
+    <div class="bottom-button-sections mt10">
       <button
         class="btn btn-success"
+        style="margin-right: 10px"
         @click="editInvoice(info.custom_invoice_id)"
       >
         Edit
@@ -306,7 +309,8 @@ export default {
     }; //end of fetchStore()
 
     const exportToPDF = () => {
-      console.log("hello from pdf");
+      // console.log("hello from pdf");
+      router.push({ path: `/${id.value}/print-invoice/` });
     };
 
     const convertToWords = () => {

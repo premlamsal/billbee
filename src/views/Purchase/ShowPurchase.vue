@@ -1,6 +1,8 @@
 <template>
   <main id="Purchase-page">
-    <button @click="exportToPDF()">Print</button>
+    <button @click="exportToPDF()" class="btn">
+      <span class="material-icons">print</span>
+    </button>
 
     <div class="huge-purchase-container">
       <div class="purchase-head">
@@ -183,9 +185,10 @@
         </div>
       </div>
     </div>
-    <div class="bottom-button-sections">
+    <div class="bottom-button-sections mt10">
       <button
         class="btn btn-success"
+        style="margin-right: 10px"
         @click="editPurchase(info.custom_purchase_id)"
       >
         Edit
@@ -314,7 +317,8 @@ export default {
     }; //end of fetchStore()
 
     const exportToPDF = () => {
-      console.log("hello from pdf");
+      // console.log("hello from pdf");
+      router.push({ path: `/${id.value}/print-purchase/` });
     };
 
     const convertToWords = () => {
@@ -428,56 +432,6 @@ export default {
 }; //end of export default
 </script>
   <style scoped>
-input.quantityInputHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-
-  font-size: 14px;
-}
-input.supplierInputHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-}
-textarea.purchaseNotesHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  resize: none;
-  margin-top: 5px;
-}
-input.purchaseDateHolder,
-input.purchaseDueDateHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-input.nameInputHolder,
-select.unitInputHolder,
-input.priceInputHolder,
-input.totalInputHolder {
-  border: 0px;
-  padding: 10px;
-  border: 1px solid #4ade809c;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 14px;
-}
 .Purchase-content {
   margin-top: 15px;
   background: #fff;
