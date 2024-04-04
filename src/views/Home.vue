@@ -155,14 +155,14 @@ export default {
 }
 
 .purchases {
-  background: linear-gradient(45deg, #8bc34a, #cddc39);
   color: white;
+  background: linear-gradient(45deg, #4099ff, #73b4ff);
 }
 
 .suppliers {
   /* background-color: #ff7b25; */
+  background: linear-gradient(45deg, #8bc34a, #cddc39);
   color: white;
-  background: linear-gradient(45deg, #4099ff, #73b4ff);
 }
 
 .customers {
