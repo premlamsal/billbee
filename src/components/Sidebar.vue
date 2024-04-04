@@ -91,6 +91,10 @@
           <i class="fi fi-tr-customize custom-flat-icons"></i>
           <span class="text">Settings</span>
         </router-link>
+        <router-link to="/storeprofile" class="button">
+          <i class="fi fi-ts-store-alt custom-flat-icons"></i>
+          <span class="text">Store Profile</span>
+        </router-link>
       </div>
     </template>
   </aside>
