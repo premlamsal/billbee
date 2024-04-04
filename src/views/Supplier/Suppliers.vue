@@ -1,6 +1,8 @@
 <template>
   <main id="suppliers-page">
-    <h1>Suppliers</h1>
+    <h1 class="icon-head-page">
+      <i class="fi fi-tr-supplier-alt custom-flat-icons"></i> Suppliers
+    </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showSupplierModal">
         <div class="modal">

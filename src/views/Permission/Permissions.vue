@@ -1,6 +1,6 @@
 <template>
   <main id="permissions-page">
-    <h1>Permissions</h1>
+    <h1 class="icon-head-page">Permissions</h1>
     <Prompt
       :isPrompt="pressedDelete"
       v-if="pressedDelete"

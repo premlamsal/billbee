@@ -1,6 +1,8 @@
 <template>
   <main id="users-page">
-    <h1>Users</h1>
+    <h1 class="icon-head-page">
+      <i class="fi fi-tr-admin-alt custom-flat-icons"></i> Users
+    </h1>
 
     <Transition :duration="550">
       <div class="modal-container" v-if="showUserModal">

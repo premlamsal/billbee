@@ -1,6 +1,8 @@
 <template>
   <main id="accounts-page">
-    <h1>Accounts</h1>
+    <h1 class="icon-head-page">
+      <i class="fi fi-ts-bank custom-flat-icons"></i> Accounts
+    </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showAccountModal">
         <div class="modal">
@@ -276,6 +278,14 @@
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="accounts.length != 0">

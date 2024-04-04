@@ -1,6 +1,6 @@
 <template>
   <main id="units-page">
-    <h1>Units</h1>
+    <h1 class="icon-head-page">Units</h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showUnitModal">
         <div class="modal">

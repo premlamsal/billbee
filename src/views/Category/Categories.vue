@@ -1,6 +1,6 @@
 <template>
   <main id="categories-page">
-    <h1>Categories</h1>
+    <h1 class="icon-head-page">Categories</h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showCategoryModal">
         <div class="modal">

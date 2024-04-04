@@ -1,6 +1,9 @@
 <template>
   <main id="invoices-page">
-    <h1>Invoices</h1>
+    <h1 class="icon-head-page">
+      <span class="fi fi-tr-file-invoice-dollar custom-flat-icons"></span>
+      Invoices
+    </h1>
     <div class="invoice-header mt20">
       <div class="search-container">
         <div class="search-box">
@@ -191,7 +194,7 @@ export default {
     const axios = inject("$axios");
     const storeSnipp = useSnipperStore();
     const hasAccess = storeSnipp.permissions;
-
+    const toast = inject("$toast");
     // console.log("hello from soft");
 
     // console.log(hasAccess);

@@ -1,6 +1,6 @@
 <template>
   <main id="roles-page">
-    <h1>Roles</h1>
+    <h1 class="icon-head-page">Roles</h1>
 
     <Transition :duration="550">
       <div class="modal-container" v-if="showRoleModal">

@@ -1,7 +1,9 @@
 <template>
   <!-- customers -->
   <main id="customers-page">
-    <h1>Customers</h1>
+    <h1 class="icon-head-page">
+      <i class="fi fi-tr-review custom-flat-icons"></i> Customers
+    </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showCustomerModal">
         <div class="modal">

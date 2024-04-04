@@ -1,53 +1,53 @@
 <template>
-  <div class="chart-container">
-    <h4 class="mt-20 mb-20">
-      Chart Report of Purchase / Sales Before:
-      {{ chartDataBeforeMonth }} month(s)
-    </h4>
-    <div class="chart-out-holder">
-      <div class="chart-box">
-        <canvas ref="myChart"></canvas>
-      </div>
-    </div>
-    <div class="chart-container-footer mt-20">
-      <div class="chart-before-month-select-container">
-        <div class="month-select-holder">
-          <label>Report Before: </label>
-          <select
-            class="custom-select"
-            v-model="chartDataBeforeMonth"
+    <div class="chart-container">
+        <h4 class="mt-20 mb-20">
+            Chart Report of Purchase / Sales Before:
+            {{ chartDataBeforeMonth }} month(s)
+        </h4>
+        <div class="chart-out-holder">
+            <div class="chart-box">
+                <canvas ref="myChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-container-footer mt-20">
+            <div class="chart-before-month-select-container">
+                <div class="month-select-holder">
+                    <label>Report Before: </label>
+                    <select
+                        class="custom-select"
+                        v-model="chartDataBeforeMonth"
             @change="monthSelectorChange()"
           >
-            <option disabled>Select month</option>
-            <option value="3">3 month</option>
-            <option value="6">6 month</option>
-            <option value="9">9 month</option>
-            <option value="12">12 month</option>
-          </select>
+                    <option disabled>Select month</option>
+                    <option value="3">3 month</option>
+                    <option value="6">6 month</option>
+                    <option value="9">9 month</option>
+                    <option value="12">12 month</option>
+                </select>
+            </div>
         </div>
-      </div>
-      <div class="chart-type-select-container">
-        <div class="chart-type-select-holder">
-          <label>Chart Type: </label>
-          <select
-            v-model="chartType"
+        <div class="chart-type-select-container">
+            <div class="chart-type-select-holder">
+                <label>Chart Type: </label>
+                <select
+                    v-model="chartType"
             @change="chartTypeChange()"
-            class="custom-select"
+                class="custom-select"
           >
-            <option disabled>Select chart type</option>
-            <option value="bar">Bar</option>
+                <option disabled>Select chart type</option>
+                <option value="bar">Bar</option>
 
-            <option value="line">Line</option>
-            <!-- only for premium user -->
-            <option value="bubble">Bubble</option>
+                <option value="line">Line</option>
+                <!-- only for premium user -->
+                <option value="bubble">Bubble</option>
 
-            <!-- only for premium user -->
-          </select>
+                <!-- only for premium user -->
+            </select>
         </div>
-      </div>
     </div>
-  </div>
-</template>
+</div>
+  </div >
+</template >
 <script setup>
 import Chart from "chart.js/auto";
 import { onMounted, ref, inject, reactive } from "vue";
@@ -62,18 +62,32 @@ const chartDataSets = ref([
     data: [],
     borderWidth: 4,
     fill: true,
-    tension: 0.3, // Adjust tension for smooth curves
-    backgroundColor: "rgba(255, 99, 132, 0.2)", // Red color with transparency
-    borderColor: "rgb(255, 99, 132)", // Red color
+    backgroundColor: "#cddc39",
+
+    // backgroundColor: [
+    //   "rgb(255, 84, 64,0.6)",
+    //   "rgba(54, 162, 235, 0.6)",
+    //   "rgba(255, 206, 86, 0.6)",
+    //   "rgba(75, 192, 192, 0.6)",
+    //   "rgba(153, 102, 255, 0.6)",
+    //   "rgba(255, 159, 64, 0.6)",
+    // ],
   },
   {
     label: "# of Sales",
     data: [],
     borderWidth: 4,
     fill: true,
-    tension: 0.3, // Adjust tension for smooth curves
-    backgroundColor: "rgba(54, 162, 235, 0.2)", // Blue color with transparency
-    borderColor: "rgb(54, 162, 235)", // Blue color
+    backgroundColor: "#ff869a",
+
+    // backgroundColor: [
+    //   "rgb(255, 84, 64,0.6)",
+    //   "rgba(54, 162, 235, 0.6)",
+    //   "rgba(255, 206, 86, 0.6)",
+    //   "rgba(75, 192, 192, 0.6)",
+    //   "rgba(153, 102, 255, 0.6)",
+    //   "rgba(255, 159, 64, 0.6)",
+    // ],
   },
 ]);
 const chartDataLabels = ref(["2080-09", "2080-09"]);
@@ -100,7 +114,7 @@ const chartOptions = reactive({
     },
   },
 });
-const chartType = ref("line"); // Set default chart type to line
+const chartType = ref("bar");
 const chartDataBeforeMonth = ref(6);
 //charts ends
 const getMonthName = (date_month) => {
@@ -126,18 +140,29 @@ const getSalesPurchaseChartInfo = (before_month) => {
   axios
     .get("sales-purchase-chart-info/" + before_month)
     .then((response) => {
+      //   console.log(response.data.month);
+      //   console.log(response.data.data);
+      // chartDataSets.value[0].label = "# of Sales";
       chartDataLabels.value = [];
 
       for (let i = 0; i < response.data.month.length; i++) {
+        // chartDataLabels.value[i] = response.data.month[i];
         chartDataLabels.value[i] = getMonthName(response.data.month[i]);
       }
       chartDataSets.value[0].data = [];
       chartDataSets.value[1].data = [];
 
       for (let i = 0; i < response.data.month.length; i++) {
+        //this will assign to 0th data array for chart and ith items to data itself
         chartDataSets.value[0].data[i] = response.data.purchase_data[i];
         chartDataSets.value[1].data[i] = response.data.sales_data[i];
       }
+
+      // console.log(chartDataLabels);
+      //   console.log(chartDataSets.value[0].label);
+      //   console.log(chartDataSets.value[1].label);
+      console.log(chartDataSets.value[0].data);
+      //   console.log(chartDataSets.value[1].data);
 
       makeSalesChart();
     })
@@ -161,7 +186,6 @@ onMounted(() => {
 });
 </script>
 
-
 <style scoped>
 .chart-box {
   position: relative;
@@ -171,10 +195,8 @@ onMounted(() => {
 }
 
 .chart-container {
-  background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  padding: 1em;
 }
 .chart-container h4 {
   text-align: center;

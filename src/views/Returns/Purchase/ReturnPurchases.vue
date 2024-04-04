@@ -1,6 +1,6 @@
 <template>
   <main id="purchases-page">
-    <h1>Return Purchases</h1>
+    <h1 class="icon-head-page">Return Purchases</h1>
     <div class="purchase-header mt20">
       <div class="search-container">
         <div class="search-box">

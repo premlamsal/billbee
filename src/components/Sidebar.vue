@@ -10,40 +10,40 @@
       </button>
     </div>
 
-    <h3>Menu</h3>
+    <!-- <h3>Menu</h3> -->
     <div class="menu">
       <router-link to="/" class="button">
-        <span class="material-icons">home</span>
+        <i class="fi fi-tr-house-chimney custom-flat-icons"></i>
         <span class="text">Home</span>
       </router-link>
       <template v-if="hasPermission('view_account')">
         <router-link to="/accounts" class="button">
-          <span class="material-icons">account_balance_wallet</span>
+          <i class="fi fi-ts-bank custom-flat-icons"></i>
           <span class="text">Accounts</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_customer')">
         <router-link to="/customers" class="button">
-          <span class="material-icons">supervised_user_circle</span>
+          <i class="fi fi-tr-review custom-flat-icons"></i>
           <span class="text">Customers</span>
         </router-link>
       </template>
 
       <template v-if="hasPermission('view_invoice')">
         <router-link to="/invoices" class="button">
-          <span class="material-icons">receipt_long</span>
+          <span class="fi fi-tr-file-invoice-dollar custom-flat-icons"></span>
           <span class="text">Invoice</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_product')">
         <router-link to="/products" class="button">
-          <span class="material-icons">shopping_bag</span>
+          <i class="fi fi-tr-box-open-full custom-flat-icons"></i>
           <span class="text">Product</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_purchase')">
         <router-link to="/purchases" class="button">
-          <span class="material-icons">description</span>
+          <i class="fi fi-tr-cart-shopping-fast custom-flat-icons"></i>
           <span class="text">Purchase</span>
         </router-link>
       </template>
@@ -54,31 +54,31 @@
         "
       >
         <router-link to="/returns" class="button">
-          <span class="material-icons">keyboard_return</span>
+          <i class="fi fi-tr-house-return custom-flat-icons"></i>
           <span class="text">Returns</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_supplier')">
         <router-link to="/suppliers" class="button">
-          <span class="material-icons">local_shipping</span>
+          <i class="fi fi-tr-supplier-alt custom-flat-icons"></i>
           <span class="text">Suppliers</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_stock')">
         <router-link to="/stocks" class="button">
-          <span class="material-icons">inventory_2</span>
+          <i class="fi fi-tr-boxes custom-flat-icons"></i>
           <span class="text">Stocks</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_transaction')">
         <router-link to="/transactions" class="button">
-          <span class="material-icons">swap_horiz</span>
+          <i class="fi fi-ts-money-coin-transfer custom-flat-icons"></i>
           <span class="text">Transactions</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_user')">
         <router-link to="/users" class="button">
-          <span class="material-icons">group</span>
+          <i class="fi fi-tr-admin-alt custom-flat-icons"></i>
           <span class="text">Users</span>
         </router-link>
       </template>
@@ -88,7 +88,7 @@
     <template v-if="hasPermission('view_setting')">
       <div class="menu">
         <router-link to="/settings" class="button">
-          <span class="material-icons">settings</span>
+          <i class="fi fi-tr-customize custom-flat-icons"></i>
           <span class="text">Settings</span>
         </router-link>
       </div>
@@ -191,31 +191,51 @@ aside .menu .button {
   align-items: center;
   text-decoration: none;
   transition: 0.2s ease-in-out;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 aside .menu .button .material-icons {
   font-size: 2rem;
   color: var(--light);
   transition: 0.2s ease-in-out;
 }
-aside .menu .button .text {
+aside .menu .button .custom-flat-icons {
+  // font-size: 1.9em;
   color: var(--light);
   transition: 0.2s ease-in-out;
 }
+aside .menu .button .text {
+  color: var(--light);
+
+  margin-left: 10px;
+  transition: 0.2s ease-in-out;
+}
 aside .menu .button:hover {
-  background-color: var(--dark-alt);
+  // background-color: var(--dark-alt);
 }
 aside .menu .button:hover .material-icons,
 aside .menu .button:hover .text {
   color: var(--primary);
 }
-aside .menu .button.router-link-exact-active {
-  background-color: var(--dark-alt);
-  border-right: 5px solid var(--primary);
-}
-aside .menu .button.router-link-exact-active .material-icons,
-aside .menu .button.router-link-exact-active .text {
+
+aside .menu .button:hover .custom-flat-icons,
+aside .menu .button:hover .text {
   color: var(--primary);
+}
+aside .menu .button.router-link-exact-active {
+  background-color: var(--primary);
+
+  // border-right: 5px solid var(--primary);
+}
+aside .menu .button.router-link-exact-active .custom-flat-icons,
+aside .menu .button.router-link-exact-active .text {
+  color: white;
+}
+aside .menu .button.router-link-exact-active .custom-flat-icons,
+aside .menu .button.router-link-exact-active .text {
+  color: white;
 }
 aside .footer {
   opacity: 0;

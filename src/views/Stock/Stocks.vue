@@ -1,6 +1,8 @@
 <template>
   <main id="stocks-page">
-    <h1>Stocks</h1>
+    <h1 class="icon-head-page">
+      <i class="fi fi-tr-boxes custom-flat-icons"></i> Stocks
+    </h1>
 
     <div class="stock-header mt20">
       <!-- <div class="link-button-container">

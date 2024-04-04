@@ -1,6 +1,8 @@
 <template>
   <main id="products-page">
-    <h1>Products</h1>
+    <h1 class="icon-head-page">
+      <i class="fi fi-tr-box-open-full custom-flat-icons"></i> Products
+    </h1>
 
     <Transition :duration="550">
       <div class="modal-container" v-if="showProductModal">

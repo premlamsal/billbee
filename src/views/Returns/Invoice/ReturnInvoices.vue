@@ -1,6 +1,6 @@
 <template>
   <main id="invoices-page">
-    <h1>Return Invoices</h1>
+    <h1 class="icon-head-page">Return Invoices</h1>
     <div class="invoice-header mt20">
       <div class="search-container">
         <div class="search-box">

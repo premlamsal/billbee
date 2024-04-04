@@ -1,6 +1,8 @@
 <template>
   <main id="purchases-page">
-    <h1>Purchases</h1>
+    <h1 style="icon-head-page">
+      <i class="fi fi-tr-cart-shopping-fast custom-flat-icons"></i> Purchases
+    </h1>
     <div class="purchase-header mt20">
       <div class="search-container">
         <div class="search-box">
@@ -191,6 +193,7 @@ export default {
     const axios = inject("$axios");
     const storeSnipp = useSnipperStore();
     const hasAccess = storeSnipp.permissions;
+    const toast = inject("$toast");
 
     // console.log("hello from soft");
 
@@ -241,6 +244,7 @@ export default {
             position: "top-right",
             transition: "zoom",
           });
+
           getPurchases();
         })
         .catch((error) => {
@@ -350,6 +354,7 @@ export default {
       deletePurchaseModal,
       pagination,
       makePagination,
+
       searchPurchase,
       searchQuery,
       hasPermission,

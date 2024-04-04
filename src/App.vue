@@ -80,7 +80,7 @@ import Sidebar from "./components/Sidebar.vue";
 
 <style lang="scss">
 :root {
-  --primary: #22c55e;
+  --primary: #17c671;
   // --primary: linear-gradient(45deg, #8bc34a, #cddc39);
   --danger: #f44336;
   --primary-alt: #22c55e;
@@ -95,11 +95,13 @@ import Sidebar from "./components/Sidebar.vue";
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Fira sans", sans-serif;
 }
 
 body {
   background: var(--light);
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 100;
+  font-style: normal;
 }
 
 button {

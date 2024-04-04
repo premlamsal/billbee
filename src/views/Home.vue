@@ -1,31 +1,33 @@
 <template>
   <main id="Home-page">
-    <h1>Dashboard</h1>
-    <p>Welcome to Dashboad</p>
+    <h1 class="icon-head-page">
+      <i class="fi fi-tr-house-chimney custom-flat-icons"></i> Dashboard
+    </h1>
+    <!-- <p>Welcome to Dashboad</p> -->
     <div class="dash-content">
-      <div class="dash-box-container pt-20 pb-20">
+      <div class="dash-box-container pb-20">
         <div class="box invoices">
-          <span class="material-icons">receipt_long</span>
+          <i class="fi fi-tr-file-invoice-dollar custom-flat-icons"></i>
           <h3>Invoices</h3>
           <p>Rs. {{ dash.invoice }}</p>
         </div>
         <div class="box purchases">
-          <span class="material-icons">description</span>
+          <i class="fi fi-tr-cart-shopping-fast custom-flat-icons"></i>
           <h3>Purchases</h3>
           <p>Rs. {{ dash.purchase }}</p>
         </div>
         <div class="box products">
-          <span class="material-icons">shopping_bag</span>
+          <i class="fi fi-tr-box-open-full custom-flat-icons"></i>
           <h3>Products</h3>
           <p>{{ dash.product }}</p>
         </div>
         <div class="box customers">
-          <span class="material-icons">supervised_user_circle</span>
+          <i class="fi fi-tr-review custom-flat-icons"></i>
           <h3>Customers</h3>
           <p>{{ dash.customer }}</p>
         </div>
         <div class="box suppliers">
-          <span class="material-icons">local_shipping</span>
+          <i class="fi fi-tr-supplier-alt custom-flat-icons"></i>
           <h3>Suppliers</h3>
           <p>{{ dash.supplier }}</p>
         </div>
@@ -89,10 +91,10 @@ export default {
 </script>
 <style  scoped>
 .dash-content {
-  margin-top: 20px;
-  background: #fff;
-  padding: 1em;
-  margin-bottom: 25px;
+  margin-top: 10px;
+  /* background: #fff; */
+  /* padding: 1em; */
+  margin-bottom: 10px;
 }
 .dash-content span.material-icons {
   font-size: 40px;
@@ -119,8 +121,8 @@ export default {
   /* width: 200px; */
   flex: 1;
   /* height: 200px; */
-  padding: 3em;
-  margin: 0.5em;
+  padding: 2em;
+  margin: 0.3em;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
@@ -143,6 +145,7 @@ export default {
   font-size: 24px;
   margin: 0;
   padding: 0;
+  font-weight: 100;
 }
 
 .box p {

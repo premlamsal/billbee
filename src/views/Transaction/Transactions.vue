@@ -1,6 +1,9 @@
 <template>
   <main id="transactions-page">
-    <h1>Transactions</h1>
+    <h1 class="icon-head-page">
+      <i class="fi fi-ts-money-coin-transfer custom-flat-icons"></i>
+      Transactions
+    </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showTransactionModal">
         <div class="modal">
@@ -152,8 +155,6 @@
                     <label>
                       <input
                         type="radio"
-                        name="engine"
-                        id="income"
                         value="income"
                         v-model="transaction.transaction_type"
                         :class="[
@@ -202,11 +203,8 @@
                   <div class="radio-box">
                     <label>
                       <input
-                        checked=""
                         class="radio-input"
                         type="radio"
-                        name="engine"
-                        id="expense"
                         value="expense"
                         v-model="transaction.transaction_type"
                       />

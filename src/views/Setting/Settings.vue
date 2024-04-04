@@ -1,6 +1,8 @@
 <template>
   <main id="settings-page">
-    <h1 style="color: var(--primary)">Settings</h1>
+    <h1 class="icon-head-page">
+      <i class="fi fi-tr-customize custom-flat-icons"></i> Settings
+    </h1>
     <!-- <p>This is the Settings page</p> -->
     <div class="border-line-bottom"></div>
     <div class="Settings-content">
