@@ -29,157 +29,6 @@
           </div>
 
           <div class="border-line-bottom"></div>
-          <h2>Store Information</h2>
-          <div class="inside-from1">
-            <div class="inside-two-input-container">
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label> Name</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.name"
-                  />
-                </div>
-              </div>
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label> Email</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.email"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="inside-two-input-container">
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label> Phone</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.phone"
-                  />
-                </div>
-              </div>
-
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label>Mobile</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.mobile"
-                  />
-                </div>
-              </div>
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label> Profit %</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.profit_percentage"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="inside-two-input-container">
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label>Website</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.url"
-                  />
-                </div>
-              </div>
-
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label> Tax Number</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.tax_number"
-                  />
-                </div>
-              </div>
-
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label> Tax %</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.tax_percentage"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="inside-two-input-container">
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label> Address</label>
-                <div class="form-input-holder-box">
-                  <input
-                    type="text"
-                    class="form-input-holder"
-                    v-model="store.address"
-                  />
-                </div>
-              </div>
-              <div style="margin-top: 10px" class="inner-form-box">
-                <label> Detail</label>
-                <div class="form-input-holder-box">
-                  <textarea
-                    type="text"
-                    class="form-input-holder"
-                    spellcheck="false"
-                    v-model="store.detail"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-
-            <div style="margin-top: 10px" class="inner-form-box-image">
-              <label> Store Logo</label>
-
-              <div class="store-image-display-box">
-                <div class="image-upload-holder2">
-                  <div>
-                    <img v-bind:src="imagePreview" class="product_logo_img" />
-                  </div>
-
-                  <div>
-                    <input
-                      id="file-input"
-                      type="file"
-                      accept="image/*"
-                      v-on:change="fileSelected"
-                      :class="[
-                        'form-input-holder2',
-                        errors.image ? 'is-invalid' : '',
-                      ]"
-                    />
-                    <div v-if="errors.image" :class="['errorText']">
-                      <div
-                        class="errorText-inner"
-                        v-for="error in errors.image"
-                        v-bind:key="error.id"
-                      >
-                        <ul>
-                          <li>{{ error }}</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="store-settings-btn-block mt10">
@@ -220,6 +69,9 @@ export default {
     const selectedStore = ref(0); //0 will render default option of select i.e "Select an option" (only on mounted) and changed after default store is loaded from database
     const imagePreview = ref(""); //for displaying image while uploading
 
+    const VITE_MY_APP_BACK_URL_HOME = ref(
+      import.meta.env.VITE_MY_APP_BACK_URL_HOME
+    );
     //on mounted start
     onMounted(() => {
       getStores();

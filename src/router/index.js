@@ -603,6 +603,26 @@ const router = createRouter({
 
 
 		},
+		{
+			path: '/storeprofile',
+			component: () => import('../views/Setting/StoreProfile.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+				title: 'StoreProfile' + " | " + import.meta.env.VITE_MY_APP_NAME,
+
+			},
+			beforeEnter(to, from, next) {
+				if (useSnipperStore().checkPermission('view_store_profile')) {
+					next()
+				}
+				else {
+					next('notfound')
+				}
+			},
+
+
+		},
 
 
 		//return invoices
