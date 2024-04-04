@@ -63,8 +63,8 @@ const chartDataSets = ref([
     borderWidth: 4,
     fill: true,
     tension: 0.3, // Adjust tension for smooth curves
-    backgroundColor: "rgba(255, 99, 132, 0.2)", // Red color with transparency
-    borderColor: "rgb(255, 99, 132)", // Red color
+    backgroundColor: "rgba(54, 162, 235, 0.2)", // Blue color with transparency
+    borderColor: "rgb(54, 162, 235)", // Blue color
   },
   {
     label: "# of Sales",
@@ -72,8 +72,9 @@ const chartDataSets = ref([
     borderWidth: 4,
     fill: true,
     tension: 0.3, // Adjust tension for smooth curves
-    backgroundColor: "rgba(54, 162, 235, 0.2)", // Blue color with transparency
-    borderColor: "rgb(54, 162, 235)", // Blue color
+
+    backgroundColor: "rgba(255, 99, 132, 0.2)", // Red color with transparency
+    borderColor: "rgb(255, 99, 132)", // Red color
   },
 ]);
 const chartDataLabels = ref(["2080-09", "2080-09"]);
