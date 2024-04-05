@@ -1,13 +1,17 @@
 <template>
   <aside :class="`${is_expanded ? 'is-expanded scroll' : 'scroll'}`">
-    <div class="logo">
-      <img :src="logoURL" alt="Vue" />
+    <div class="logo-box">
+      <div class="logo">
+        <img :src="logoURL" alt="Vue" />
+      </div>
     </div>
 
-    <div class="menu-toggle-wrap">
-      <button class="menu-toggle" @click="ToggleMenu">
-        <span class="material-icons">keyboard_double_arrow_right</span>
-      </button>
+    <div class="warp-box">
+      <div class="menu-toggle-wrap">
+        <button class="menu-toggle" @click="ToggleMenu">
+          <span class="material-icons">keyboard_double_arrow_right</span>
+        </button>
+      </div>
     </div>
 
     <!-- <h3>Menu</h3> -->
@@ -161,8 +165,6 @@ aside .logo img {
   width: 3rem;
 }
 aside .menu-toggle-wrap {
-  display: flex;
-  justify-content: flex-end;
   margin-bottom: 1rem;
   position: relative;
   top: 0;
@@ -281,5 +283,9 @@ aside.is-expanded .footer {
 .logo {
   display: flex;
   justify-content: center;
+}
+.warp-box {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
