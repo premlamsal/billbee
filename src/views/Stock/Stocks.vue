@@ -1,7 +1,9 @@
 <template>
   <main id="stocks-page">
     <h1 class="icon-head-page">
-      <i class="fi fi-tr-boxes custom-flat-icons"></i> Stocks
+      <i class="fi fi-tr-boxes custom-flat-icons"></i>
+
+      <span style="font-weight: 200"> Stocks</span>
     </h1>
 
     <div class="stock-header mt20">
@@ -10,8 +12,9 @@
         <router-link to="/units"> Units </router-link>
       </div> -->
       <!-- <button class="btn-new-stock" @click="addStockBtn()">
+            <i class="fi fi-rr-plus"></i>
         <span class="btn-name"> New Stock</span>
-        <span class="material-icons">add_circle</span>
+    
       </button> -->
       <div class="search-container">
         <div class="search-box">
@@ -99,6 +102,14 @@
             </tr>
           </tfoot>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="stocks.length != 0">

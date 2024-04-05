@@ -1,7 +1,8 @@
 <template>
   <main id="purchases-page">
     <h1 style="icon-head-page">
-      <i class="fi fi-tr-cart-shopping-fast custom-flat-icons"></i> Purchases
+      <i class="fi fi-tr-cart-shopping-fast custom-flat-icons"></i>
+      <span style="font-weight: 200"> Purchases</span>
     </h1>
     <div class="purchase-header mt20">
       <div class="search-container">
@@ -19,8 +20,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_purchase')">
         <button class="btn-new-purchase" @click="newPurchaseBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Purchase</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -67,33 +68,43 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      @click="showPurchase(purchase.custom_purchase_id)"
-                      v-if="hasPermission('show_purchase')"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editPurchase(purchase.custom_purchase_id)"
-                      v-if="hasPermission('edit_purchase')"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="deletePurchaseModal(purchase.id)"
-                      v-if="hasPermission('delete_purchase')"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box show"
+                        @click="showPurchase(purchase.custom_purchase_id)"
+                        v-if="hasPermission('show_purchase')"
+                      >
+                        <i class="fi fi-rr-tally-4"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box edit"
+                        @click="editPurchase(purchase.custom_purchase_id)"
+                        v-if="hasPermission('edit_purchase')"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        @click="deletePurchaseModal(purchase.id)"
+                        v-if="hasPermission('delete_purchase')"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="purchases.length != 0">

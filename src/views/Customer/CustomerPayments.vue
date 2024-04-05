@@ -1,6 +1,8 @@
 <template>
   <main id="payments-page">
-    <h1>Customer Payments</h1>
+    <h1>
+      <span style="font-weight: 200"> Customer Payments</span>
+    </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showPaymentModal">
         <div class="modal">
@@ -195,8 +197,8 @@
       </div>
       <div class="button-box">
         <button class="btn-new-payment" @click="addPaymentBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Payment</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -233,28 +235,33 @@
                 />
               </td>
               <td>
-                <span
-                  class="material-icons"
-                  style="color: var(--primary); cursor: pointer"
-                  >format_align_justify</span
-                >
-                <span
-                  class="material-icons"
-                  style="color: blueviolet; cursor: pointer"
-                  @click="editPaymentModal(payment.id)"
-                  >edit</span
-                >
-                <span
-                  class="material-icons"
-                  style="color: orangered; cursor: pointer"
-                  @click="deletePaymentModal(payment.id)"
-                  >delete</span
-                >
+                <div class="flat-action-button-container">
+                  <div
+                    class="flat-action-button-box edit"
+                    @click="editPaymentModal(payment.id)"
+                  >
+                    <i class="fi fi-rr-edit"></i>
+                  </div>
+                  <div
+                    class="flat-action-button-box delete"
+                    @click="deletePaymentModal(payment.id)"
+                  >
+                    <i class="fi fi-rr-trash"></i>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
         <p v-else>Add Some Payments</p>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="payments.length != 0">

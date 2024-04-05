@@ -1,7 +1,9 @@
 <template>
   <main id="settings-page">
     <h1 class="icon-head-page">
-      <i class="fi fi-tr-customize custom-flat-icons"></i> Settings
+      <i class="fi fi-tr-customize custom-flat-icons"></i>
+
+      <span style="font-weight: 200">Settings</span>
     </h1>
     <!-- <p>This is the Settings page</p> -->
     <div class="border-line-bottom"></div>

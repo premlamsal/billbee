@@ -2,7 +2,8 @@
   <!-- customers -->
   <main id="customers-page">
     <h1 class="icon-head-page">
-      <i class="fi fi-tr-review custom-flat-icons"></i> Customers
+      <i class="fi fi-tr-review custom-flat-icons"></i>
+      <span style="font-weight: 200"> Customers</span>
     </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showCustomerModal">
@@ -172,8 +173,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_customer')">
         <button class="btn-new-customer" @click="addCustomerBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Customer</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -226,33 +227,43 @@
                   "
                 >
                   <td>
-                    <span
-                      v-if="hasPermission('show_customer')"
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      @click="showCustomer(customer.custom_customer_id)"
-                      >format_align_justify</span
-                    >
-                    <span
-                      v-if="hasPermission('edit_customer')"
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editCustomerModal(customer.id)"
-                      >edit</span
-                    >
-                    <span
-                      v-if="hasPermission('delete_customer')"
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="deleteCustomerModal(customer.id)"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box show"
+                        v-if="hasPermission('show_customer')"
+                        @click="showCustomer(customer.custom_customer_id)"
+                      >
+                        <i class="fi fi-rr-tally-4"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box edit"
+                        v-if="hasPermission('edit_customer')"
+                        @click="editCustomerModal(customer.id)"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        v-if="hasPermission('delete_customer')"
+                        @click="deleteCustomerModal(customer.id)"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
 

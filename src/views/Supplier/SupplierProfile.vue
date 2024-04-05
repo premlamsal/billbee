@@ -1,7 +1,9 @@
 <template>
   <main id="accounts-page">
-    <h1>Supplier Profile</h1>
-    <h3>
+    <h1>
+      <span style="font-weight: 200"> Supplier Profile</span>
+    </h1>
+    <h3 style="font-weight: 200">
       {{ supplier.name }} || Supplier ID : {{ supplier.custom_supplier_id }}
     </h3>
     <div class="account-header">

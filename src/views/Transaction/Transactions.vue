@@ -2,7 +2,8 @@
   <main id="transactions-page">
     <h1 class="icon-head-page">
       <i class="fi fi-ts-money-coin-transfer custom-flat-icons"></i>
-      Transactions
+
+      <span style="font-weight: 200"> Transactions</span>
     </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showTransactionModal">
@@ -302,8 +303,9 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_transaction')">
         <button class="btn-new-transaction" @click="addTransactionBtn()">
+          <i class="fi fi-rr-plus"></i>
+
           <span class="btn-name"> New Transaction</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -367,32 +369,36 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      v-if="hasPermission('show_transaction')"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editTransactionModal(transaction.id)"
-                      v-if="hasPermission('show_transaction')"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="deleteTransactionModal(transaction.id)"
-                      v-if="hasPermission('show_transaction')"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box edit"
+                        @click="editTransactionModal(transaction.id)"
+                        v-if="hasPermission('show_transaction')"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        @click="deleteTransactionModal(transaction.id)"
+                        v-if="hasPermission('delete_transaction')"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="transactions.length != 0">

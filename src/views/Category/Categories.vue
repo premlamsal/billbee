@@ -92,8 +92,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_category')">
         <button class="btn-new-category" @click="addCategoryBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Category</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -132,38 +132,42 @@
                 <td>{{ category.description }}</td>
                 <template
                   v-if="
-                    hasPermission('show_category') ||
                     hasPermission('edit_category') ||
                     hasPermission('delete_category')
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      v-if="hasPermission('show_category')"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editCategoryModal(category.id)"
-                      v-if="hasPermission('show_category')"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="deleteCategoryModal(category.id)"
-                      v-if="hasPermission('show_category')"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box edit"
+                        v-if="hasPermission('edit_category')"
+                        @click="editCategoryModal(category.id)"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        v-if="hasPermission('delete_category')"
+                        @click="deleteCategoryModal(category.id)"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="categories.length != 0">

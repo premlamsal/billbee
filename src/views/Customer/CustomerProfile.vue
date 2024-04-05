@@ -1,7 +1,7 @@
 <template>
   <main id="accounts-page">
-    <h1>Customer Profile</h1>
-    <h3>
+    <h1><span style="font-weight: 200"> Customer Profile</span></h1>
+    <h3 style="font-weight: 200">
       {{ customer.name }} || Customer ID : {{ customer.custom_customer_id }}
     </h3>
     <div class="account-header">

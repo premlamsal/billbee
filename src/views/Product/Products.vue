@@ -1,7 +1,8 @@
 <template>
   <main id="products-page">
     <h1 class="icon-head-page">
-      <i class="fi fi-tr-box-open-full custom-flat-icons"></i> Products
+      <i class="fi fi-tr-box-open-full custom-flat-icons"></i>
+      <span style="font-weight: 200"> Products</span>
     </h1>
 
     <Transition :duration="550">
@@ -277,8 +278,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_product')">
         <button class="btn-new-product" @click="addProductBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Product</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -354,33 +355,43 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      @click="showProduct(product.custom_product_id)"
-                      v-if="hasPermission('show_product')"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editProductModal(product.custom_product_id)"
-                      v-if="hasPermission('show_product')"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      v-if="hasPermission('show_product')"
-                      @click="deleteProductModal(product.id)"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box show"
+                        @click="showProduct(product.custom_product_id)"
+                        v-if="hasPermission('show_product')"
+                      >
+                        <i class="fi fi-rr-tally-4"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box edit"
+                        @click="editProductModal(product.custom_product_id)"
+                        v-if="hasPermission('show_product')"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        v-if="hasPermission('show_product')"
+                        @click="deleteProductModal(product.id)"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="products.length != 0">

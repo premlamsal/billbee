@@ -1,6 +1,8 @@
 <template>
   <main id="purchases-page">
-    <h1 class="icon-head-page">Return Purchases</h1>
+    <h1 class="icon-head-page">
+      <span style="font-weight: 200"> Return Purchases</span>
+    </h1>
     <div class="purchase-header mt20">
       <div class="search-container">
         <div class="search-box">
@@ -18,7 +20,7 @@
       <div class="button-box" v-if="hasPermission('add_return_purchase')">
         <button class="btn-new-return-purchase" @click="newReturnPurchaseBtn()">
           <span class="btn-name"> New Return Purchase</span>
-          <span class="material-icons">add_circle</span>
+          <i class="fi fi-rr-plus"></i>
         </button>
       </div>
     </div>
@@ -68,37 +70,47 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      v-if="hasPermission('show_return_purchase')"
-                      @click="
-                        showReturnPurchase(purchase.custom_return_purchase_id)
-                      "
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      v-if="hasPermission('edit_return_purchase')"
-                      @click="
-                        editPurchaseReturn(purchase.custom_return_purchase_id)
-                      "
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      v-if="hasPermission('delete_return_purchase')"
-                      @click="deleteReturnPurchaseModal(purchase.id)"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box show"
+                        v-if="hasPermission('show_return_purchase')"
+                        @click="
+                          showReturnPurchase(purchase.custom_return_purchase_id)
+                        "
+                      >
+                        <i class="fi fi-rr-tally-4"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box edit"
+                        v-if="hasPermission('edit_return_purchase')"
+                        @click="
+                          editPurchaseReturn(purchase.custom_return_purchase_id)
+                        "
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        v-if="hasPermission('delete_return_purchase')"
+                        @click="deleteReturnPurchaseModal(purchase.id)"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="return_purchases.length != 0">

@@ -1,7 +1,8 @@
 <template>
   <main id="accounts-page">
     <h1 class="icon-head-page">
-      <i class="fi fi-ts-bank custom-flat-icons"></i> Accounts
+      <i class="fi fi-ts-bank custom-flat-icons"></i>
+      <span style="font-weight: 200"> Accounts</span>
     </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showAccountModal">
@@ -194,8 +195,9 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_account')">
         <button class="btn-new-account" @click="addAccountBtn()">
-          <span class="btn-name"> New Account</span>
-          <span class="material-icons">add_circle</span>
+          <i class="fi fi-rr-plus"></i>
+          <span class="btn-name" style="margin: 2px"> New Account </span>
+          <!-- <i class="fi fi-tr-square-plus"></i> -->
         </button>
       </div>
     </div>
@@ -251,27 +253,29 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      v-if="hasPermission('show_account')"
-                      @click="showAccount(account.custom_account_id)"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      v-if="hasPermission('show_account')"
-                      @click="editAccountModal(account.id)"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      v-if="hasPermission('show_account')"
-                      @click="deleteAccountModal(account.id)"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box show"
+                        v-if="hasPermission('show_account')"
+                        @click="showAccount(account.custom_account_id)"
+                      >
+                        <i class="fi fi-rr-tally-4"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box edit"
+                        v-if="hasPermission('edit_account')"
+                        @click="editAccountModal(account.id)"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        v-if="hasPermission('delete_account')"
+                        @click="deleteAccountModal(account.id)"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>

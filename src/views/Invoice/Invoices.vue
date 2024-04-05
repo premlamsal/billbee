@@ -2,7 +2,8 @@
   <main id="invoices-page">
     <h1 class="icon-head-page">
       <span class="fi fi-tr-file-invoice-dollar custom-flat-icons"></span>
-      Invoices
+
+      <span style="font-weight: 200"> Invoices</span>
     </h1>
     <div class="invoice-header mt20">
       <div class="search-container">
@@ -20,8 +21,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_invoice')">
         <button class="btn-new-invoice" @click="newInvoiceBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Invoice</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -68,33 +69,43 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      @click="showInvoice(invoice.custom_invoice_id)"
-                      v-if="hasPermission('show_invoice')"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editInvoice(invoice.custom_invoice_id)"
-                      v-if="hasPermission('edit_invoice')"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="deleteInvoiceModal(invoice.id)"
-                      v-if="hasPermission('delete_invoice')"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box show"
+                        @click="showInvoice(invoice.custom_invoice_id)"
+                        v-if="hasPermission('show_invoice')"
+                      >
+                        <i class="fi fi-rr-tally-4"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box edit"
+                        @click="editInvoice(invoice.custom_invoice_id)"
+                        v-if="hasPermission('edit_invoice')"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        @click="deleteInvoiceModal(invoice.id)"
+                        v-if="hasPermission('delete_invoice')"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="invoices.length != 0">

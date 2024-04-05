@@ -1,7 +1,9 @@
 <template>
   <main id="suppliers-page">
     <h1 class="icon-head-page">
-      <i class="fi fi-tr-supplier-alt custom-flat-icons"></i> Suppliers
+      <i class="fi fi-tr-supplier-alt custom-flat-icons"></i>
+
+      <span style="font-weight: 200"> Suppliers</span>
     </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showSupplierModal">
@@ -169,8 +171,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_supplier')">
         <button class="btn-new-supplier" @click="addSupplierBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Supplier</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -219,33 +221,43 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      v-if="hasPermission('show_supplier')"
-                      @click="showSupplier(supplier.custom_supplier_id)"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editSupplierModal(supplier.id)"
-                      v-if="hasPermission('show_supplier')"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="deleteSupplierModal(supplier.id)"
-                      v-if="hasPermission('show_supplier')"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box show"
+                        v-if="hasPermission('show_supplier')"
+                        @click="showSupplier(supplier.custom_supplier_id)"
+                      >
+                        <i class="fi fi-rr-tally-4"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box edit"
+                        @click="editSupplierModal(supplier.id)"
+                        v-if="hasPermission('edit_supplier')"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        @click="deleteSupplierModal(supplier.id)"
+                        v-if="hasPermission('delete_supplier')"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="suppliers.length != 0">

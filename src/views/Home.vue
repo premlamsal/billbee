@@ -1,7 +1,8 @@
 <template>
   <main id="Home-page">
     <h1 class="icon-head-page">
-      <i class="fi fi-tr-house-chimney custom-flat-icons"></i> Dashboard
+      <i class="fi fi-tr-house-chimney custom-flat-icons"></i>
+      <span style="font-weight: 200"> Dashboard</span>
     </h1>
     <!-- <p>Welcome to Dashboad</p> -->
     <div class="dash-content">

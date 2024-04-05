@@ -1,7 +1,7 @@
 <template>
   <div class="chart-container">
     <h4 class="mt-20 mb-20">
-      Chart Report of Purchase / Sales Before:
+      Purchase & Sales Before:
       {{ chartDataBeforeMonth }} month(s)
     </h4>
     <div class="chart-out-holder">

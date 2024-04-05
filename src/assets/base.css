@@ -300,6 +300,7 @@ button.btn-primary {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 4em;
 }
 
 span.material-icons.empty-box {
@@ -330,6 +331,10 @@ span.material-icons.empty-box {
     direction: ltr;
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
+}
+
+.flat-icon-larger {
+    font-size: 80px;
 }
 
 .icon-head-page {}
@@ -366,4 +371,53 @@ span.material-icons.empty-box {
     overflow-y: scroll;
     height: 100vh;
 
+}
+
+table thead tr th {
+    font-weight: 300;
+}
+
+table tbody tr td {
+    font-weight: 100;
+}
+
+.empty-container h4 {
+    font-weight: 100;
+
+}
+
+.btn-name {
+    margin: 2px;
+}
+
+.flat-action-button-box {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+.flat-action-button-box i {
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+.flat-action-button-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.show {
+    color: var(--primary)
+}
+
+.edit {
+    color: var(--grey)
+}
+
+.delete {
+    color: var(--danger)
 }

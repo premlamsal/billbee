@@ -1,6 +1,8 @@
 <template>
   <main id="invoices-page">
-    <h1 class="icon-head-page">Return Invoices</h1>
+    <h1 class="icon-head-page"></h1>
+
+    <span style="font-weight: 200"> Return Invoices</span>
     <div class="invoice-header mt20">
       <div class="search-container">
         <div class="search-box">
@@ -17,8 +19,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_return_invoice')">
         <button class="btn-new-return-invoice" @click="newReturnInvoiceBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Return Invoice</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -68,37 +70,47 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      v-if="hasPermission('show_return_invoice')"
-                      @click="
-                        showReturnInvoice(invoice.custom_return_invoice_id)
-                      "
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      v-if="hasPermission('edit_return_invoice')"
-                      @click="
-                        editInvoiceReturn(invoice.custom_return_invoice_id)
-                      "
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      v-if="hasPermission('delete_return_invoice')"
-                      style="color: orangered; cursor: pointer"
-                      @click="deleteReturnInvoiceModal(invoice.id)"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box show"
+                        v-if="hasPermission('show_return_invoice')"
+                        @click="
+                          showReturnInvoice(invoice.custom_return_invoice_id)
+                        "
+                      >
+                        <i class="fi fi-rr-tally-4"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box edit"
+                        v-if="hasPermission('edit_return_invoice')"
+                        @click="
+                          editInvoiceReturn(invoice.custom_return_invoice_id)
+                        "
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        v-if="hasPermission('delete_return_invoice')"
+                        @click="deleteReturnInvoiceModal(invoice.id)"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="return_invoices.length != 0">

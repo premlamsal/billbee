@@ -1,6 +1,6 @@
 <template>
   <main id="accounts-page">
-    <h1>Accounts Statement</h1>
+    <h1><span style="font-weight: 200"> Accounts Statement</span></h1>
     <div class="account-header"></div>
     <div class="accounts-content">
       <div

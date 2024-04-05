@@ -1,6 +1,8 @@
 <template>
   <main id="permissions-page">
-    <h1 class="icon-head-page">Permissions</h1>
+    <h1 class="icon-head-page">
+      <span style="font-weight: 200"> Permissions</span>
+    </h1>
     <Prompt
       :isPrompt="pressedDelete"
       v-if="pressedDelete"
@@ -932,8 +934,8 @@
         @click="addPermissionBtn()"
         v-if="hasPermission('add_category')"
       >
+        <i class="fi fi-rr-plus"></i>
         <span class="btn-name"> New Permission</span>
-        <span class="material-icons">add_circle</span>
       </button>
     </div>
     <div class="permissions-content">
@@ -995,26 +997,37 @@
                       style="color: var(--primary); cursor: pointer"
                       >format_align_justify</span
                     > -->
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editPermissionModal(permission.id)"
-                      v-if="hasPermission('show_category')"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="delBtn(permission.id)"
-                      v-if="hasPermission('show_category')"
-                      >delete</span
-                    >
+
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box edit"
+                        @click="editPermissionModal(permission.id)"
+                        v-if="hasPermission('show_permission')"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        @click="delBtn(permission.id)"
+                        v-if="hasPermission('show_permission')"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="permissions.length != 0">

@@ -1,6 +1,8 @@
 <template>
   <main id="roles-page">
-    <h1 class="icon-head-page">Roles</h1>
+    <h1 class="icon-head-page">
+      <span style="font-weight: 200">Roles</span>
+    </h1>
 
     <Transition :duration="550">
       <div class="modal-container" v-if="showRoleModal">
@@ -106,8 +108,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_role')">
         <button class="btn-new-role" @click="addRoleBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Role</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -158,26 +160,37 @@
                       style="color: var(--primary); cursor: pointer"
                       >format_align_justify</span
                     > -->
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      v-if="hasPermission('show_role')"
-                      @click="editRoleModal(role.id)"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      v-if="hasPermission('show_role')"
-                      @click="deleteRoleModal(role.id)"
-                      >delete</span
-                    >
+
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box edit"
+                        v-if="hasPermission('edit_role')"
+                        @click="editRoleModal(role.id)"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        v-if="hasPermission('delete_role')"
+                        @click="deleteRoleModal(role.id)"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="roles.length != 0">

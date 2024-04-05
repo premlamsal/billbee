@@ -1,6 +1,8 @@
 <template>
   <main id="suppliers-page">
-    <h1>Returns Home</h1>
+    <h1>
+      <span style="font-weight: 200"> Return Home</span>
+    </h1>
     <div class="return-card-container">
       <div class="return-cards-holder">
         <div
@@ -9,8 +11,10 @@
           v-if="hasPermission('view_return_invoice')"
         >
           <div class="return-invoice">
-            <span class="material-icons">receipt_long</span>
-            <h3>Return Invoices</h3>
+            <span
+              class="fi fi-tr-file-invoice-dollar custom-flat-icons flat-icon-larger"
+            ></span>
+            <h3 style="font-weight: 200">Return Invoices</h3>
             <p>Click Here to See Return Invoices</p>
           </div>
         </div>
@@ -19,9 +23,11 @@
           @click="goToReturnPurchases()"
           v-if="hasPermission('view_return_purchase')"
         >
-          <span class="material-icons">description</span>
+          <i
+            class="fi fi-tr-cart-shopping-fast custom-flat-icons flat-icon-larger"
+          ></i>
           <div class="return-purchase">
-            <h3>Return Purchase</h3>
+            <h3 style="font-weight: 200">Return Invoices</h3>
             <p>Click Here to See Return Purchase</p>
           </div>
         </div>

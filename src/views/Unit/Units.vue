@@ -1,6 +1,8 @@
 <template>
   <main id="units-page">
-    <h1 class="icon-head-page">Units</h1>
+    <h1 class="icon-head-page">
+      <span style="font-weight: 200"> Units</span>
+    </h1>
     <Transition :duration="550">
       <div class="modal-container" v-if="showUnitModal">
         <div class="modal">
@@ -94,8 +96,8 @@
       </div>
       <div class="button-box" v-if="hasPermission('add_unit')">
         <button class="btn-new-unit" @click="addUnitBtn()">
+          <i class="fi fi-rr-plus"></i>
           <span class="btn-name"> New Unit</span>
-          <span class="material-icons">add_circle</span>
         </button>
       </div>
     </div>
@@ -140,32 +142,36 @@
                   "
                 >
                   <td>
-                    <span
-                      class="material-icons"
-                      style="color: var(--primary); cursor: pointer"
-                      v-if="hasPermission('show_category')"
-                      >format_align_justify</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: blueviolet; cursor: pointer"
-                      @click="editUnitModal(unit.id)"
-                      v-if="hasPermission('show_category')"
-                      >edit</span
-                    >
-                    <span
-                      class="material-icons"
-                      style="color: orangered; cursor: pointer"
-                      @click="deleteUnitModal(unit.id)"
-                      v-if="hasPermission('show_category')"
-                      >delete</span
-                    >
+                    <div class="flat-action-button-container">
+                      <div
+                        class="flat-action-button-box edit"
+                        @click="editUnitModal(unit.id)"
+                        v-if="hasPermission('show_category')"
+                      >
+                        <i class="fi fi-rr-edit"></i>
+                      </div>
+                      <div
+                        class="flat-action-button-box delete"
+                        @click="deleteUnitModal(unit.id)"
+                        v-if="hasPermission('show_category')"
+                      >
+                        <i class="fi fi-rr-trash"></i>
+                      </div>
+                    </div>
                   </td>
                 </template>
               </tr>
             </template>
           </tbody>
         </table>
+      </div>
+      <div class="empty-container" v-else>
+        <div class="empty-box">
+          <div class="round-empty-holder">
+            <!-- <span class="material-icons empty-box">account_balance_wallet</span> -->
+            <h4>No Data Found</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pagination-container" v-if="units.length != 0">

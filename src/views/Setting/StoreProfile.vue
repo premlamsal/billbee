@@ -1,7 +1,8 @@
 <template>
   <main id="settings-page">
     <h1 class="icon-head-page">
-      <i class="fi fi-tr-customize custom-flat-icons"></i> Store Profile
+      <i class="fi fi-tr-customize custom-flat-icons"></i>
+      <span style="font-weight: 200"> Store Profile</span>
     </h1>
     <!-- <p>This is the Settings page</p> -->
     <div class="Settings-content">
@@ -11,8 +12,8 @@
 
       <div class="store-settings">
         <div class="store-settings-inner-block">
-          <div class="border-line-bottom"></div>
-          <h2>Store Information</h2>
+          <!-- <div class="border-line-bottom"></div> -->
+          <!-- <h2>Store Information</h2> -->
 
           <div class="inside-from1">
             <!-- <div class="big-logo-store-profile-box">
