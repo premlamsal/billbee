@@ -333,3 +333,37 @@ span.material-icons.empty-box {
 }
 
 .icon-head-page {}
+
+.zoom-out {
+    /* transform: scale(0.8);
+    /* Adjust the scale factor as needed */
+    /* transform-origin: top left; */
+    /* Keep content aligned to the top left */
+    /* width: 125%; */
+    /* Adjust the width to ensure proper fitting */
+    /* height: 125%; */
+    /* Adjust the height to ensure proper fitting */
+}
+
+.scroll:active::-webkit-scrollbar-thumb,
+.scroll:focus::-webkit-scrollbar-thumb,
+.scroll:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    visibility: hidden;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+
+.scrollable {
+    overflow-y: scroll;
+    height: 100vh;
+
+}

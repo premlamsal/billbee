@@ -1,5 +1,5 @@
 <template>
-  <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
+  <aside :class="`${is_expanded ? 'is-expanded scroll' : 'scroll'}`">
     <div class="logo">
       <img :src="logoURL" alt="Vue" />
     </div>
@@ -142,10 +142,14 @@ aside {
   color: var(--light);
   width: calc(2rem + 32px);
   overflow: hidden;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding: 1rem;
   transition: 0.8s ease-in-out;
+  position: fixed;
+  overflow-y: scroll;
+  height: 100vh;
 }
+
 aside .flex {
   flex: 1 1 0%;
 }

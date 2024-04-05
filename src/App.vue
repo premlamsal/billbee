@@ -6,7 +6,7 @@
         v-if="storeAuth.authData.isAuthenticated && snippStore.hasStore"
       />
     </Suspense>
-    <div class="router-view-container">
+    <div class="router-view-container scrollable scroll">
       <template v-if="snippStore.isAPISeverUP">
         <div
           class="top-nav-container"
@@ -88,7 +88,7 @@ import Sidebar from "./components/Sidebar.vue";
   --dark: #1e293b;
   --dark-alt: #334155;
   --light: #f1f5f9;
-  --sidebar-width: 300px;
+  --sidebar-width: 250px;
 }
 
 * {
@@ -102,6 +102,7 @@ body {
   font-family: "Fira Sans", sans-serif;
   font-weight: 100;
   font-style: normal;
+  // zoom: 0.8; /* Adjust the zoom level as needed */
 }
 
 button {
@@ -113,6 +114,7 @@ button {
 }
 .router-view-container {
   width: 100%;
+  margin-left: var(--sidebar-width);
 }
 .app {
   display: flex;
