@@ -19,12 +19,18 @@
               <div class="purchase-first-half">
                 <div class="top-head">
                   <div class="company-title">
-                    <h3>{{ store.name }}</h3>
+                    <h3>
+                      {{ info.supplier_name }}
+                    </h3>
                   </div>
                   <div class="company-details">
-                    <p>{{ store.address }}</p>
-                    <p>{{ store.phone }}</p>
-                    <p>TAX NO: {{ store.tax_number }}</p>
+                    <p>
+                      {{ info.supplier_address }}
+                    </p>
+                    <p>
+                      {{ info.supplier_phone }}
+                    </p>
+                    <p>{{ info.supplier_details }}</p>
                   </div>
                 </div>
               </div>
@@ -32,10 +38,10 @@
               <div class="purchase-second-half">
                 <div class="header-supplier-container">
                   <div class="supplier-info">
-                    <h3>Supplier Details</h3>
-                    <p>{{ info.supplier_name }}</p>
-                    <p>{{ info.supplier_address }}</p>
-                    <p>{{ info.supplier_phone }}</p>
+                    <h3>To</h3>
+                    <p>{{ store.name }}</p>
+                    <p>{{ store.address }}</p>
+                    <p>TAX NO: {{ store.tax_number }}</p>
                   </div>
                   <div class="purchase-header">
                     <h3>Purchase</h3>
@@ -191,7 +197,7 @@ export default {
           info.custom_purchase_id = response.data.purchase.custom_purchase_id;
           info.title = response.data.purchase.title;
           info.supplier_id = response.data.supplier_id;
-          info.supplier_name = response.data.purchase.supplier_name;
+          info.supplier_name = response.data.purchase.supplier.name;
           info.purchase_date = response.data.purchase.purchase_date;
           info.due_date = response.data.purchase.due_date;
           info.note = response.data.purchase.note;
@@ -202,8 +208,8 @@ export default {
           info.grand_total = response.data.purchase.grand_total;
           info.supplier_address = response.data.purchase.supplier.address;
           info.grand_total = response.data.purchase.grand_total;
-          info.supplier_phone = response.data.purchase.supplier_phone;
-          info.supplier_details = response.data.purchase.supplier_details;
+          info.supplier_phone = response.data.purchase.supplier.phone;
+          info.supplier_details = response.data.purchase.supplier.details;
           info.status = response.data.purchase.status;
 
           //veu.set will make data reactive and updated

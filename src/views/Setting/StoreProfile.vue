@@ -38,6 +38,17 @@
                   />
                 </div>
               </div>
+              <div v-if="errors.name" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.name"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
+              </div>
               <div style="margin-top: 10px" class="inner-form-box">
                 <label> Email</label>
                 <div class="form-input-holder-box">
@@ -51,27 +62,16 @@
                   />
                 </div>
               </div>
-            </div>
-            <div v-if="errors.name" :class="['errorText']">
-              <div
-                class="errorText-inner"
-                v-for="error in errors.name"
-                v-bind:key="error.id"
-              >
-                <ul>
-                  <li>{{ error }}</li>
-                </ul>
-              </div>
-            </div>
-            <div v-if="errors.email" :class="['errorText']">
-              <div
-                class="errorText-inner"
-                v-for="error in errors.email"
-                v-bind:key="error.id"
-              >
-                <ul>
-                  <li>{{ error }}</li>
-                </ul>
+              <div v-if="errors.email" :class="['errorText']">
+                <div
+                  class="errorText-inner"
+                  v-for="error in errors.email"
+                  v-bind:key="error.id"
+                >
+                  <ul>
+                    <li>{{ error }}</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
