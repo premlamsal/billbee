@@ -36,19 +36,19 @@
       <template v-if="hasPermission('view_invoice')">
         <router-link to="/invoices" class="button">
           <span class="fi fi-tr-file-invoice-dollar custom-flat-icons"></span>
-          <span class="text">Invoice</span>
+          <span class="text">Invoices</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_product')">
         <router-link to="/products" class="button">
           <i class="fi fi-tr-box-open-full custom-flat-icons"></i>
-          <span class="text">Product</span>
+          <span class="text">Products</span>
         </router-link>
       </template>
       <template v-if="hasPermission('view_purchase')">
         <router-link to="/purchases" class="button">
           <i class="fi fi-tr-cart-shopping-fast custom-flat-icons"></i>
-          <span class="text">Purchase</span>
+          <span class="text">Purchases</span>
         </router-link>
       </template>
       <template
