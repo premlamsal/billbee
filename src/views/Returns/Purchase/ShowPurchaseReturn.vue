@@ -1,6 +1,8 @@
 <template>
   <main id="Purchase-page">
-    <button @click="exportToPDF()">Print</button>
+    <button @click="exportToPDF()" class="btn">
+      <span class="material-icons">print</span>
+    </button>
 
     <div class="huge-return_purchase-container">
       <div class="return_purchase-head">

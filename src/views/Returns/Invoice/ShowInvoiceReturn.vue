@@ -1,6 +1,8 @@
 <template>
   <main id="Invoice-page">
-    <button @click="exportToPDF()">Print</button>
+    <button @click="exportToPDF()" class="btn">
+      <span class="material-icons">print</span>
+    </button>
 
     <div class="huge-return_invoice-container">
       <div class="return_invoice-head">
