@@ -335,6 +335,7 @@
                           width="40"
                           height="40"
                           :alt="product.name"
+                          @click="openViewer(product.image)"
                         />
                       </div>
                     </div>
@@ -478,12 +479,18 @@
     @event-confirm="callbackPrompt"
     @event-cancel="callbackPromptCancel"
   ></prompt>
+  <ImageViewer :image="zoomedImage" />
 </template>
 	<script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useSnipperStore } from "@/stores/snipper";
+
+import ImageViewer from "./../../components/ImageViewer.vue";
 export default {
+  components: {
+    ImageViewer,
+  },
   setup() {
     const router = useRouter();
     const route = useRoute();
@@ -506,7 +513,7 @@ export default {
     );
     const storeSnipp = useSnipperStore();
     const hasAccess = storeSnipp.permissions;
-
+    const zoomedImage = ref(null);
     // console.log("hello from soft");
 
     // console.log(hasAccess);
@@ -603,6 +610,17 @@ export default {
     };
     const showProduct = (custom_product_id) => {
       router.push({ path: `${custom_product_id}/show-product/` });
+    };
+    // Function to add a query string with a timestamp to the image URL
+    const addQueryString = (url) => {
+      const timestamp = new Date().getTime(); // Get current timestamp
+      return url + `?t=${timestamp}`; // Append timestamp as a query parameter
+    };
+    const openViewer = (image) => {
+      zoomedImage.value = addQueryString(
+        VITE_MY_APP_BACK_URL_HOME.value + image
+      );
+      console.log(zoomedImage.value);
     };
 
     const getCategories = () => {
@@ -907,6 +925,8 @@ export default {
       searchQuery,
       searchProduct,
       hasPermission,
+      zoomedImage,
+      openViewer,
     };
   }, //end of setup
 };
