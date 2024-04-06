@@ -712,6 +712,27 @@ const router = createRouter({
 			},
 		},
 
+
+		{
+			path: '/:id/print-return-invoice',
+			name: 'PrintInvoice',
+			component: () => import('../views/Returns/Invoice/PrintReturnInvoice.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+				title: 'Print Return Invoice' + " | " + import.meta.env.VITE_MY_APP_NAME,
+
+			},
+			beforeEnter(to, from, next) {
+
+				if (useSnipperStore().checkPermission('view_return_invoice')) {
+					next()
+				}
+				else {
+					next('notfound')
+				}
+			},
+		},
 		//return purchases
 
 
@@ -797,6 +818,27 @@ const router = createRouter({
 					next('notfound')
 				}
 
+			},
+		},
+
+		{
+			path: '/:id/print-return-purchase',
+			name: 'PrintReturnPurchase',
+			component: () => import('../views/Returns/Purchase/PrintReturnPurchase.vue'),
+			meta: {
+				requiresAuth: true,
+				requiresStore: true,
+				title: 'Print Return Purchase' + " | " + import.meta.env.VITE_MY_APP_NAME,
+
+			},
+			beforeEnter(to, from, next) {
+
+				if (useSnipperStore().checkPermission('view_return_purchase')) {
+					next()
+				}
+				else {
+					next('notfound')
+				}
 			},
 		},
 		{

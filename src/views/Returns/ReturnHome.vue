@@ -27,7 +27,7 @@
             class="fi fi-tr-cart-shopping-fast custom-flat-icons flat-icon-larger"
           ></i>
           <div class="return-purchase">
-            <h3 style="font-weight: 200">Return Invoices</h3>
+            <h3 style="font-weight: 200">Return Purchases</h3>
             <p>Click Here to See Return Purchase</p>
           </div>
         </div>
