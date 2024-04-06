@@ -237,6 +237,12 @@ export default {
       // named route
       router.push({ path: `/${id}/edit-return-purchase/` });
     };
+
+    const exportToPDF = () => {
+      // console.log("hello from pdf");
+      router.push({ path: `/${id.value}/print-return-purchase/` });
+    };
+
     const fetchPurchaseReturn = () => {
       axios
         .get("return-purchase/" + id.value)
@@ -311,10 +317,6 @@ export default {
           console.log(error);
         });
     }; //end of fetchStore()
-
-    const exportToPDF = () => {
-      console.log("hello from pdf");
-    };
 
     const convertToWords = () => {
       info.grand_total_words = convertNumberToWords(info.grand_total);

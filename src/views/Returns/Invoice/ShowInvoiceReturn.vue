@@ -311,7 +311,8 @@ export default {
     }; //end of fetchStore()
 
     const exportToPDF = () => {
-      console.log("hello from pdf");
+      // console.log("hello from pdf");
+      router.push({ path: `/${id.value}/print-return-invoice/` });
     };
 
     const convertToWords = () => {
