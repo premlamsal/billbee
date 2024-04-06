@@ -44,7 +44,7 @@
                         Return Invoice Number: #
                         {{ info.custom_return_invoice_id }}
                       </p>
-                      <p>Return Invoice Date: {{ info.invoice_date }}</p>
+                      <p>Return Invoice Date: {{ info.return_invoice_date }}</p>
                       <!-- Add due date if needed -->
                       <p>Due Date: {{ info.due_date }}</p>
                     </div>
