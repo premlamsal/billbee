@@ -350,16 +350,56 @@
                   {{ transaction.date }}
                 </td>
                 <td>{{ transaction.transaction_name }}</td>
-                <td>{{ transaction.transaction_type }}</td>
+
+                <td>
+                  <div class="transaction-type-box-container">
+                    <div v-if="transaction.transaction_type === 'expense'">
+                      <div class="transaction-type-box bg-danger">Expense</div>
+                    </div>
+                    <div v-if="transaction.transaction_type === 'income'">
+                      <div class="transaction-type-box bg-success">Income</div>
+                    </div>
+                    <div
+                      v-if="transaction.transaction_type === 'sales_payment'"
+                    >
+                      <div class="transaction-type-box bg-success">
+                        Sales Payment
+                      </div>
+                    </div>
+                    <div
+                      v-if="transaction.transaction_type === 'purchase_payment'"
+                    >
+                      <div class="transaction-type-box bg-danger">
+                        Purchase Payment
+                      </div>
+                    </div>
+                    <div
+                      v-if="transaction.transaction_type === 'opening_balance'"
+                    >
+                      <div class="transaction-type-box bg-primary">
+                        Opening Balance
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
                 <td>{{ transaction.amount }}</td>
                 <td>{{ transaction.notes }}</td>
                 <td>{{ transaction.account_id }}</td>
                 <td>
-                  <img
-                    :src="VITE_MY_APP_BACK_URL_HOME + transaction.image"
-                    width="40"
-                    height="40"
-                  />
+                  <template v-if="transaction.image !== null">
+                    <img
+                      :src="VITE_MY_APP_BACK_URL_HOME + transaction.image"
+                      width="40"
+                      height="40"
+                      @click="openViewer(transaction.image)"
+                    />
+                  </template>
+                  <template v-else>
+                    <i
+                      class="fi fi-ts-money-coin-transfer custom-flat-icons"
+                    ></i>
+                  </template>
                 </td>
                 <template
                   v-if="
@@ -485,12 +525,18 @@
     @event-confirm="callbackPrompt"
     @event-cancel="callbackPromptCancel"
   ></prompt>
+  <ImageViewer :image="zoomedImage" />
 </template>
     <script>
 import { computed, reactive, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useSnipperStore } from "@/stores/snipper";
+
+import ImageViewer from "./../../components/ImageViewer.vue";
 export default {
+  components: {
+    ImageViewer,
+  },
   setup() {
     const router = useRouter();
     const route = useRoute();
@@ -526,6 +572,7 @@ export default {
     const modalHeader = ref(""); // Add or Edit Transaction
     const storeSnipp = useSnipperStore();
     const hasAccess = storeSnipp.permissions;
+    const zoomedImage = ref(null);
 
     // console.log("hello from soft");
 
@@ -611,6 +658,18 @@ export default {
           reader.readAsDataURL(image.value);
         }
       }
+    };
+
+    // Function to add a query string with a timestamp to the image URL
+    const addQueryString = (url) => {
+      const timestamp = new Date().getTime(); // Get current timestamp
+      return url + `?t=${timestamp}`; // Append timestamp as a query parameter
+    };
+    const openViewer = (image) => {
+      zoomedImage.value = addQueryString(
+        VITE_MY_APP_BACK_URL_HOME.value + image
+      );
+      console.log(zoomedImage.value);
     };
 
     const addTransactionBtn = () => {
@@ -916,6 +975,9 @@ export default {
       searchQuery,
       searchTransaction,
       hasPermission,
+
+      zoomedImage,
+      openViewer,
     };
   }, //end of setup
 };
@@ -1117,6 +1179,26 @@ tr:nth-child(even) {
   outline: none;
 }
 .radio-input::focus {
+}
+.transaction-type-box {
+  padding: 5px;
+  display: inline;
+  color: #f2f2f2;
+  border-radius: 10px;
+}
+.bg-danger {
+  background: #f44336;
+}
+.bg-success {
+  background: #8bc34a;
+}
+.bg-primary {
+  background: #2196f3;
+}
+.bg-warning {
+  background: #ff9800;
+}
+.transaction-type-box-container {
 }
 
 /* radio button end */
