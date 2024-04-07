@@ -726,6 +726,9 @@ export default {
       errors.value = "";
     };
     const addProduct = () => {
+      const config = {
+        headers: { "content-type": "multipart/form-data" },
+      };
       if (isModalUpdating.value) {
         console.log("okay i will update boos");
 
@@ -736,17 +739,15 @@ export default {
         formdata.append("unit_id", product.unit_id);
         formdata.append("cp", product.cp);
         formdata.append("sp", product.sp);
-
-        formdata.append("image", product.image);
-
         formdata.append("opening_stock", product.opening_stock);
         formdata.append("description", product.description);
         if (image.value) {
           formdata.append("image", image.value);
         }
+        formdata.append("image", "");
 
         axios
-          .post("product/edit", formdata)
+          .post("product/edit", formdata, config)
           .then((response) => {
             toast(response.data.message, {
               showIcon: true,
@@ -774,7 +775,6 @@ export default {
         formdata.append("product_cat_id", product.product_cat_id);
         formdata.append("unit_id", product.unit_id);
         formdata.append("cp", product.cp);
-        formdata.append("image", product.image);
         formdata.append("sp", product.sp);
         formdata.append("opening_stock", product.opening_stock);
         formdata.append("description", product.description);
@@ -784,7 +784,7 @@ export default {
         formdata.append("image", "");
 
         axios
-          .post("product/add", formdata)
+          .post("product/add", formdata, config)
           .then((response) => {
             toast(response.data.message, {
               showIcon: true,
