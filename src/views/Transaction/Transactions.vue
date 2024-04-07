@@ -438,6 +438,7 @@
                         <div
                           class="flat-action-button-box edit"
                           @click="lockedAction()"
+                          style="color: var(--dark)"
                         >
                           <i class="fi fi-ts-padlock-check"></i>
                         </div>
