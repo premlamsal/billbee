@@ -13,14 +13,22 @@
           v-if="storeAuth.authData.isAuthenticated"
         >
           <div class="top-nav-menu">
-            <button>
-              <div style="display: flex; align-items: center; font-size: 18px">
+            <button
+              style="display: flex; align-items: center; font-size: 18px"
+              @click="showDropDown()"
+              :class="isDropDown ? 'drop-down pressed' : 'drop-down'"
+            >
+              <div>
+                <i class="fi fi-tr-circle-user"></i>
+              </div>
+              <div style="margin-left: 4px">
                 {{ storeAuth.authData.user.name }}
-
+              </div>
+              <div>
                 <span class="material-icons">arrow_drop_down</span>
               </div>
             </button>
-            <div class="dropdown-content">
+            <div class="dropdown-content" v-if="isDropDown">
               <a href="#" @click="logoutBtn()"
                 ><span class="material-icons">logout</span> Logout</a
               >
@@ -71,9 +79,11 @@ const showDropDown = () => {
     isDropDown.value = true;
   }
 };
+
 const router = useRouter();
 const logoutBtn = () => {
   storeAuth.removeUser();
+  snippStore.setStoreFalse();
   router.push({ path: "/login" });
   showDropDown();
 };
@@ -143,7 +153,8 @@ button {
 }
 .dropdown-content {
   position: absolute;
-  top: 25px;
+  top: 50px;
+  right: 20px;
 }
 .dropdown-content a {
   background: #fff;
@@ -187,10 +198,16 @@ button {
   opacity: 0;
   transform: translateY(-90px);
 }
-.dropdown-content {
-  display: none;
+.drop-down {
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
 }
-.top-nav-menu:hover .dropdown-content {
-  display: block;
+.drop-down i {
+  font-size: 30px;
+}
+.pressed {
+  // background: var(--primary-alt);
+  color: var(--primary-alt);
 }
 </style>
