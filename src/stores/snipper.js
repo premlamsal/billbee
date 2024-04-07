@@ -24,6 +24,7 @@ export const useSnipperStore = defineStore("snipper", () => {
     const permissions = reactive([]);
     const isLoadedPermissions = ref(false);
     const stores = reactive([]);//will hold store available to the user
+
     const hasStore = ref(false);//will get true if user has store //hit api to get if user has store or not
 
     async function getPermissions() {
@@ -70,6 +71,10 @@ export const useSnipperStore = defineStore("snipper", () => {
 
             })
     }
+
+    function setStoreFalse() {
+        hasStore.value = false;
+    }
     async function getStores() {
 
         stores.splice(0);  //clearing array
@@ -104,5 +109,5 @@ export const useSnipperStore = defineStore("snipper", () => {
     }
 
 
-    return { permissions, getPermissions, checkPermission, stores, hasStore, getStores, isAPISeverUP, checkIfAPIServerUp };
+    return { permissions, getPermissions, checkPermission, stores, hasStore, getStores, isAPISeverUP, checkIfAPIServerUp, setStoreFalse };
 });
