@@ -340,14 +340,7 @@ span.material-icons.empty-box {
 .icon-head-page {}
 
 .zoom-out {
-    /* transform: scale(0.8);
-    /* Adjust the scale factor as needed */
-    /* transform-origin: top left; */
-    /* Keep content aligned to the top left */
-    /* width: 125%; */
-    /* Adjust the width to ensure proper fitting */
-    /* height: 125%; */
-    /* Adjust the height to ensure proper fitting */
+    /* zoom: 75%; */
 }
 
 .scroll:active::-webkit-scrollbar-thumb,

@@ -60,6 +60,8 @@ onMounted(async () => {
 
 // console.log('store.permissions');
 
+// Watch for changes in is_expanded
+
 const isDropDown = ref(false);
 const showDropDown = () => {
   console.log("buttonpressed");
@@ -88,7 +90,7 @@ import Sidebar from "./components/Sidebar.vue";
   --dark: #1e293b;
   --dark-alt: #334155;
   --light: #f1f5f9;
-  --sidebar-width: 250px;
+  --sidebar-width: 300px;
 }
 
 * {
@@ -114,8 +116,8 @@ button {
 }
 .router-view-container {
   width: 100%;
-  margin-left: var(--sidebar-width);
 }
+
 .app {
   display: flex;
 

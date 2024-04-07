@@ -383,7 +383,7 @@
                   </div>
                 </td>
 
-                <td>{{ transaction.amount }}</td>
+                <td>Rs. {{ transaction.amount }}</td>
                 <td>{{ transaction.notes }}</td>
                 <td>{{ transaction.account_id }}</td>
                 <td>
@@ -1183,7 +1183,7 @@ tr:nth-child(even) {
 .transaction-type-box {
   padding: 5px;
   display: inline;
-  color: #f2f2f2;
+  color: #fff;
   border-radius: 10px;
 }
 .bg-danger {

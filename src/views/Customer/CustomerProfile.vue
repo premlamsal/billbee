@@ -44,19 +44,17 @@
               <td v-if="transaction.transaction_type === 'payment'">Payment</td>
               <td>{{ transaction.refID }}</td>
               <td v-if="transaction.transaction_type === 'sales'">
-                {{ transaction.amount }}
+                Rs. {{ transaction.amount }}
               </td>
               <td v-else></td>
               <td v-if="transaction.transaction_type === 'payment'">
-                {{ transaction.amount }}
+                Rs. {{ transaction.amount }}
               </td>
               <td v-else-if="transaction.transaction_type === 'sales_return'">
-                {{ transaction.amount }}
+                Rs. {{ transaction.amount }}
               </td>
               <td v-else></td>
-              <td>
-                {{ transaction.balance }}
-              </td>
+              <td>Rs. {{ transaction.balance }}</td>
             </tr>
           </tbody>
           <tfoot>
@@ -65,8 +63,8 @@
               <td></td>
 
               <td></td>
-              <td style="font-weight: bold">Dr. {{ totalSales }}</td>
-              <td style="font-weight: bold">Cr. {{ totalPayment }}</td>
+              <td style="font-weight: bold">Dr. Rs. {{ totalSales }}</td>
+              <td style="font-weight: bold">Cr. Rs. {{ totalPayment }}</td>
               <td></td>
             </tr>
           </tfoot>

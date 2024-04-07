@@ -149,7 +149,7 @@ aside {
   /* min-height: 100vh; */
   padding: 1rem;
   transition: 0.8s ease-in-out;
-  position: fixed;
+  // position: fixed;
   overflow-y: scroll;
   height: 100vh;
 }

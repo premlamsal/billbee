@@ -86,8 +86,8 @@
                 <td>{{ stock.product.category.name }}</td>
                 <td>{{ stock.quantity }} {{ stock.unit.short_name }}</td>
 
-                <td>{{ stock.price }}</td>
-                <td>{{ stock.quantity * stock.price }}</td>
+                <td>Rs. {{ stock.price }}</td>
+                <td>Rs. {{ stock.quantity * stock.price }}</td>
               </tr>
             </template>
           </tbody>
@@ -98,7 +98,7 @@
               <td></td>
               <td></td>
               <td style="font-weight: bold">Grand Total</td>
-              <td style="font-weight: bold">{{ grandTotalStock }}</td>
+              <td style="font-weight: bold">Rs. {{ grandTotalStock }}</td>
             </tr>
           </tfoot>
         </table>
