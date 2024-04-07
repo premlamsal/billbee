@@ -715,7 +715,7 @@ const router = createRouter({
 
 		{
 			path: '/:id/print-return-invoice',
-			name: 'PrintInvoice',
+			name: 'PrintReturnInvoice',
 			component: () => import('../views/Returns/Invoice/PrintReturnInvoice.vue'),
 			meta: {
 				requiresAuth: true,
