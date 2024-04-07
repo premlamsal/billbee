@@ -1,8 +1,10 @@
 <template>
   <main id="invoices-page">
-    <h1 class="icon-head-page"></h1>
+    <h1 class="icon-head-page">
+      <span class="fi fi-tr-file-invoice-dollar custom-flat-icons"></span>
+      <span style="font-weight: 200"> Return Invoices</span>
+    </h1>
 
-    <span style="font-weight: 200"> Return Invoices</span>
     <div class="invoice-header mt20">
       <div class="search-container">
         <div class="search-box">

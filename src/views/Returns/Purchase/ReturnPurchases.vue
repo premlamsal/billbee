@@ -1,6 +1,7 @@
 <template>
   <main id="purchases-page">
     <h1 class="icon-head-page">
+      <i class="fi fi-tr-cart-shopping-fast custom-flat-icons"></i>
       <span style="font-weight: 200"> Return Purchases</span>
     </h1>
     <div class="purchase-header mt20">
