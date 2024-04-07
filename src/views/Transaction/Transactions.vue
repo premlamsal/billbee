@@ -409,22 +409,40 @@
                   "
                 >
                   <td>
-                    <div class="flat-action-button-container">
-                      <div
-                        class="flat-action-button-box edit"
-                        @click="editTransactionModal(transaction.id)"
-                        v-if="hasPermission('show_transaction')"
-                      >
-                        <i class="fi fi-rr-edit"></i>
+                    <template
+                      v-if="
+                        transaction.transaction_type !== 'purchase_payment' &&
+                        transaction.transaction_type !== 'sales_payment' &&
+                        transaction.transaction_type !== 'opening_balance'
+                      "
+                    >
+                      <div class="flat-action-button-container">
+                        <div
+                          class="flat-action-button-box edit"
+                          @click="editTransactionModal(transaction.id)"
+                          v-if="hasPermission('show_transaction')"
+                        >
+                          <i class="fi fi-rr-edit"></i>
+                        </div>
+                        <div
+                          class="flat-action-button-box delete"
+                          @click="deleteTransactionModal(transaction.id)"
+                          v-if="hasPermission('delete_transaction')"
+                        >
+                          <i class="fi fi-rr-trash"></i>
+                        </div>
                       </div>
-                      <div
-                        class="flat-action-button-box delete"
-                        @click="deleteTransactionModal(transaction.id)"
-                        v-if="hasPermission('delete_transaction')"
-                      >
-                        <i class="fi fi-rr-trash"></i>
+                    </template>
+                    <template v-else>
+                      <div class="flat-action-button-container">
+                        <div
+                          class="flat-action-button-box edit"
+                          @click="lockedAction()"
+                        >
+                          <i class="fi fi-ts-padlock-check"></i>
+                        </div>
                       </div>
-                    </div>
+                    </template>
                   </td>
                 </template>
               </tr>
@@ -612,6 +630,14 @@ export default {
     const callbackPromptCancel = () => {
       isActivePrompt.value = false;
       delete_id.value = "";
+    };
+    const lockedAction = () => {
+      toast("Perform action from Payments.", {
+        showIcon: true,
+        type: "danger",
+        position: "top-right",
+        transition: "zoom",
+      });
     };
     const deleteTransaction = (transaction_id) => {
       axios
@@ -978,6 +1004,7 @@ export default {
 
       zoomedImage,
       openViewer,
+      lockedAction,
     };
   }, //end of setup
 };
