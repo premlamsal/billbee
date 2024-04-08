@@ -1,12 +1,16 @@
 <template>
   <main id="accounts-page">
-    <h1><span style="font-weight: 200"> Customer Profile</span></h1>
+    <h1>
+      <i class="fi fi-tr-review custom-flat-icons"></i>
+      <span style="font-weight: 200"> Customer Profile</span>
+    </h1>
     <h3 style="font-weight: 200">
       {{ customer.name }} || Customer ID : {{ customer.custom_customer_id }}
     </h3>
     <div class="account-header">
       <button @click="goToCustomerPayments()" class="btn-custom-primary">
-        Payments
+        <i class="fi fi-ts-coin-up-arrow"></i>
+        <span class="btn-name">Payments</span>
       </button>
     </div>
     <div class="accounts-content">

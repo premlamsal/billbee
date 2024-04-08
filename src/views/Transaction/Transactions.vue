@@ -387,7 +387,11 @@
                 <td>{{ transaction.notes }}</td>
                 <td>{{ transaction.account_id }}</td>
                 <td>
-                  <template v-if="transaction.image !== null">
+                  <template
+                    v-if="
+                      transaction.image !== '' && transaction.image !== null
+                    "
+                  >
                     <img
                       :src="VITE_MY_APP_BACK_URL_HOME + transaction.image"
                       width="40"

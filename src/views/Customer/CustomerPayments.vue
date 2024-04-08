@@ -1,6 +1,7 @@
 <template>
   <main id="payments-page">
     <h1>
+      <i class="fi fi-ts-coin-up-arrow custom-flat-icons"></i>
       <span style="font-weight: 200"> Customer Payments</span>
     </h1>
     <Transition :duration="550">
@@ -228,11 +229,15 @@
               <td>{{ payment.date }}</td>
               <td>Rs. {{ payment.amount }}</td>
               <td>
-                <img
-                  :src="VITE_MY_APP_BACK_URL_HOME + payment.image"
-                  width="40"
-                  height="40"
-                />
+                <template v-if="payment.image !== '' && payment.image !== null">
+                  <img
+                    :src="VITE_MY_APP_BACK_URL_HOME + payment.image"
+                    width="40"
+                    height="40"
+                /></template>
+                <template v-else>
+                  <i class="fi fi-ts-coin-up-arrow custom-flat-icons"></i>
+                </template>
               </td>
               <td>
                 <div class="flat-action-button-container">

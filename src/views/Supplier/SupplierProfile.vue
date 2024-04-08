@@ -1,6 +1,7 @@
 <template>
   <main id="accounts-page">
     <h1>
+      <i class="fi fi-tr-supplier-alt custom-flat-icons"></i>
       <span style="font-weight: 200"> Supplier Profile</span>
     </h1>
     <h3 style="font-weight: 200">
@@ -8,7 +9,7 @@
     </h3>
     <div class="account-header">
       <button @click="goToSupplierPayments()" class="btn-custom-primary">
-        Payments
+        <span class="btn-name">Payments</span>
       </button>
     </div>
     <div class="accounts-content">
