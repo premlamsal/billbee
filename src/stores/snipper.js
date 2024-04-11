@@ -59,14 +59,17 @@ export const useSnipperStore = defineStore("snipper", () => {
         await axios.get('check-server-status')
             .then((response) => {
                 isAPISeverUP.value = true
-                console.log('API UP AND WORKING')
-
+                console.log('API UP AND WORKING from snipper')
+                return true;
             })
             .catch((error) => {
                 if (error.code === "ERR_NETWORK") {
                     isAPISeverUP.value = false;
+
                 }
-                console.log('API DOWN')
+                console.log('API DOWN from snipper')
+                return false;
+
 
 
             })

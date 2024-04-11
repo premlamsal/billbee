@@ -69,15 +69,6 @@ img {
   display: block;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
-}
-
 .zoom-fade-enter-active,
 .zoom-fade-leave-active {
   transition: opacity 0.5s, transform 0.5s;

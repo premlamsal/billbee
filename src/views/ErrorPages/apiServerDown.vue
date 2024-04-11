@@ -274,16 +274,16 @@ import { useRouter, useRoute } from "vue-router";
 import { useSnipperStore } from "@/stores/snipper";
 export default {
   setup() {
-    const router = useRouter();
-    const snippStore = useSnipperStore();
-    const enabled = ref(false);
+    // const router = useRouter();
+    // const snippStore = useSnipperStore();
+    const enabled = ref(true);
 
     onMounted(() => {
-      if (snippStore.isAPISeverUP) {
-        router.push({ path: "/" });
-      } else {
-        enabled.value = true;
-      }
+      // if (snippStore.isAPISeverUP) {
+      //   router.push({ path: "/" });
+      // } else {
+      //   enabled.value = true;
+      // }
     });
     return { enabled };
   },

@@ -888,6 +888,10 @@ router.beforeEach(async (to, from, next) => {
 
 	const storeSnipp = useSnipperStore();
 	const storeAuth = useAuthStore();
+	// const checkAPI = await storeSnipp.checkIfAPIServerUp();
+	const checkAPI = false;
+
+
 
 	if (storeAuth.authData.isAuthenticated) {
 
@@ -944,7 +948,14 @@ router.beforeEach(async (to, from, next) => {
 
 
 
+
+
+
+
 })
+
+
+
 
 router.beforeEach((to, from, next) => {
 	// Get the page title from the route meta data that we have defined
