@@ -448,8 +448,10 @@ export default {
           payment.old_amount = response.data.data[0].amount;
           payment.account_id = response.data.account_id;
           payment.old_account_id = response.data.account_id;
-          imagePreview.value =
-            VITE_MY_APP_BACK_URL_HOME.value + response.data.data[0].image;
+          if (response.data.data[0].image) {
+            imagePreview.value =
+              VITE_MY_APP_BACK_URL_HOME.value + response.data.data[0].image;
+          }
 
           toast(response.data.message, {
             showIcon: true,
