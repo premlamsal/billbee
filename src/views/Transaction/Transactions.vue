@@ -731,20 +731,22 @@ export default {
           transaction.date = response.data.data[0].date;
           transaction.transaction_type = response.data.data[0].transaction_type;
           transaction.account_id = response.data.data[0].account_id;
-          imagePreview.value = response.data.data[0].image;
 
-          if (isValidHttpUrl(response.data.data[0].image)) {
-            transaction.image = response.data.data[0].image;
-            imagePreview.value = transaction.image;
-            // console.log('valid')
-          } else {
-            // console.log('no-valid')
-            // console.log(VITE_MY_APP_BACK_URL_HOME.value)
-            transaction.image =
-              VITE_MY_APP_BACK_URL_HOME.value + response.data.data[0].image;
-            imagePreview.value = transaction.image;
+          if (response.data.data[0].image) {
+            imagePreview.value = response.data.data[0].image;
+
+            if (isValidHttpUrl(response.data.data[0].image)) {
+              transaction.image = response.data.data[0].image;
+              imagePreview.value = transaction.image;
+              // console.log('valid')
+            } else {
+              // console.log('no-valid')
+              // console.log(VITE_MY_APP_BACK_URL_HOME.value)
+              transaction.image =
+                VITE_MY_APP_BACK_URL_HOME.value + response.data.data[0].image;
+              imagePreview.value = transaction.image;
+            }
           }
-
           //   toast(response.data.message, {
           //     showIcon: true,
           //     type: response.data.status,
